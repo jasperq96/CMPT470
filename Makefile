@@ -18,3 +18,8 @@ u:
 
 up:
 	docker-compose up -d
+
+up-proj:
+	docker-compose up -d
+	docker exec dello-box-server node_modules/.bin/knex migrate:latest
+	docker exec dello-box-server node_modules/.bin/knex seed:run
