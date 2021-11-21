@@ -1,18 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigationbar from './components/NavigationBar';
+import Calendar from './Pages/Calendar';
+import Tasks from './Pages/Tasks';
+import Files from './Pages/Files';
+import Account from './Pages/Account';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+      <Navigationbar/>
+      <Switch>
+        <Route path="/Calendar" component= {Calendar} />
+        <Route path="/Tasks" component= {Tasks}/>
+        <Route path="/Files" component= {Files}/>
+        <Route path="/Account" component= {Account}/>
+      </Switch>
+    </Router>
     </div>
   );
 }
