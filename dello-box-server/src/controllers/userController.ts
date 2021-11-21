@@ -2,10 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import logging from '../config/logging';
 import { Knex } from '../config/postgres';
 
-const NAMESPACE = 'Dummy Control';
-const TABLE_NAME = 'dummy';
+const NAMESPACE = 'User Control';
+const TABLE_NAME = 'user_info';
 
-export const getDummies = async (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING LIST OF ${TABLE_NAME}S`);
   try {
     const retrievedDummies = await Knex.select('*').from(TABLE_NAME);
@@ -17,4 +17,4 @@ export const getDummies = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export default { getDummies };
+export default { getUsers };
