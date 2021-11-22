@@ -5,6 +5,8 @@ import logging from './config/logging';
 import config from './config/config';
 import dummyRoutes from './routes/dummyRoute';
 import userRoutes from './routes/userRoute';
+import accountRoutes from './routes/accountRoute';
+import taskRoutes from './routes/taskRoute';
 
 export const createServer = () => {
   const router: Application = express();
@@ -53,7 +55,9 @@ export const enableLogging = (router: Application, namespace: string) => {
 
 export const enableRoutes = (router: Application) => {
   router.use('/dummy', dummyRoutes);
-  router.use('/users', userRoutes); //adding route for API
+  router.use('/users', userRoutes);
+  router.use('/accounts', accountRoutes);
+  router.use('/tasks', taskRoutes);
 };
 
 export const enableErrorHandling = (router: Application) => {
