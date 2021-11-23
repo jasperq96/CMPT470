@@ -1,69 +1,115 @@
 {
-	"info": {
-		"_postman_id": "29ab2928-f64a-4101-8610-106bab72f96b",
-		"name": "dello-box",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Default",
-			"item": [
-				{
-					"name": "GET homepage message",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Dummy",
-			"item": [
-				{
-					"name": "GET all dummies",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/dummy",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"dummy"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "GET all users",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": null
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "e4f441d3-1885-4209-9df6-32b772b33e69",
+    "name": "dello-box",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Default",
+      "item": [
+        {
+          "name": "GET homepage message",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": [""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dummy",
+      "item": [
+        {
+          "name": "GET all dummies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/dummy",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["dummy"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Information",
+      "item": [
+        {
+          "name": "GET all user information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/user-info",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user-info"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "File",
+      "item": [
+        {
+          "name": "POST a file",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:3000/file",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["file"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET a file by file id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/file/:fileId",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["file", ":fileId"],
+              "variable": [
+                {
+                  "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
