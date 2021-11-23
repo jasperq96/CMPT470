@@ -39,11 +39,11 @@ const addFile = async (req: any, res: Response, next: NextFunction) => {
   try {
     const filepath = req.file.path;
     const mimetype = req.file.mimetype;
-    const createdFile = await Knex.insert(inputtedReqFile(req, filepath, mimetype)).into(TABLE_NAME);
-    const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).whereIn('id', createdFile);
+    await Knex.insert(inputtedReqFile(req, filepath, mimetype)).into(TABLE_NAME);
+    const numFiles = await Knex(TABLE_NAME).count('id').first();
+    const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).where('id', numFiles.count);
     logging.info(NAMESPACE, `CREATED ${TABLE_NAME.toUpperCase()}`, retrievedCreatedFile);
     res.status(201).send(retrievedCreatedFile);
-    // res.sendStatus(204);
   } catch (error: any) {
     res.status(400).send(fileMimetypeError);
   }
