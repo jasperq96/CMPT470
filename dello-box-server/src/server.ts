@@ -4,6 +4,8 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';
 import dummyRoutes from './routes/dummyRoute';
+import accountRoutes from './routes/accountRoute';
+import taskRoutes from './routes/taskRoute';
 import userInfoRoutes from './routes/userInfoRoute';
 import fileRoutes from './routes/fileRoute';
 
@@ -56,6 +58,8 @@ export const enableRoutes = (router: Application) => {
   router.use('/dummy', dummyRoutes);
   router.use('/user-info', userInfoRoutes);
   router.use('/file', fileRoutes);
+  router.use('/accounts', accountRoutes);
+  router.use('/tasks', taskRoutes);
 };
 
 export const enableErrorHandling = (router: Application) => {

@@ -6,6 +6,25 @@
   },
   "item": [
     {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "GET all accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/accounts",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["accounts"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Default",
       "item": [
         {
@@ -37,25 +56,6 @@
               "host": ["localhost"],
               "port": "3000",
               "path": ["dummy"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "User Information",
-      "item": [
-        {
-          "name": "GET all user information",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/user-info",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user-info"]
             }
           },
           "response": []
@@ -105,6 +105,44 @@
                   "value": ""
                 }
               ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Information",
+      "item": [
+        {
+          "name": "GET all user information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/user-info",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user-info"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "GET all tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/tasks",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["tasks"]
             }
           },
           "response": []
