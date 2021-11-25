@@ -4,9 +4,10 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';
 import dummyRoutes from './routes/dummyRoute';
-import userRoutes from './routes/userRoute';
 import accountRoutes from './routes/accountRoute';
 import taskRoutes from './routes/taskRoute';
+import userInfoRoutes from './routes/userInfoRoute';
+import fileRoutes from './routes/fileRoute';
 
 export const createServer = () => {
   const router: Application = express();
@@ -55,7 +56,8 @@ export const enableLogging = (router: Application, namespace: string) => {
 
 export const enableRoutes = (router: Application) => {
   router.use('/dummy', dummyRoutes);
-  router.use('/users', userRoutes);
+  router.use('/user-info', userInfoRoutes);
+  router.use('/file', fileRoutes);
   router.use('/accounts', accountRoutes);
   router.use('/tasks', taskRoutes);
 };
