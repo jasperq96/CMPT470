@@ -4,6 +4,7 @@ import config from '../config/config';
 import logging from '../config/logging';
 import { Request } from 'express';
 import userAuth from '../controllers/requestTemplates/authUserController';
+import { User } from 'db/models/userModel';
 
 const NAMESPACE = 'PASSPORT MIDDLEWARE';
 
@@ -12,7 +13,7 @@ const cookieExtractor = (req: Request) => {
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }
-  logging.info(NAMESPACE, 'cookie', token);
+  logging.info(NAMESPACE, `EXTRACTED COOKIE: ${token}`);
   return token;
 };
 
@@ -22,15 +23,16 @@ const jwtOptions = {
 };
 
 const strategyAll = new PassportJWT.Strategy(jwtOptions, async (payload, done) => {
-  logging.info(NAMESPACE, 'JWT VERIFICATION: INCOMING PAYLOAD', payload);
+  logging.info(NAMESPACE, `JWT VERIFICATION: INCOMING PAYLOAD ${payload}`);
   const id = payload.sub;
   try {
-    const user: any = await userAuth.findUser('user.id', id);
-    if (!user[0]) {
+    const userArray: User[] = await userAuth.findUser('user.id', id);
+    const user: User = userArray[0];
+    if (!user) {
       return done(null, false);
     } else {
-      user[0].password && delete user[0].password;
-      return done(null, user[0]);
+      user.password && delete user.password;
+      return done(null, user);
     }
   } catch (error) {
     done(error, false);

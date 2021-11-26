@@ -26,4 +26,5 @@ const authConfig = {
   validPassword,
   issueJWT
 };
+
 export default authConfig;
