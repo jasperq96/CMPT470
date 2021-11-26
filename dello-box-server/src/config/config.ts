@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const SERVER_HOSTNAME = process.env.HOST_NAME || 'localhost';
-const SERVER_PORT = process.env.SERVER_PORT || 3000;
-const CORS_ORIGIN_URL = process.env.CORS_ORIGIN_URL || 'http://localhost:8080';
+const SERVER_PORT = process.env.SERVER_PORT || 2999;
+const CORS_ORIGIN_URL = process.env.CORS_ORIGIN_URL || 'http://localhost:8079';
 
 const SERVER = {
   hostname: SERVER_HOSTNAME,

@@ -3,7 +3,7 @@ import logging from '../config/logging';
 import { Knex } from '../config/postgres';
 
 const NAMESPACE = 'Task Control';
-const TABLE_NAME = 'task_info';
+const TABLE_NAME = 'task';
 
 export const getTasks = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING LIST OF ${TABLE_NAME}S`);
