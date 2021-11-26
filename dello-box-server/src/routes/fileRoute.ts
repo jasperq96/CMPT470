@@ -1,6 +1,6 @@
 import express from 'express';
 import controller from '../controllers/fileController';
-import { fileUpload } from 'middlewares/multerValidation';
+import { fileUpload } from 'middlewares/multerValidation.mw';
 
 const router = express.Router();
 

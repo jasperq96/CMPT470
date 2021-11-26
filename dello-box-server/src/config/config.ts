@@ -24,9 +24,16 @@ const POSTGRES = {
   host: POSTGRES_HOST
 };
 
+const JWT_SECRET = process.env.JWT_SECRET || '$2a$12$d5ggzj9/UbWhciqjWdNg.OarUMabwWMHTOF/D0ClQpwa13PtWAUau';
+
+const JWT = {
+  secret: JWT_SECRET
+};
+
 const config = {
   server: SERVER,
-  database: POSTGRES
+  database: POSTGRES,
+  jwt: JWT
 };
 
 export default config;
