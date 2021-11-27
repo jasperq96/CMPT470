@@ -1,5 +1,6 @@
 import React from 'react'
-import {Navbar,Container} from 'react-bootstrap'
+import {Navbar,Container,Form,Button, Col} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 export default function Signup() {
     return (
         <div>
@@ -13,9 +14,26 @@ export default function Signup() {
                 </Container>
             </Navbar>
             </div>
-            <h1>
-            Signup Page
-            </h1>
+            <Container>
+                <Col xs>
+                    <Form>
+                        <Form.Group className="mb-3 mt-5" ontrolId="formBasicEmail">
+                            <Form.Label>User Name</Form.Label>
+                            <Form.Control type="Username" placeholder="Enter Username" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
+                        <Link to ="/inprogress">
+                        <Button variant="primary" type="submit" >
+                            Sign Up
+                        </Button>
+                        </Link>
+                    </Form>
+                </Col>
+            </Container>
         </div>
     )
 }
