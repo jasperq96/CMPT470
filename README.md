@@ -21,3 +21,10 @@ Making a migration file:
 Making a seed file:
 
 - docker exec dello-box-server node_modules/.bin/knex seed:make -x ts "name_of_seed"
+
+<h1>Login Credentials</h1>
+
+Currently there are two valid user accounts:
+
+- Username: username1, Password: user1
+- Username: username2, Password: user2

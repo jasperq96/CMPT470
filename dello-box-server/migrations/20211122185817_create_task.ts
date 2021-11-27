@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable('task_info', (table: Knex.CreateTableBuilder) => {
+  return knex.schema.createTable('task', (table: Knex.CreateTableBuilder) => {
     table.increments();
     table.timestamp('start_date').notNullable();
     table.timestamp('end_date').notNullable();
@@ -12,5 +12,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable('task_info');
+  return knex.schema.dropTable('task');
 }

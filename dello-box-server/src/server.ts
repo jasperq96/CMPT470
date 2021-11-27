@@ -4,10 +4,14 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';
 import dummyRoutes from './routes/dummyRoute';
-import accountRoutes from './routes/accountRoute';
+import userRoutes from './routes/userRoute';
 import taskRoutes from './routes/taskRoute';
 import userInfoRoutes from './routes/userInfoRoute';
 import fileRoutes from './routes/fileRoute';
+import authenticationRoutes from './routes/authenticationRoute';
+import './middlewares/passportStrategy.mw';
+import passport from 'passport';
+import cookieParser from 'cookie-parser';
 
 export const createServer = () => {
   const router: Application = express();
@@ -52,14 +56,17 @@ export const enableLogging = (router: Application, namespace: string) => {
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
   router.use(morgan('dev'));
+  router.use(cookieParser());
+  router.use(passport.initialize());
 };
 
 export const enableRoutes = (router: Application) => {
+  router.use('/auth', authenticationRoutes);
   router.use('/dummy', dummyRoutes);
   router.use('/user-info', userInfoRoutes);
   router.use('/file', fileRoutes);
-  router.use('/accounts', accountRoutes);
-  router.use('/tasks', taskRoutes);
+  router.use('/user', userRoutes);
+  router.use('/task', taskRoutes);
 };
 
 export const enableErrorHandling = (router: Application) => {
