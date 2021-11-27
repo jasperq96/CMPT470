@@ -27,8 +27,8 @@ export default function Login() {
                             <Form.Control type="password" placeholder="Password" />
                         </Form.Group>
                         <Link to ="/inprogress">
-                        <Button variant="primary" type="submit" >
-                            Submit
+                        <Button variant="primary" type="Log In" >
+                            Log In
                         </Button>
                         </Link>
                     </Form>
