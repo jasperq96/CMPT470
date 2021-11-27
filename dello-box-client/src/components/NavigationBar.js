@@ -16,7 +16,6 @@ function Navigationbar(){
             <Nav.Link as={Link} to={"/contacts"}>Contacts</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to={"/account"}>Sign in</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         </Container>
