@@ -5,18 +5,26 @@ import Calendar from './Pages/Calendar';
 import Tasks from './Pages/Tasks';
 import Files from './Pages/Files';
 import Account from './Pages/Account';
+import Home from './Pages/Home';
+import Landing from './Pages/Landing';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Contacts from './Pages/Contacts';
 
 function App() {
   return (
     <div>
       <Router>
-      <Navigationbar/>
       <Switch>
-        <Route path="/Calendar" component= {Calendar} />
-        <Route path="/Tasks" component= {Tasks}/>
-        <Route path="/Files" component= {Files}/>
-        <Route path="/Account" component= {Account}/>
+      <Route exact path="/" component= {Landing}/>
+        <div>
+        <Navigationbar/>
+          <Route exact path="/home" component= {Home} />
+          <Route exact path="/calendar" component= {Calendar} />
+          <Route exact path="/tasks" component= {Tasks}/>
+          <Route exact path="/files" component= {Files}/>
+          <Route exact path="/account" component= {Account}/>
+          <Route exact path="/Contacts" component= {Contacts}/>
+        </div>
       </Switch>
     </Router>
     </div>
