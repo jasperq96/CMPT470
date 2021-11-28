@@ -13,5 +13,7 @@ const invalidExtension = (entity: string, extensionTypes: string) => {
 const fileNegativeOrNanInputError = negativeOrNanInputError('/file/:fileId');
 const fileDNEError = dneError('file', 'does not exist');
 const fileMimetypeError = invalidExtension('file', 'png, jpg, or jpeg');
+const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:userId');
+const userInfoDNEError = dneError('user', 'does not exist');
 
-export { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError };
+export { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, userInfoNegativeOrNanInputError, userInfoDNEError };
