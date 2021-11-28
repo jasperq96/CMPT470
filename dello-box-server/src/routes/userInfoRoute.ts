@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('', controller.getUserInfo);
 router.get('/:userId', controller.getUserInfoByUserId);
+router.put('/:userId', controller.editUserInfoByUserId);
 
 export = router;
