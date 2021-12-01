@@ -6,5 +6,6 @@ const router = express.Router();
 router.get('', controller.getTasks);
 router.get('/:userId', controller.getTasksByUserId);
 router.get('/view/:id', controller.getTaskById);
+router.delete('/:id', controller.deleteTaskById);
 
 export = router;

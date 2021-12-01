@@ -2,9 +2,10 @@ import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from 'config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
-import { tasksNegativeOrNanInputError, tasksDNEError, taskNegativeOrNanInputError, taskDNEError } from 'utils/errorMessages';
-import { getItems } from './requestTemplates/getAllRequest';
+import { tasksNegativeOrNanInputError, tasksDNEError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError } from 'utils/errorMessages';
 import { Task } from 'db/models/taskModel';
+import { getItems } from './requestTemplates/getAllRequest';
+import { deleteItemById } from './requestTemplates/deleteByIdRequest';
 
 const NAMESPACE = 'Task Control';
 const TABLE_NAME = 'task';
@@ -57,4 +58,8 @@ const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getTasks, getTasksByUserId, getTaskById };
+const deleteTaskById = async (req: Request, res: Response, next: NextFunction) => {
+  await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
+};
+
+export default { getTasks, getTasksByUserId, getTaskById, deleteTaskById };
