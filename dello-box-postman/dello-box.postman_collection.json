@@ -81,25 +81,6 @@
       ]
     },
     {
-      "name": "Dummy",
-      "item": [
-        {
-          "name": "GET all dummies",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/dummy",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["dummy"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
       "name": "File",
       "item": [
         {
@@ -180,6 +161,55 @@
               "host": ["localhost"],
               "port": "3000",
               "path": ["user-info"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user information by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/user-info/:userId",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user-info", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT user information by user id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Jimmy\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"jimmysmith@hotmail.com\",\r\n    \"phone\": \"778-123-4567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/user-info/:userId",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user-info", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []

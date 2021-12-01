@@ -3,7 +3,6 @@ import cors from 'cors';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import dummyRoutes from './routes/dummyRoute';
 import userRoutes from './routes/userRoute';
 import taskRoutes from './routes/taskRoute';
 import userInfoRoutes from './routes/userInfoRoute';
@@ -62,7 +61,6 @@ export const enableLogging = (router: Application, namespace: string) => {
 
 export const enableRoutes = (router: Application) => {
   router.use('/auth', authenticationRoutes);
-  router.use('/dummy', dummyRoutes);
   router.use('/user-info', userInfoRoutes);
   router.use('/file', fileRoutes);
   router.use('/user', userRoutes);
