@@ -2,7 +2,7 @@ import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('file', (table: Knex.CreateTableBuilder) => {
-    table.increments();
+    table.increments().primary();
     table.text('filename').notNullable();
     table.text('filepath').notNullable();
     table.text('mimetype').notNullable();

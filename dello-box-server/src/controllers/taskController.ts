@@ -5,6 +5,7 @@ import { isInvalidInput } from 'utils/isInvalidInput';
 import { tasksNegativeOrNanInputError, tasksDNEError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError } from 'utils/errorMessages';
 import { Task } from 'db/models/taskModel';
 import { getItems } from './requestTemplates/getAllRequest';
+import { createItem } from './requestTemplates/createRequest';
 import { editItemById } from './requestTemplates/editByIdRequest';
 import { deleteItemById } from './requestTemplates/deleteByIdRequest';
 
@@ -12,8 +13,8 @@ const NAMESPACE = 'Task Control';
 const TABLE_NAME = 'task';
 
 const inputtedReqBody = (req: Request) => {
-  const { startDate, endDate, title, notes } = req.body;
-  return { start_date: startDate, end_date: endDate, title: title, notes: notes };
+  const { userId, startDate, endDate, title, notes } = req.body;
+  return { user_id: userId, start_date: startDate, end_date: endDate, title: title, notes: notes };
 };
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
@@ -64,6 +65,10 @@ const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const createTask = async (req: Request, res: Response, next: NextFunction) => {
+  await createItem(req, res, next, NAMESPACE, TABLE_NAME, inputtedReqBody(req));
+};
+
 const editTaskById = async (req: Request, res: Response, next: NextFunction) => {
   const taskId: number = +req.params.id;
   await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, inputtedReqBody(req), taskId, 'id');
@@ -73,4 +78,4 @@ const deleteTaskById = async (req: Request, res: Response, next: NextFunction) =
   await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, editTaskById, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskById, deleteTaskById };
