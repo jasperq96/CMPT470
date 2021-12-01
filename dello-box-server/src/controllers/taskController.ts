@@ -5,10 +5,16 @@ import { isInvalidInput } from 'utils/isInvalidInput';
 import { tasksNegativeOrNanInputError, tasksDNEError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError } from 'utils/errorMessages';
 import { Task } from 'db/models/taskModel';
 import { getItems } from './requestTemplates/getAllRequest';
+import { editItemById } from './requestTemplates/editByIdRequest';
 import { deleteItemById } from './requestTemplates/deleteByIdRequest';
 
 const NAMESPACE = 'Task Control';
 const TABLE_NAME = 'task';
+
+const inputtedReqBody = (req: Request) => {
+  const { startDate, endDate, title, notes } = req.body;
+  return { start_date: startDate, end_date: endDate, title: title, notes: notes };
+};
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
   await getItems(req, res, next, NAMESPACE, TABLE_NAME);
@@ -58,8 +64,13 @@ const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const editTaskById = async (req: Request, res: Response, next: NextFunction) => {
+  const taskId: number = +req.params.id;
+  await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, inputtedReqBody(req), taskId, 'id');
+};
+
 const deleteTaskById = async (req: Request, res: Response, next: NextFunction) => {
   await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, editTaskById, deleteTaskById };
