@@ -45,7 +45,6 @@ const getUserInfoByUserId = async (req: Request, res: Response, next: NextFuncti
 };
 
 const editUserInfoByUserId = async (req: Request, res: Response, next: NextFunction) => {
-  logging.info(NAMESPACE, `EDITING ${TABLE_NAME.toUpperCase()} BY USER ID`);
   const userId: number = +req.params.userId;
   await editItemById(req, res, next, NAMESPACE, TABLE_NAME, userInfoNegativeOrNanInputError, userInfoDNEError, inputtedReqBody(req), userId, 'user_id');
 };

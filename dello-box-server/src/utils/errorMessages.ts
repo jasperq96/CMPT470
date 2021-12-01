@@ -15,5 +15,21 @@ const fileDNEError = dneError('file', 'does not exist');
 const fileMimetypeError = invalidExtension('file', 'png, jpg, or jpeg');
 const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:userId');
 const userInfoDNEError = dneError('user', 'does not exist');
+const tasksNegativeOrNanInputError = negativeOrNanInputError('/task/:userId');
+const tasksDNEError = dneError('tasks', 'do not exist for this user or user does not exist');
+const taskNegativeOrNanInputError = negativeOrNanInputError('/task/view/:id');
+const taskDNEError = dneError('task', 'does not exist');
+const taskEditDeleteNegativeOrNanInputError = negativeOrNanInputError('/task/:id');
 
-export { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, userInfoNegativeOrNanInputError, userInfoDNEError };
+export {
+  fileNegativeOrNanInputError,
+  fileDNEError,
+  fileMimetypeError,
+  userInfoNegativeOrNanInputError,
+  userInfoDNEError,
+  tasksNegativeOrNanInputError,
+  tasksDNEError,
+  taskNegativeOrNanInputError,
+  taskDNEError,
+  taskEditDeleteNegativeOrNanInputError
+};
