@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 export default function Files() {
-    return (
-        <div>
-            <h1>
-            Placeholder for Files
-            </h1>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Placeholder for Files</h1>
+    </div>
+  );
 }

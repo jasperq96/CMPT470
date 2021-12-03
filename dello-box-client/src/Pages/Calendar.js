@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 export default function Calendar() {
-    return (
-        <div>
-            <h1>
-            Placeholder for Calendar
-            </h1>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Placeholder for Calendar</h1>
+    </div>
+  );
 }

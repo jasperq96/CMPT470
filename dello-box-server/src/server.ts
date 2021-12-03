@@ -25,16 +25,17 @@ export const sendFirstRequest = (router: Application) => {
 
 export const enableCors = (router: Application) => {
   const allowedOrigins = config.server.corsOriginUrl;
+  logging.debug('origins', 'ALLOWED ORIGINS IS', allowedOrigins);
   const options: cors.CorsOptions = {
     origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
   };
-
   router.use(cors(options));
-  router.use((req, res, next) => {
+  router.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Origin', allowedOrigins);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type Accept, Authorization,');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type Accept, Authorization');
+    res.header('Access-Control-Expose-Headers', 'Content-Disposition');
     if (req.method === 'OPTIONS') {
       res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
       return res.status(200).json({});

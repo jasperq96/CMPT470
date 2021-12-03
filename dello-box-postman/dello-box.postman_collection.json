@@ -23,9 +23,9 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/auth/login",
+              "raw": "localhost:8080/auth/login",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["auth", "login"]
             }
           },
@@ -37,9 +37,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/auth/authenticate",
+              "raw": "localhost:8080/auth/authenticate",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["auth", "authenticate"]
             }
           },
@@ -51,9 +51,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/auth/logout",
+              "raw": "localhost:8080/auth/logout",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["auth", "logout"]
             }
           },
@@ -70,9 +70,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/",
+              "raw": "localhost:8080/",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": [""]
             }
           },
@@ -99,9 +99,9 @@
               ]
             },
             "url": {
-              "raw": "localhost:3000/file",
+              "raw": "localhost:8080/file",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["file"]
             }
           },
@@ -113,9 +113,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/file/:fileId",
+              "raw": "localhost:8080/file/:fileId",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["file", ":fileId"],
               "variable": [
                 {
@@ -138,9 +138,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/user",
+              "raw": "localhost:8080/user",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["user"]
             }
           },
@@ -157,9 +157,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/user-info",
+              "raw": "localhost:8080/user-info",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["user-info"]
             }
           },
@@ -171,9 +171,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/user-info/:userId",
+              "raw": "localhost:8080/user-info/:userId",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["user-info", ":userId"],
               "variable": [
                 {
@@ -200,9 +200,9 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/user-info/:userId",
+              "raw": "localhost:8080/user-info/:userId",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["user-info", ":userId"],
               "variable": [
                 {
@@ -225,9 +225,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/task",
+              "raw": "localhost:8080/task",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task"]
             }
           },
@@ -239,9 +239,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/task/:userId",
+              "raw": "localhost:8080/task/:userId",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task", ":userId"],
               "variable": [
                 {
@@ -259,9 +259,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/task/view/:id",
+              "raw": "localhost:8080/task/view/:id",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task", "view", ":id"],
               "variable": [
                 {
@@ -288,9 +288,9 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/task",
+              "raw": "localhost:8080/task",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task"]
             }
           },
@@ -311,9 +311,9 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/task/:id",
+              "raw": "localhost:8080/task/:id",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task", ":id"],
               "variable": [
                 {
@@ -331,9 +331,9 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:3000/task/:id",
+              "raw": "localhost:8080/task/:id",
               "host": ["localhost"],
-              "port": "3000",
+              "port": "8080",
               "path": ["task", ":id"],
               "variable": [
                 {
