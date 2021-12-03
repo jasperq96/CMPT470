@@ -1,239 +1,325 @@
 {
-  "info": {
-    "_postman_id": "e4f441d3-1885-4209-9df6-32b772b33e69",
-    "name": "dello-box",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Authentication",
-      "item": [
-        {
-          "name": "LOGIN",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"user1\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "localhost:3000/auth/login",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["auth", "login"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AUTHENTICATE",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/auth/authenticate",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["auth", "authenticate"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "LOGOUT",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/auth/logout",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["auth", "logout"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Default",
-      "item": [
-        {
-          "name": "GET homepage message",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": [""]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "File",
-      "item": [
-        {
-          "name": "POST a file",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "file",
-                  "type": "file",
-                  "src": []
-                }
-              ]
-            },
-            "url": {
-              "raw": "localhost:3000/file",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["file"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET a file by file id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/file/:fileId",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["file", ":fileId"],
-              "variable": [
-                {
-                  "key": "fileId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "User",
-      "item": [
-        {
-          "name": "GET all users",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/user",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "User Information",
-      "item": [
-        {
-          "name": "GET all user information",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/user-info",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user-info"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET user information by user id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/user-info/:userId",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user-info", ":userId"],
-              "variable": [
-                {
-                  "key": "userId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "PUT user information by user id",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"firstName\": \"Jimmy\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"jimmysmith@hotmail.com\",\r\n    \"phone\": \"778-123-4567\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "localhost:3000/user-info/:userId",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user-info", ":userId"],
-              "variable": [
-                {
-                  "key": "userId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Task",
-      "item": [
-        {
-          "name": "GET all tasks",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/task",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["task"]
-            }
-          },
-          "response": []
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "c45d4c09-0d9d-4dce-bea3-89828b64e373",
+		"name": "dello-box",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"user1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AUTHENTICATE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/auth/authenticate",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGOUT",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/auth/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Default",
+			"item": [
+				{
+					"name": "GET homepage message",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "POST a file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/file",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET a file by file id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/file/:fileId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"file",
+								":fileId"
+							],
+							"variable": [
+								{
+									"key": "fileId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GET all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Information",
+			"item": [
+				{
+					"name": "GET all user information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user-info",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user information by user id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user-info/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user-info",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT user information by user id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Jimmy\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"jimmysmith@hotmail.com\",\r\n    \"phone\": \"778-123-4567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user-info/:userId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user-info",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "GET all tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/task",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "GET all contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/contacts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Contacts By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/contacts/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }
