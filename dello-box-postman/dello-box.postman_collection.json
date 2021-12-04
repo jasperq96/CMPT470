@@ -62,6 +62,45 @@
       ]
     },
     {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "GET all contacts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/contacts",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET contacts by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/contacts/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Default",
       "item": [
         {
@@ -136,6 +175,26 @@
           "name": "GET a file by file id",
           "request": {
             "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file/:fileId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":fileId"],
+              "variable": [
+                {
+                  "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a file by file id",
+          "request": {
+            "method": "DELETE",
             "header": [],
             "url": {
               "raw": "localhost:8080/file/:fileId",

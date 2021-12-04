@@ -27,6 +27,8 @@ const tasksDNEError = dneError('tasks', 'do not exist for this user or user does
 const taskNegativeOrNanInputError = negativeOrNanInputError('/task/view/:id');
 const taskDNEError = dneError('task', 'does not exist');
 const taskEditDeleteNegativeOrNanInputError = negativeOrNanInputError('/task/:id');
+const contactDNEError = dneError('Contacts', 'do not exist for this user');
+const contactNegativeOrNanInputError = negativeOrNanInputError('/contacts/:userId');
 
 export {
   fileNegativeOrNanInputError,
@@ -41,5 +43,7 @@ export {
   tasksDNEError,
   taskNegativeOrNanInputError,
   taskDNEError,
-  taskEditDeleteNegativeOrNanInputError
+  taskEditDeleteNegativeOrNanInputError,
+  contactDNEError,
+  contactNegativeOrNanInputError
 };
