@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c45d4c09-0d9d-4dce-bea3-89828b64e373",
+		"_postman_id": "3a88f502-82eb-4193-8727-584fd54e2500",
 		"name": "dello-box",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -207,14 +207,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/user-info/1",
+							"raw": "localhost:3000/user-info/:userId",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"user-info",
-								"1"
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -276,6 +282,143 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET all tasks by user id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/task/:userId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET a task by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/task/view/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								"view",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST a task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"startDate\": \"2021-11-03T05:30:00\",\r\n    \"endDate\": \"2021-11-29T21:30:00\",\r\n    \"title\": \"A task\",\r\n    \"notes\": \"giggity\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/task",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT a task by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"startDate\": \"2021-11-09T19:30:00\",\r\n    \"endDate\": \"2021-11-27T13:45:00\",\r\n    \"title\": \"my new task\",\r\n    \"notes\": \"hehehehehehehehehehe kekekekekekekekekekeke\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/task/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE a task by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/task/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -301,7 +444,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Contacts By ID",
+					"name": "GET contacts of ID",
 					"request": {
 						"method": "GET",
 						"header": [],
