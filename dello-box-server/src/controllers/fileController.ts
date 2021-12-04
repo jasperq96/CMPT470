@@ -57,4 +57,29 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getFileById, addFileByUserId };
+const deleteFileById = async (req: any, res: Response, next: NextFunction) => {
+  logging.info(NAMESPACE, `DELETING A ${TABLE_NAME.toUpperCase()} BY ID`);
+  const fileId: number = +req.params.fileId;
+  if (isInvalidInput(fileId)) {
+    res.status(400).send(fileNegativeOrNanInputError);
+    return;
+  }
+
+  try {
+    const retrievedFileById = await Knex.select('filepath').from(TABLE_NAME).where('id', fileId).first();
+    logging.info(NAMESPACE, 'DELETED FILE IS ', retrievedFileById);
+    const deleteByFileId = await Knex(TABLE_NAME).del().where('id', '=', fileId);
+    if (!deleteByFileId) {
+      res.status(404).send(fileDNEError);
+      return;
+    }
+    deleteUploadedFile(NAMESPACE, '/home/node/app/'.concat(retrievedFileById.filepath));
+    logging.info(NAMESPACE, `DELETED ${TABLE_NAME.toUpperCase()} WITH ID ${fileId} AND FILE PATH`, retrievedFileById);
+    res.sendStatus(204);
+  } catch (error: any) {
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
+  }
+};
+
+export default { getFileById, addFileByUserId, deleteFileById };
