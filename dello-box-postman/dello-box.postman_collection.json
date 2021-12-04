@@ -1,7 +1,7 @@
 {
   "info": {
-    "_postman_id": "25a85695-f516-4a86-8ccf-5090a80c17c6",
-    "name": "dello-box",
+    "_postman_id": "201e306a-95e8-4f40-aafe-d038ad1316e8",
+    "name": "dello-box Copy",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -55,6 +55,45 @@
               "host": ["localhost"],
               "port": "3000",
               "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "GET all contacts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/contacts",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["contacts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET contacts by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/contacts/:userId",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["contacts", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
