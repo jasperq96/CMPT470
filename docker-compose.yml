@@ -9,9 +9,9 @@ services:
     volumes:
       - ./dello-box-client:/dello-box-client
     expose:
-      - '8080'
+      - '3000'
     ports:
-      - 8080:8080
+      - 3000:3000
     container_name: dello-box-client
     command: npm start
 
@@ -26,9 +26,9 @@ services:
       - ./dello-box-server:/home/node/app/
     container_name: dello-box-server
     expose:
-      - '3000'
+      - '8080'
     ports:
-      - 3000:3000
+      - 8080:8080
     command: npm run dev
 
   dello-box-database:
