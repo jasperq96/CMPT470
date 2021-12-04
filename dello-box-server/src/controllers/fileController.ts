@@ -1,8 +1,9 @@
 import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
-import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError } from 'utils/errorMessages';
+import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError } from 'utils/errorMessages';
 import { isInvalidInput } from 'utils/isInvalidInput';
+import { deleteUploadedFile } from 'utils/removeAssetFile';
 
 const NAMESPACE = 'File Control';
 const TABLE_NAME = 'file';
@@ -34,15 +35,21 @@ const getFileById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const addFile = async (req: any, res: Response, next: NextFunction) => {
+const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `CREATING AN ${TABLE_NAME.toUpperCase()}`);
+  const filepath = req.file.path;
+  const mimetype = req.file.mimetype;
+  const userId: number = +req.params.userId;
+  const retrievedUser = await Knex.select('*').from('user').where('id', userId);
+  if (isInvalidInput(userId) || !retrievedUser.length) {
+    deleteUploadedFile(NAMESPACE, '/home/node/app/'.concat(filepath));
+    res.status(400).send(filePostInputError);
+    return;
+  }
+
   try {
-    const filepath = req.file.path;
-    const mimetype = req.file.mimetype;
     const insertedFile = await Knex.insert(inputtedReqFile(req, filepath, mimetype)).into(TABLE_NAME).returning('*');
     const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).where('id', insertedFile[0].id);
-    // const numFiles = await Knex(TABLE_NAME).count('id').first();
-    // const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).where('id', numFiles.count);
     logging.info(NAMESPACE, `CREATED ${TABLE_NAME.toUpperCase()}`, retrievedCreatedFile);
     res.status(201).send(retrievedCreatedFile);
   } catch (error: any) {
@@ -50,4 +57,4 @@ const addFile = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getFileById, addFile };
+export default { getFileById, addFileByUserId };
