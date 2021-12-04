@@ -1,16 +1,16 @@
 import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
-import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError } from 'utils/errorMessages';
+import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError, fileByUserIdNegativeOrNanInputError } from 'utils/errorMessages';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { deleteUploadedFile } from 'utils/removeAssetFile';
 
 const NAMESPACE = 'File Control';
 const TABLE_NAME = 'file';
 
-const inputtedReqFile = (req: any, filepath: any, mimetype: any) => {
+const inputtedReqFile = (req: any, userId: number, filepath: any, mimetype: any) => {
   const { filename, size } = req.file;
-  return { filename: filename, filepath: filepath, mimetype: mimetype, size: size };
+  return { user_id: userId, filename: filename, filepath: filepath, mimetype: mimetype, size: size };
 };
 
 const getFileById = async (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +48,7 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   }
 
   try {
-    const insertedFile = await Knex.insert(inputtedReqFile(req, filepath, mimetype)).into(TABLE_NAME).returning('*');
+    const insertedFile = await Knex.insert(inputtedReqFile(req, userId, filepath, mimetype)).into(TABLE_NAME).returning('*');
     const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).where('id', insertedFile[0].id);
     logging.info(NAMESPACE, `CREATED ${TABLE_NAME.toUpperCase()}`, retrievedCreatedFile);
     res.status(201).send(retrievedCreatedFile);
@@ -61,7 +61,7 @@ const deleteFileById = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `DELETING A ${TABLE_NAME.toUpperCase()} BY ID`);
   const fileId: number = +req.params.fileId;
   if (isInvalidInput(fileId)) {
-    res.status(400).send(fileNegativeOrNanInputError);
+    res.status(400).send(fileByUserIdNegativeOrNanInputError);
     return;
   }
 

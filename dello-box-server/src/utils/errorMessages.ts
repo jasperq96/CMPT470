@@ -17,6 +17,8 @@ const inputError = (url: string) => {
 const fileNegativeOrNanInputError = negativeOrNanInputError('/file/:fileId');
 const fileDNEError = dneError('file', 'does not exist');
 const fileMimetypeError = invalidExtension('file', 'png, jpg, or jpeg');
+const fileByUserIdNegativeOrNanInputError = inputError('/file/:userId');
+const filesDNEError = dneError('files', 'do not exist for this user');
 const filePostInputError = inputError('/file/:userId');
 const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:userId');
 const userInfoDNEError = dneError('user', 'does not exist');
@@ -30,6 +32,8 @@ export {
   fileNegativeOrNanInputError,
   fileDNEError,
   fileMimetypeError,
+  fileByUserIdNegativeOrNanInputError,
+  filesDNEError,
   filePostInputError,
   userInfoNegativeOrNanInputError,
   userInfoDNEError,
