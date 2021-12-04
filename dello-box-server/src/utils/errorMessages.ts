@@ -10,9 +10,16 @@ const invalidExtension = (entity: string, extensionTypes: string) => {
   return { error: `${entity} must be of extension types ${extensionTypes}` };
 };
 
+const inputError = (url: string) => {
+  return { error: `Incorrect usage for ${url}, must be a valid id` };
+};
+
 const fileNegativeOrNanInputError = negativeOrNanInputError('/file/:fileId');
 const fileDNEError = dneError('file', 'does not exist');
 const fileMimetypeError = invalidExtension('file', 'png, jpg, or jpeg');
+const fileByUserIdNegativeOrNanInputError = inputError('/file/:userId');
+const filesDNEError = dneError('files', 'do not exist for this user');
+const filePostInputError = inputError('/file/:userId');
 const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:userId');
 const userInfoDNEError = dneError('user', 'does not exist');
 const tasksNegativeOrNanInputError = negativeOrNanInputError('/task/:userId');
@@ -27,6 +34,9 @@ export {
   fileNegativeOrNanInputError,
   fileDNEError,
   fileMimetypeError,
+  fileByUserIdNegativeOrNanInputError,
+  filesDNEError,
+  filePostInputError,
   userInfoNegativeOrNanInputError,
   userInfoDNEError,
   tasksNegativeOrNanInputError,
