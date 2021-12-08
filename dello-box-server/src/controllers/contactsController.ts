@@ -89,7 +89,6 @@ const editNicknameOfContacts = async (req: Request, res: Response, next: NextFun
 };
 
 const deleteContactById = async (req: Request, res: Response, next: NextFunction) => {
-  // Do not need to cover case where contact does not exist, since they have to choose who to delete from existing contacts
   const userId: number = +req.params.userId;
   const contactId: number = +req.body.contactId;
 
@@ -102,6 +101,10 @@ const deleteContactById = async (req: Request, res: Response, next: NextFunction
   try {
     const listOfContacts = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', userId).first();
     const index = listOfContacts['contacts'].indexOf(contactId);
+    if (index == -1) {
+      res.status(404).send(contactDNEError);
+      return;
+    }
     listOfContacts['contacts'].splice(index, 1);
     const editByItemId = await Knex.update({ contacts: listOfContacts['contacts'] }).into(`${TABLE_NAME}`).where('user_id', '=', userId);
     if (!editByItemId) {
@@ -120,6 +123,10 @@ const deleteContactById = async (req: Request, res: Response, next: NextFunction
 const addContactById = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
   const contactId: number = +req.body.contactId;
+  if (userId == contactId) {
+    res.status(400).send('Cannot Add Yourself');
+    return;
+  }
 
   logging.info(NAMESPACE, `EDITING CONTACTS IN ${TABLE_NAME.toUpperCase()} BY ID`);
   if (isInvalidInput(userId)) {
@@ -129,15 +136,28 @@ const addContactById = async (req: Request, res: Response, next: NextFunction) =
 
   try {
     const listOfContacts = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', userId).first();
+    if (listOfContacts['contacts'].includes(contactId)) {
+      res.status(400).send('Contact already exists');
+      return;
+    }
+
+    const userExists = await Knex.select('user_id').from('user_info').where('user_id', contactId).andWhere('user_id', '<>', userId);
+    if (!userExists.length) {
+      res.status(404).send(contactDNEError);
+      return;
+    }
+
     listOfContacts['contacts'].push(contactId);
     listOfContacts['contacts'].sort(function (a: number, b: number) {
       return a - b;
     });
+
     const editByItemId = await Knex.update({ contacts: listOfContacts['contacts'] }).into(`${TABLE_NAME}`).where('user_id', '=', userId);
     if (!editByItemId) {
       res.status(404).send(contactDNEError);
       return;
     }
+
     const retrievedEditedItem = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', '=', userId);
     logging.info(NAMESPACE, `EDITED CONTACTS_LIST WITH ID ${userId}`, retrievedEditedItem);
     res.status(201).send(retrievedEditedItem);
