@@ -8,10 +8,6 @@ import { getItems } from './requestTemplates/getAllRequest';
 const NAMESPACE = 'Contact List Control';
 const TABLE_NAME = 'contact_list';
 
-// const inputtedReqBody = (req: Request) => {
-//   return { user_id: userId, start_date: startDate, end_date: endDate, title: title, notes: notes };
-// };
-
 const getContacts = async (req: Request, res: Response, next: NextFunction) => {
   await getItems(req, res, next, NAMESPACE, TABLE_NAME);
 };
