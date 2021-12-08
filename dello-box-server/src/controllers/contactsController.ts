@@ -30,12 +30,16 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
       .andWhere(`user_info.user_id`, '<>', userId);
 
     listOfNicknames['contact_nicknames'] = JSON.parse(listOfNicknames['contact_nicknames']);
+    logging.info(NAMESPACE, `LIST OF NICKNAMES `, listOfNicknames['contact_nicknames']);
+    logging.info(NAMESPACE, `LIST OF CONTACT INFO `, retrievedUserInfo);
 
     /*
     Does not need to cover the case where the list of contacts contains yourself. Adding a contact, the query will exclude yourself as an option
     */
     listOfContacts['contacts'].forEach((id: number, contact: number) => {
       if (String(id) in listOfNicknames['contact_nicknames']) {
+        logging.info(NAMESPACE, `USER ${id}`, retrievedUserInfo[contact]);
+        logging.info(NAMESPACE, `WITH NICKNAME `, listOfNicknames['contact_nicknames'][String(id)]);
         retrievedUserInfo[contact]['nickname'] = listOfNicknames['contact_nicknames'][String(id)];
       }
     });
@@ -119,4 +123,34 @@ const deleteContactById = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export default { getContacts, getContactsByUserId, editNicknameOfContacts, deleteContactById };
+const addContactById = async (req: Request, res: Response, next: NextFunction) => {
+  const userId: number = +req.params.userId;
+  const contactId: number = +req.body.contactId;
+
+  logging.info(NAMESPACE, `EDITING CONTACTS IN ${TABLE_NAME.toUpperCase()} BY ID`);
+  if (isInvalidInput(userId)) {
+    res.status(400).send(contactNegativeOrNanInputError);
+    return;
+  }
+
+  try {
+    const listOfContacts = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', userId).first();
+    listOfContacts['contacts'].push(contactId);
+    listOfContacts['contacts'].sort(function (a: number, b: number) {
+      return a - b;
+    });
+    const editByItemId = await Knex.update({ contacts: listOfContacts['contacts'] }).into(`${TABLE_NAME}`).where('user_id', '=', userId);
+    if (!editByItemId) {
+      res.status(404).send(contactDNEError);
+      return;
+    }
+    const retrievedEditedItem = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', '=', userId);
+    logging.info(NAMESPACE, `EDITED CONTACTS_LIST WITH ID ${userId}`, retrievedEditedItem);
+    res.status(201).send(retrievedEditedItem);
+  } catch (error: any) {
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
+  }
+};
+
+export default { getContacts, getContactsByUserId, editNicknameOfContacts, deleteContactById, addContactById };
