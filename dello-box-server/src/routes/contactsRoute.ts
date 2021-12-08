@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get('', controller.getContacts);
 router.get('/:userId', controller.getContactsByUserId);
-router.put('/:userId', registerNickName, validateNickname, controller.editUserInfoByUserId);
+router.put('/:userId', registerNickName, validateNickname, controller.editNicknameOfContacts);
 
 export = router;

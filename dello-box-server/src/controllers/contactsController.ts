@@ -53,7 +53,7 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-const editUserInfoByUserId = async (req: Request, res: Response, next: NextFunction) => {
+const editNicknameOfContacts = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
   const contactId: number = req.body.contactId;
   const newNickname: string = req.body.newNickname;
@@ -90,4 +90,4 @@ const editUserInfoByUserId = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export default { getContacts, getContactsByUserId, editUserInfoByUserId };
+export default { getContacts, getContactsByUserId, editNicknameOfContacts };
