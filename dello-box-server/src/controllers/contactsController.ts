@@ -23,14 +23,24 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
 
   try {
     const userId: number = +req.params.userId;
-    const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId);
-
+    const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId).first(); //stores ID's of my contacts
+    const listOfNicknames = await Knex.select('user_info.contact_nicknames').from('user_info').where('user_id', userId).first();
     const retrievedUserInfo = await Knex.select('user_info.first_name', 'user_info.last_name')
-      .from(TABLE_NAME)
-      .crossJoin('user_info')
-      .where(`user_info.user_id`, 'in', listOfContacts[0]['contacts'])
-      .andWhere(`${TABLE_NAME}.user_id`, userId)
+      .from('user_info')
+      .where(`user_info.user_id`, 'in', listOfContacts['contacts'])
       .andWhere(`user_info.user_id`, '<>', userId);
+
+    listOfNicknames['contact_nicknames'] = JSON.parse(listOfNicknames['contact_nicknames']);
+
+    /*
+    Does not need to cover the case where the list of contacts contains yourself. Adding a contact, the query will exclude yourself as an option
+    */
+    listOfContacts['contacts'].forEach((id: number, contact: number) => {
+      if (String(id) in listOfNicknames['contact_nicknames']) {
+        retrievedUserInfo[contact]['nickname'] = listOfNicknames['contact_nicknames'][String(id)];
+      }
+    });
+
     logging.info(NAMESPACE, `RETRIEVED USER INFO FOR USER ${userId}`, retrievedUserInfo);
 
     if (!retrievedUserInfo) {

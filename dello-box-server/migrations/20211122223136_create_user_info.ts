@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('last_name').notNullable();
     table.string('email').notNullable();
     table.string('phone').notNullable();
+    table.specificType('contact_nicknames', 'text[]').defaultTo('{"{}"}'); //nicknames for contacts, not yourself
   });
 }
 
