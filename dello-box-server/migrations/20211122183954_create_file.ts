@@ -3,6 +3,7 @@ import { Knex } from 'knex';
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('file', (table: Knex.CreateTableBuilder) => {
     table.increments().primary();
+    table.boolean('is_public').notNullable();
     table.integer('user_id').unsigned().notNullable().references('id').inTable('user');
     table.text('filename').notNullable();
     table.text('filepath').notNullable();
