@@ -4,13 +4,14 @@ import { Knex } from '../config/postgres';
 import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError, fileByUserIdNegativeOrNanInputError } from 'utils/errorMessages';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { deleteUploadedFile } from 'utils/removeAssetFile';
+import { File } from 'db/models/fileModel';
 
 const NAMESPACE = 'File Control';
 const TABLE_NAME = 'file';
 
 const inputtedReqFile = (req: any, userId: number, filepath: any, mimetype: any) => {
   const { filename, size } = req.file;
-  return { user_id: userId, filename: filename, filepath: filepath, mimetype: mimetype, size: size };
+  return { is_public: false, user_id: userId, filename: filename, filepath: filepath, mimetype: mimetype, size: size };
 };
 
 const getFileById = async (req: Request, res: Response, next: NextFunction) => {
@@ -49,7 +50,7 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
 
   try {
     const insertedFile = await Knex.insert(inputtedReqFile(req, userId, filepath, mimetype)).into(TABLE_NAME).returning('*');
-    const retrievedCreatedFile = await Knex.select('*').from(TABLE_NAME).where('id', insertedFile[0].id);
+    const retrievedCreatedFile: File = await Knex.select('*').from(TABLE_NAME).where('id', insertedFile[0].id).first();
     logging.info(NAMESPACE, `CREATED ${TABLE_NAME.toUpperCase()}`, retrievedCreatedFile);
     res.status(201).send(retrievedCreatedFile);
   } catch (error: any) {
@@ -66,7 +67,7 @@ const deleteFileById = async (req: any, res: Response, next: NextFunction) => {
   }
 
   try {
-    const retrievedFileById = await Knex.select('filepath').from(TABLE_NAME).where('id', fileId).first();
+    const retrievedFileById: File = await Knex.select('filepath').from(TABLE_NAME).where('id', fileId).first();
     logging.info(NAMESPACE, 'DELETED FILE IS ', retrievedFileById);
     const deleteByFileId = await Knex(TABLE_NAME).del().where('id', '=', fileId);
     if (!deleteByFileId) {
