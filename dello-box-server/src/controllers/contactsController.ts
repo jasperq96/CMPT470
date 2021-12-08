@@ -30,21 +30,15 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
       .andWhere(`user_info.user_id`, '<>', userId);
 
     listOfNicknames['contact_nicknames'] = JSON.parse(listOfNicknames['contact_nicknames']);
-    logging.info(NAMESPACE, `LIST OF NICKNAMES `, listOfNicknames['contact_nicknames']);
-    logging.info(NAMESPACE, `LIST OF CONTACT INFO `, retrievedUserInfo);
 
     /*
     Does not need to cover the case where the list of contacts contains yourself. Adding a contact, the query will exclude yourself as an option
     */
     listOfContacts['contacts'].forEach((id: number, contact: number) => {
       if (String(id) in listOfNicknames['contact_nicknames']) {
-        logging.info(NAMESPACE, `USER ${id}`, retrievedUserInfo[contact]);
-        logging.info(NAMESPACE, `WITH NICKNAME `, listOfNicknames['contact_nicknames'][String(id)]);
         retrievedUserInfo[contact]['nickname'] = listOfNicknames['contact_nicknames'][String(id)];
       }
     });
-
-    logging.info(NAMESPACE, `RETRIEVED USER INFO FOR USER ${userId}`, retrievedUserInfo);
 
     if (!retrievedUserInfo) {
       res.status(404).send(contactDNEError);
