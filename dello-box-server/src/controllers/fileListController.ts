@@ -17,7 +17,13 @@ const getFilesByUserId = async (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const retrievedFileInformation: File[] = await Knex.select('*').from(TABLE_NAME).where('user_id', '=', userId);
+    const retrievedFileInformation: File[] = await Knex.select('*')
+      .from(TABLE_NAME)
+      .where('user_id', '=', userId)
+      .orWhere((condition: any) => {
+        condition.where('user_id', '<>', userId).andWhere('is_public', '=', true);
+      })
+      .orderBy('id');
     logging.info(NAMESPACE, `RETRIEVED ${TABLE_NAME.toUpperCase()} INFORMATION FOR USER ${userId}`, retrievedFileInformation);
     if (!retrievedFileInformation.length) {
       res.status(404).send(filesDNEError);
