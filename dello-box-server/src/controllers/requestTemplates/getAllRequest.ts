@@ -5,11 +5,12 @@ import { User } from 'db/models/userModel';
 import { UserInfo } from 'db/models/userInfoModel';
 import { Task } from 'db/models/taskModel';
 import { Contacts } from 'db/models/contactModel';
+import { Column } from 'db/models/columnModel';
 
 export const getItems = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string) => {
   logging.info(namespace, `GETTING LIST OF ${tableName.toUpperCase()}S`);
   try {
-    const items: User[] | UserInfo[] | Task[] | Contacts[] = await Knex.select('*').from(tableName).orderBy('id');
+    const items: User[] | UserInfo[] | Task[] | Contacts[] | Column[] = await Knex.select('*').from(tableName).orderBy('id');
     logging.info(namespace, `RETRIEVED ${tableName.toUpperCase()}S:`, items);
     res.status(200).send(items);
   } catch (error: any) {

@@ -9,6 +9,7 @@ import userInfoRoutes from './routes/userInfoRoute';
 import fileRoutes from './routes/fileRoute';
 import contactRoutes from './routes/contactsRoute';
 import fileListRoutes from './routes/fileListRoute';
+import columnRoutes from './routes/columnRoute';
 import authenticationRoutes from './routes/authenticationRoute';
 import './middlewares/passportStrategy.mw';
 import passport from 'passport';
@@ -70,6 +71,7 @@ export const enableRoutes = (router: Application) => {
   router.use('/user', userRoutes);
   router.use('/task', taskRoutes);
   router.use('/contacts', contactRoutes);
+  router.use('/column', columnRoutes);
 };
 
 export const enableErrorHandling = (router: Application) => {

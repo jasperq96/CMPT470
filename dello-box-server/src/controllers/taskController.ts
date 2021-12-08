@@ -30,7 +30,11 @@ const getTasksByUserId = async (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const retrievedTasks: Task[] = await Knex.select(`${TABLE_NAME}.*`).from(TABLE_NAME).join('user', 'user.id', '=', `${TABLE_NAME}.user_id`).where(`${TABLE_NAME}.user_id`, '=', userId);
+    const retrievedTasks: Task[] = await Knex.select(`${TABLE_NAME}.*`)
+      .from(TABLE_NAME)
+      .join('user', 'user.id', '=', `${TABLE_NAME}.user_id`)
+      .where(`${TABLE_NAME}.user_id`, '=', userId)
+      .orderBy('id');
     logging.info(NAMESPACE, `RETRIEVED TASKS FOR USER ${userId}`, retrievedTasks);
     if (!retrievedTasks.length) {
       res.status(404).send(tasksDNEError);
