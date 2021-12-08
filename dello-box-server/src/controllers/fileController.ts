@@ -1,13 +1,19 @@
 import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
-import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError, fileByUserIdNegativeOrNanInputError } from 'utils/errorMessages';
+import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError } from 'utils/errorMessages';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { deleteUploadedFile } from 'utils/removeAssetFile';
+import { editItemById } from './requestTemplates/editByIdRequest';
 import { File } from 'db/models/fileModel';
 
 const NAMESPACE = 'File Control';
 const TABLE_NAME = 'file';
+
+const inputtedReqBody = (req: Request) => {
+  const { isPublic } = req.body;
+  return { is_public: isPublic };
+};
 
 const inputtedReqFile = (req: any, userId: number, filepath: any, mimetype: any) => {
   const { filename, size } = req.file;
@@ -58,11 +64,16 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
+const editFileById = async (req: any, res: Response, next: NextFunction) => {
+  const fileId: number = +req.params.fileId;
+  await editItemById(req, res, next, NAMESPACE, TABLE_NAME, fileNegativeOrNanInputError, fileDNEError, inputtedReqBody(req), fileId, 'id');
+};
+
 const deleteFileById = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `DELETING A ${TABLE_NAME.toUpperCase()} BY ID`);
   const fileId: number = +req.params.fileId;
   if (isInvalidInput(fileId)) {
-    res.status(400).send(fileByUserIdNegativeOrNanInputError);
+    res.status(400).send(fileNegativeOrNanInputError);
     return;
   }
 
@@ -83,4 +94,4 @@ const deleteFileById = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getFileById, addFileByUserId, deleteFileById };
+export default { getFileById, addFileByUserId, editFileById, deleteFileById };
