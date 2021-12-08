@@ -62,6 +62,77 @@
       ]
     },
     {
+      "name": "Column",
+      "item": [
+        {
+          "name": "GET all columns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/column",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a column",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"On Hold\",\r\n    \"order\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a column label by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"To-Do List\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column/:id/label",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column", ":id", "label"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Contacts",
       "item": [
         {
@@ -83,6 +154,35 @@
           "request": {
             "method": "GET",
             "header": [],
+            "url": {
+              "raw": "localhost:8080/contacts/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT nickname by userId",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Second nickname works\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "localhost:8080/contacts/:userId",
               "host": ["localhost"],
