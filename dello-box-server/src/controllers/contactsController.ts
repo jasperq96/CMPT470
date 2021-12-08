@@ -90,4 +90,33 @@ const editNicknameOfContacts = async (req: Request, res: Response, next: NextFun
   }
 };
 
-export default { getContacts, getContactsByUserId, editNicknameOfContacts };
+const deleteContactById = async (req: Request, res: Response, next: NextFunction) => {
+  // Do not need to cover case where contact does not exist, since they have to choose who to delete from existing contacts
+  const userId: number = +req.params.userId;
+  const contactId: number = +req.body.contactId;
+
+  logging.info(NAMESPACE, `EDITING CONTACTS IN ${TABLE_NAME.toUpperCase()} BY ID`);
+  if (isInvalidInput(userId)) {
+    res.status(400).send(contactNegativeOrNanInputError);
+    return;
+  }
+
+  try {
+    const listOfContacts = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', userId).first();
+    const index = listOfContacts['contacts'].indexOf(contactId);
+    listOfContacts['contacts'].splice(index, 1);
+    const editByItemId = await Knex.update({ contacts: listOfContacts['contacts'] }).into(`${TABLE_NAME}`).where('user_id', '=', userId);
+    if (!editByItemId) {
+      res.status(404).send(contactDNEError);
+      return;
+    }
+    const retrievedEditedItem = await Knex.select('contacts').from(`${TABLE_NAME}`).where('user_id', '=', userId);
+    logging.info(NAMESPACE, `EDITED CONTACTS_LIST WITH ID ${userId}`, retrievedEditedItem);
+    res.status(201).send(retrievedEditedItem);
+  } catch (error: any) {
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
+  }
+};
+
+export default { getContacts, getContactsByUserId, editNicknameOfContacts, deleteContactById };
