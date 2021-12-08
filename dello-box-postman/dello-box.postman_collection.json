@@ -192,10 +192,19 @@
           "response": []
         },
         {
-          "name": "DELETE a file by file id",
+          "name": "PUT a file by id",
           "request": {
-            "method": "DELETE",
+            "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isPublic\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "localhost:8080/file/:fileId",
               "host": ["localhost"],
