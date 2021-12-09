@@ -1,33 +1,36 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigationbar from './components/NavigationBar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Tasks from './pages/Tasks';
 import Files from './pages/Files';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
-import Inprogress from './pages/Inprogress';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import PrivateRoute from './hocs/privateRoutes';
+import PublicRoute from './hocs/publicRoutes';
 
 function App() {
   return (
     <div>
       <Router>
+        <ToastContainer />
         <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/inprogress" component={Inprogress} />
+          <PublicRoute exact path="/" component={Landing} />
+          <PublicRoute exact path="/login" component={Login} />
+          <PublicRoute exact path="/signup" component={Signup} />
           <div>
             <Navigationbar />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/calendar" component={Calendar} />
-            <Route exact path="/tasks" component={Tasks} />
-            <Route exact path="/files" component={Files} />
-            <Route exact path="/contacts" component={Contacts} />
+            <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/calendar" component={Calendar} />
+            <PrivateRoute exact path="/tasks" component={Tasks} />
+            <PrivateRoute exact path="/files" component={Files} />
+            <PrivateRoute exact path="/contacts" component={Contacts} />
           </div>
         </Switch>
       </Router>
