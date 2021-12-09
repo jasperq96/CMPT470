@@ -358,6 +358,29 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "POST a user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"reeeeeeee\",\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Stone\",\r\n    \"email\": \"chrisstoe@hotmail.com\",\r\n    \"phone\": \"778-321-7654\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/user",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user"]
+            }
+          },
+          "response": []
         }
       ]
     },
