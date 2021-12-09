@@ -5,7 +5,7 @@ import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import initialSignup from './initialSignup.json';
 import { createUserObject } from '../../models/userModel';
-import { capitalize, decapitalize } from '../../utils/capitalizeString';
+import { capitalize } from '../../utils/capitalizeString';
 
 const Signup = () => {
   let history = useHistory();
@@ -22,7 +22,7 @@ const Signup = () => {
       .catch((error) => {
         // Will display the first input error message
         const errorBody = error.response.data.errors[0];
-        toast.error(capitalize(errorBody.param).concat(' ').concat(decapitalize(errorBody.msg)));
+        toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
       });
   };
 
