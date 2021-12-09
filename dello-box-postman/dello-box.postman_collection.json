@@ -258,9 +258,9 @@
 					"response": []
 				},
 				{
-					"name": "POST contact by id",
+					"name": "PUT add contact by id",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -295,7 +295,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\"\r\n}",
+							"raw": "{\r\n    \"username\": \"user3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -303,7 +303,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/contacts/1/all",
+							"raw": "localhost:8080/contacts/1/filter",
 							"host": [
 								"localhost"
 							],
@@ -311,7 +311,7 @@
 							"path": [
 								"contacts",
 								"1",
-								"all"
+								"filter"
 							]
 						}
 					},
