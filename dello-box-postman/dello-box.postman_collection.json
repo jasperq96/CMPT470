@@ -208,7 +208,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Second nickname works\"\r\n}",
+							"raw": "{\r\n    \"contactId\" : 3,\r\n    \"newNickname\": \"Third\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,20 +216,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/contacts/:userId",
+							"raw": "localhost:8080/contacts/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"contacts",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"1"
 							]
 						}
 					},
@@ -286,6 +280,38 @@
 							"path": [
 								"contacts",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user info by username",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/contacts/1/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts",
+								"1",
+								"all"
 							]
 						}
 					},
