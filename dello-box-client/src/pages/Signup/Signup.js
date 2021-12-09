@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import initialSignup from './initialSignup.json';
+import { createUserObject } from '../../models/userModel';
 import { capitalize, decapitalize } from '../../utils/capitalizeString';
 
 const Signup = () => {
@@ -34,14 +35,7 @@ const Signup = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    createUser({
-      username: values.username,
-      password: values.password,
-      firstName: values.firstname,
-      lastName: values.lastname,
-      email: values.email,
-      phone: values.phonenumber
-    });
+    createUser(createUserObject(values));
   };
 
   return (
