@@ -12,12 +12,13 @@ const returnAuthenticationStatus = (isAuthenticated: boolean, user: any, message
   return { isAuthenticated: isAuthenticated, user: user, message: message };
 };
 
-const userDoesExist = () => {
-  return { error: 'This username is already being used' };
+const authErrorMessage = (message: string, field: string) => {
+  return { errors: [{ msg: message, param: field }] };
 };
 
 const authUserNotFound = isAuthenticated(false, 'User not found');
 const authInvalidCredentials = isAuthenticated(false, 'Entered incorrect username or password');
 const authServerError = isAuthenticated(false, 'Server error from login');
+const authUserExists = authErrorMessage('This username is already being used', 'username');
 
-export { authUserNotFound, authInvalidCredentials, authServerError, returnLoginAuthenticationStatus, returnAuthenticationStatus, userDoesExist };
+export { authUserNotFound, authInvalidCredentials, authServerError, returnLoginAuthenticationStatus, returnAuthenticationStatus, authUserExists };

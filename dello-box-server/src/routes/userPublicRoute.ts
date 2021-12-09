@@ -5,7 +5,6 @@ import { validateUser } from 'middlewares/validateUser.mw';
 
 const router = express.Router();
 
-router.get('', controller.getUsers);
 router.post('', registerUser, validateUser, controller.createUser);
 
 export = router;

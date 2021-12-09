@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Knex } from 'config/postgres';
 import userAuth from './requestTemplates/authUserController';
 import authConfig from 'utils/authConfig';
-import { userDoesExist } from 'utils/authMessages';
+import { authUserExists } from 'utils/authMessages';
 import { getItems } from './requestTemplates/getAllRequest';
 import { insertItem } from './requestTemplates/createRequest';
 import { User } from 'db/models/userModel';
@@ -36,8 +36,9 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     let newUser = userInputtedReqBody(req);
     const userFound: User = await retrieveUserByUserName(newUser.username);
+    logging.error(NAMESPACE, 'User Found', userFound);
     if (userFound) {
-      res.status(400).send(userDoesExist);
+      res.status(400).send(authUserExists);
     } else {
       newUser.password = await authConfig.hashPassword(newUser.password);
       const createdUser: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);

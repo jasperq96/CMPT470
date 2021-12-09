@@ -1,34 +1,49 @@
 import React, { useState } from 'react';
 import { Navbar, Container, Form, Button, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-export default function Signup() {
-  const [values, setValue] = useState({
-    username: '',
-    firstname: '',
-    lastname: '',
-    phonenumber: '',
-    email: '',
-    password: ''
-  });
+import { useHistory } from 'react-router-dom';
+import httpService from '../../services/httpService';
+import { toast } from 'react-toastify';
+import initialSignup from './initialSignup.json';
+import { capitalize, decapitalize } from '../../utils/capitalizeString';
+
+const Signup = () => {
+  let history = useHistory();
+  const [values, setValue] = useState(initialSignup);
+
+  const createUser = async (newUser) => {
+    const url = `/user`;
+    httpService
+      .post(url, newUser)
+      .then(() => {
+        toast.success('Successfully created a new user with username!');
+        history.push('/login');
+      })
+      .catch((error) => {
+        // Will display the first input error message
+        const errorBody = error.response.data.errors[0];
+        toast.error(capitalize(errorBody.param).concat(' ').concat(decapitalize(errorBody.msg)));
+      });
+  };
+
   const handleChange = (evt) => {
     setValue({
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.name);
-    }
   };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(`submitted values are 
-        ${values.username}
-        ${values.password}
-        ${values.firstname}
-        ${values.lastname}
-        ${values.email}
-        ${values.phonenumber}`);
+    createUser({
+      username: values.username,
+      password: values.password,
+      firstName: values.firstname,
+      lastName: values.lastname,
+      email: values.email,
+      phone: values.phonenumber
+    });
   };
+
   return (
     <div>
       <div>
@@ -77,4 +92,6 @@ export default function Signup() {
       </Container>
     </div>
   );
-}
+};
+
+export default Signup;
