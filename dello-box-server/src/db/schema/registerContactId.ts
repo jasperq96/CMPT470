@@ -6,4 +6,4 @@ const userIdSchema = [
     .withMessage('Has to be an integer that does not start with a 0')
 ];
 
-export { userIdSchema as registerUserId };
+export { userIdSchema as registerContactId };
