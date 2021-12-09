@@ -13,17 +13,15 @@ const Signup = () => {
 
   const createUser = async (newUser) => {
     const url = `/user`;
-    httpService
-      .post(url, newUser)
-      .then(() => {
-        toast.success('Successfully created a new user with username!');
-        history.push('/login');
-      })
-      .catch((error) => {
-        // Will display the first input error message
-        const errorBody = error.response.data.errors[0];
-        toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
-      });
+    try {
+      await httpService.post(url, newUser);
+      toast.success('Successfully created a new user with username!');
+      history.push('/login');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
   };
 
   const handleChange = (evt) => {
