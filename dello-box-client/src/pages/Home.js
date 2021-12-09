@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../hooks/UserContext';
 
 export default function Home() {
+  const userContext = useContext(UserContext);
+
   return (
     <div>
-      <h1>Placeholder for Homepage</h1>
+      <h1>Welcome back {userContext.user?.username}</h1>
     </div>
   );
 }

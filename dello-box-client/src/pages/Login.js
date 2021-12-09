@@ -1,22 +1,47 @@
-import React, { useState } from 'react';
 import { Navbar, Container, Form, Button, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-export default function Login() {
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../hooks/UserContext';
+import { toast } from 'react-toastify';
+import authenticationService from '../services/authenticationService';
+
+const Login = () => {
+  let history = useHistory();
+  let userContext = useContext(UserContext);
   const [values, setValue] = useState({
     username: '',
     password: ''
   });
+
+  const attemptLogin = async (loginUser) => {
+    const data = await authenticationService.login(loginUser);
+    const { isAuthenticated } = data;
+    if (isAuthenticated) {
+      userContext.setUser(data.user);
+      userContext.setIsAuthenticated(isAuthenticated);
+      history.push('/home');
+      toast.success(`Successfully logged in as ${data.user.username}!`);
+    } else {
+      toast.error('Invalid login credentials!');
+    }
+  };
+
   const handleChange = (evt) => {
     setValue({
       ...values,
       [evt.target.name]: evt.target.value
     });
   };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(`submitted values are ${values.username}
-        ${values.password}`);
+    const user = {
+      username: values.username,
+      password: values.password
+    };
+    attemptLogin(user);
   };
+
   return (
     <div>
       <div>
@@ -43,14 +68,11 @@ export default function Login() {
             <Button variant="primary" type="submit">
               Log in
             </Button>
-            <Link to="/inprogress">
-              <Button variant="primary" type="Log In">
-                Redirect
-              </Button>
-            </Link>
           </Form>
         </Col>
       </Container>
     </div>
   );
-}
+};
+
+export default Login;

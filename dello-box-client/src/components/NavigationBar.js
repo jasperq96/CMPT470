@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../hooks/UserContext';
+import { useHistory } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 function Navigationbar() {
+  let history = useHistory();
+  const userContext = useContext(UserContext);
+  const onClickLogOutHandler = async () => {
+    await userContext.logout();
+    toast.success('Successfully logged out!');
+    history.push('/');
+  };
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -25,7 +37,11 @@ function Navigationbar() {
                 Contacts
               </Nav.Link>
             </Nav>
-            <Nav></Nav>
+            <Nav className="float-right">
+              <Nav.Link as={Link} onClick={onClickLogOutHandler}>
+                Sign Out
+              </Nav.Link>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

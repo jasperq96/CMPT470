@@ -43,7 +43,7 @@ export default function Signup() {
         <Col xs>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 mt-5" controlId="formBasicUsername">
-              <Form.Label>User Name</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control placeholder="Enter Username" name="username" value={values.username} onChange={handleChange} />
             </Form.Group>
             <Row>
@@ -71,11 +71,6 @@ export default function Signup() {
             <Button variant="primary" type="submit">
               Sign Up
             </Button>
-            <Link to="/inprogress">
-              <Button variant="primary" type="submit">
-                Redirect
-              </Button>
-            </Link>
           </Form>
         </Col>
       </Container>

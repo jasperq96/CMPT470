@@ -1,27 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import httpService from '../services/httpService';
 
 const Navigationbar = () => {
-  const [testApi, setTestApiState] = useState('');
-
-  useEffect(() => {
-    getDefaultMessage();
-  }, [setTestApiState]);
-
-  const getDefaultMessage = async () => {
-    const url = '/user';
-    try {
-      const response = await httpService.get(url);
-      setTestApiState(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log('Error: Unable to fetch from ' + url);
-    }
-  };
-
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
