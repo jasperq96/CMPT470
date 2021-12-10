@@ -10,7 +10,7 @@ const ViewFiles = () => {
   const [files, setFiles] = useState([]);
 
   const getFiles = async () => {
-    const url = `/file-list/${userContext.user?.id}`;
+    const url = `/file-list/${userContext.user?.id}/all`;
     try {
       const response = await httpService.get(url);
       setFiles(response.data);
