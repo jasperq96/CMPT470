@@ -3,7 +3,9 @@ import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'r
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './Task.css';
 import Modal_tasks from '../../components/Modal_tasks';
-import { render } from 'react-dom';
+import Modal_columns from '../../components/Modal_columns';
+import Modal_columns_edit from '../../components/Modal_columns_edit';
+import Modal_task_edit from '../../components/Modal_task_edit';
 const tasksfrombackend = [
   {
     id: 3,
@@ -99,27 +101,27 @@ const tasksfrombackend = [
 const columnsfrombackend = [
   {
     id: 20,
-    label: 'first column',
+    title: 'first column',
     col_order: 0
   },
   {
     id: 21,
-    label: 'second column',
+    title: 'second column',
     col_order: 1
   },
   {
     id: 22,
-    label: 'third column',
+    title: 'third column',
     col_order: 2
   },
   {
     id: 23,
-    label: 'third column',
+    title: 'third column',
     col_order: 3
   },
   {
     id: 24,
-    label: 'third column',
+    title: 'third column',
     col_order: 4
   }
   // {
@@ -233,22 +235,52 @@ export default function Tasks() {
   const [column_modal, setColumn_Modal] = useState(false);
   const [column_index, setColumn_Index] = useState(0);
   const [task_index, setTask_Index] = useState(0);
+  const [task_edit, setTask_edit] = useState(false);
+  const [column_edit, setColumn_edit] = useState(false);
   //const [parsed_columns, setParsed_Columns] = useState([]);
-  const onDeleteModal = (evt) => {
+  const onDeleteModal_task = (evt) => {
     evt.stopPropagation();
+    evt.preventDefault();
     setTask_Modal(true);
+  };
+  const onDeleteModal_column = (evt) => {
+    evt.stopPropagation();
+    evt.preventDefault();
+    setColumn_Modal(true);
+  };
+  const onEditModal_column = (evt) => {
+    evt.stopPropagation();
+    evt.preventDefault();
+    setColumn_edit(true);
+  };
+  const onEditModal_task = (evt) => {
+    evt.stopPropagation();
+    evt.preventDefault();
+    setTask_edit(true);
   };
   const onModalClose = () => {
     setTask_Modal(false);
     return;
   };
+  const onModalClose_column = () => {
+    setColumn_Modal(false);
+    return;
+  };
+  const onEditTaskClose = () => {
+    setTask_edit(false);
+    return;
+  };
+  const onEditColClose = () => {
+    setColumn_edit(false);
+    return;
+  };
 
   const parsing_columns = [];
   for (let i = 0; i < columns.length; i++) {
-    console.log(columns[i].label);
+    console.log(columns[i].title);
     const parsed_object = {
       id: columns[i].id,
-      label: columns[i].label,
+      title: columns[i].title,
       col_order: columns[i].col_order,
       col_tasks: tasks.filter((desired_tasks) => columns[i].id === desired_tasks.col_id)
     };
@@ -259,25 +291,26 @@ export default function Tasks() {
   console.log(parsed_columns);
   //onDragEnd(result, parsed_columns, setParsed_Columns)
   const onTaskDelete = (task, index) => {
-    console.log(parsed_columns);
-    console.log('heloooooooooooooooo', task.col_id);
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
-    console.log('these are the columns', column);
-    console.log('these are the column tasks', column.col_tasks);
     const copied_tasks = [...column.col_tasks];
     console.log('these are the copied tasks', copied_tasks);
     copied_tasks.splice(index, 1);
     copied_tasks.forEach((task, index) => (task.index = index));
-    console.log(column_array[task.col_id]);
-    console.log(task.col_id);
     column_array[column_index].col_tasks = copied_tasks;
     //column_array[task.col_id].col_tasks = copied_tasks;
-    console.log(column_array);
     setParsed_Columns(column_array);
-    console.log(parsed_columns);
-    console.log('click', task, index);
     setTask_Modal(false);
+    return;
+  };
+  const onColumnDelete = (index) => {
+    const column_array = [...parsed_columns];
+    const column = parsed_columns[column_index];
+    console.log('this is the deleted column', column);
+    column_array.splice(index, 1);
+    column_array.forEach((col, index) => (col.col_order = index));
+    setParsed_Columns(column_array);
+    setColumn_Modal(false);
     return;
   };
 
@@ -302,7 +335,31 @@ export default function Tasks() {
                           <Col md="auto" ref={provided.innerRef} {...provided.draggableProps}>
                             <ListGroup>
                               <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center' }}>
-                                {column.label}
+                                {column.title}
+                                <Modal_columns index={column_index} show={column_modal} task={column} onModalClose={onModalClose_column} onColumnDelete={onColumnDelete} />
+                                <Modal_columns_edit show={column_edit} handleClose={onEditColClose} />
+                                <Button
+                                  style={{ display: 'inline-flex', float: 'right' }}
+                                  variant="danger"
+                                  onClick={(e) => {
+                                    onDeleteModal_column(e);
+                                    setColumn_Index(column.col_order);
+                                  }}
+                                >
+                                  X
+                                </Button>
+                                {console.log(column_modal)}
+                                <Button
+                                  style={{ display: 'inline-flex', float: 'right' }}
+                                  variant="dark"
+                                  onClick={(e) => {
+                                    onEditModal_column(e);
+                                    console.log('this is the column order', column_index);
+                                    setColumn_Index(column.col_order);
+                                  }}
+                                >
+                                  Edit{' '}
+                                </Button>
                               </ListGroupItem>
                               <div style={{ margin: 8 }}>
                                 <Droppable droppableId={column.col_order.toString()} type="task" key={column.col_order}>
@@ -340,23 +397,22 @@ export default function Tasks() {
                                                     {task.id}
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
-                                                      <Modal_tasks index={task_index} show={task_modal} task={task} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
-
+                                                      <Modal_tasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+                                                      <Modal_task_edit show={task_edit} handleClose={onEditTaskClose} />
                                                       <Button
                                                         variant="danger"
                                                         onClick={(e) => {
-                                                          onDeleteModal(e);
+                                                          onDeleteModal_task(e);
                                                           setTask_Index(task.index);
                                                           setColumn_Index(column.col_order);
                                                         }}
                                                       >
                                                         X
                                                       </Button>
-                                                      {console.log(task_modal)}
                                                       <Button
                                                         variant="dark"
                                                         onClick={(e) => {
-                                                          onDeleteModal(e);
+                                                          onEditModal_task(e);
                                                           setTask_Index(task.index);
                                                           console.log('this is the column order', column_index);
                                                           setColumn_Index(column.col_order);
