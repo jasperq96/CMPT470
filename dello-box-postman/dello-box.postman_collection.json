@@ -312,25 +312,15 @@
       "name": "File",
       "item": [
         {
-          "name": "POST a file by user id",
+          "name": "GET all file information by user id",
           "request": {
-            "method": "POST",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "file",
-                  "type": "file",
-                  "src": []
-                }
-              ]
-            },
             "url": {
-              "raw": "localhost:8080/file/:userId",
+              "raw": "localhost:8080/file-list/:userId/all",
               "host": ["localhost"],
               "port": "8080",
-              "path": ["file", ":userId"],
+              "path": ["file-list", ":userId", "all"],
               "variable": [
                 {
                   "key": "userId",
@@ -342,15 +332,29 @@
           "response": []
         },
         {
-          "name": "GET all file information by user id",
+          "name": "GET public file information",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/file-list/:userId",
+              "raw": "localhost:8080/file-list/public",
               "host": ["localhost"],
               "port": "8080",
-              "path": ["file-list", ":userId"],
+              "path": ["file-list", "public"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET private file information by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file-list/:userId/private",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file-list", ":userId", "private"],
               "variable": [
                 {
                   "key": "userId",
@@ -374,6 +378,36 @@
               "variable": [
                 {
                   "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a file by user id",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:8080/file/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
                   "value": ""
                 }
               ]
