@@ -27,15 +27,17 @@ const FileElement = (props) => {
 
   return (
     <React.Fragment>
-      <tr>
-        <td>
-          <a href={file} download={`${props.data.filename}`}>
-            {props.data.filename}
-          </a>
-        </td>
-        <td>{props.data.mimetype}</td>
-        <td>{props.data.size}</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>
+            <a href={file} download={`${props.data.filename}`}>
+              {props.data.filename}
+            </a>
+          </td>
+          <td>{props.data.mimetype}</td>
+          <td>{props.data.size}</td>
+        </tr>
+      </tbody>
     </React.Fragment>
   );
 };

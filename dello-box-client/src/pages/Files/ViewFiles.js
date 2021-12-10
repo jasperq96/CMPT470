@@ -27,13 +27,15 @@ const ViewFiles = () => {
     <React.Fragment>
       <h1>View Files</h1>
       <table>
-        <tr>
-          <th>Filename</th>
-          <th>Mimetype</th>
-          <th>Size (Bytes)</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Filename</th>
+            <th>Mimetype</th>
+            <th>Size (Bytes)</th>
+          </tr>
+        </thead>
         {files.map((file, index) => (
-          <FileElement data={file} />
+          <FileElement id={index} data={file} />
         ))}
       </table>
     </React.Fragment>

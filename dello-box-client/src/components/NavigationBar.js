@@ -46,6 +46,9 @@ function Navigationbar() {
               </Nav.Link>
             </Nav>
             <Nav className="float-right">
+              <NavDropdown title={userContext.user?.username} id="basic-nav-dropdown">
+                <NavDropdown.Item>Settings</NavDropdown.Item>
+              </NavDropdown>
               <Nav.Link as={Link} onClick={onClickLogOutHandler}>
                 Sign Out
               </Nav.Link>
