@@ -1,8 +1,6 @@
 import { Knex } from 'knex';
 
-export async function seed(knex: Knex): Promise<void> {
-  await knex('user_info').del();
-
+export async function insertUserInfo(knex: Knex): Promise<void> {
   await knex('user_info').insert([
     {
       user_id: 1,

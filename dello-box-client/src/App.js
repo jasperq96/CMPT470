@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Tasks from './pages/Tasks';
-import Files from './pages/Files';
+import UploadFiles from './pages/Files/UploadFiles';
+import ManageFiles from './pages/Files/ManageFiles';
+import ViewFiles from './pages/Files/ViewFiles';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
@@ -15,7 +17,7 @@ import Signup from './pages/Signup/Signup';
 import PrivateRoute from './hocs/privateRoutes';
 import PublicRoute from './hocs/publicRoutes';
 
-function App() {
+const App = () => {
   return (
     <div>
       <Router>
@@ -29,13 +31,15 @@ function App() {
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/calendar" component={Calendar} />
             <PrivateRoute exact path="/tasks" component={Tasks} />
-            <PrivateRoute exact path="/files" component={Files} />
+            <PrivateRoute exact path="/files/upload" component={UploadFiles} />
+            <PrivateRoute exact path="/files/manage" component={ManageFiles} />
+            <PrivateRoute exact path="/files/view" component={ViewFiles} />
             <PrivateRoute exact path="/contacts" component={Contacts} />
           </div>
         </Switch>
       </Router>
     </div>
   );
-}
+};
 
 export default App;
