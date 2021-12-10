@@ -39,6 +39,8 @@ services:
     ports:
       - 5432:5432
     environment:
+      TZ: 'America/Vancouver'
+      PGTZ: 'America/Vancouver'
       PGDATA: /dello-box-database
       POSTGRES_DB: delloboxdb
       POSTGRES_USER: GNINE

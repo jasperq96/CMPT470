@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import { useHistory } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -30,9 +30,17 @@ function Navigationbar() {
               <Nav.Link as={Link} to={'/tasks'}>
                 Tasks
               </Nav.Link>
-              <Nav.Link as={Link} to={'/files'}>
-                Files
-              </Nav.Link>
+              <NavDropdown title="Files" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={'/files/upload'}>
+                  Upload A File
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/files/manage'}>
+                  Manage Your Files
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/files/view'}>
+                  View Files
+                </NavDropdown.Item>
+              </NavDropdown>
               <Nav.Link as={Link} to={'/contacts'}>
                 Contacts
               </Nav.Link>

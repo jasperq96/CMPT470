@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Tasks from './pages/Tasks';
-import Files from './pages/Files';
+import ViewFiles from './pages/Files/ViewFiles';
+import Files from './pages/Files/Files';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
@@ -29,7 +30,9 @@ function App() {
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/calendar" component={Calendar} />
             <PrivateRoute exact path="/tasks" component={Tasks} />
-            <PrivateRoute exact path="/files" component={Files} />
+            <PrivateRoute exact path="/files/upload" component={Files} />
+            <PrivateRoute exact path="/files/manage" component={Files} />
+            <PrivateRoute exact path="/files/view" component={ViewFiles} />
             <PrivateRoute exact path="/contacts" component={Contacts} />
           </div>
         </Switch>

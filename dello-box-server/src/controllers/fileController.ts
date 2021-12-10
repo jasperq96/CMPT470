@@ -48,7 +48,7 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   const mimetype = req.file.mimetype;
   const userId: number = +req.params.userId;
   const retrievedUser = await Knex.select('*').from('user').where('id', userId);
-  if (isInvalidInput(userId) || !retrievedUser.length) {
+  if (isInvalidInput(userId) || !retrievedUser.length || isNaN(userId)) {
     deleteUploadedFile(NAMESPACE, '/home/node/app/'.concat(filepath));
     res.status(400).send(filePostInputError);
     return;
