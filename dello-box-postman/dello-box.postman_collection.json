@@ -170,13 +170,103 @@
           "response": []
         },
         {
+          "name": "GET user info by username",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/filter",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "filter"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "PUT nickname by userId",
           "request": {
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Second nickname works\"\r\n}",
+              "raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Third\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/nickname",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "nickname"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT add contact by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/add",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "add"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE contact by id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
