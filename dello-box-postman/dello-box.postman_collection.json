@@ -202,13 +202,16 @@
 					"response": []
 				},
 				{
-					"name": "PUT nickname by userId",
+					"name": "GET user info by username",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Second nickname works\"\r\n}",
+							"raw": "{\r\n    \"username\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,29 +219,53 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/contacts/:userId",
+							"raw": "localhost:8080/contacts/1/filter",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"contacts",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"1",
+								"filter"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "DELETE contact by id",
+					"name": "PUT nickname by userId",
 					"request": {
-						"method": "DELETE",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Third\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/contacts/1/nickname",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts",
+								"1",
+								"nickname"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT add contact by id",
+					"request": {
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -250,23 +277,24 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/contacts/1",
+							"raw": "localhost:8080/contacts/1/add",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"contacts",
-								"1"
+								"1",
+								"add"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "POST contact by id",
+					"name": "DELETE contact by id",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",

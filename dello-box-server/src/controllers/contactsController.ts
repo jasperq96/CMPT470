@@ -8,11 +8,11 @@ import { getItems } from './requestTemplates/getAllRequest';
 const NAMESPACE = 'Contact List Control';
 const TABLE_NAME = 'contact_list';
 
-const getContacts = async (req: Request, res: Response, next: NextFunction) => {
+const getAllContactLists = async (req: Request, res: Response, next: NextFunction) => {
   await getItems(req, res, next, NAMESPACE, TABLE_NAME);
 };
 
-const getContactsByUserId = async (req: Request, res: Response, next: NextFunction) => {
+const getContactsOfUserId = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING ${TABLE_NAME.toLocaleUpperCase()} BY USER ID`);
   const userId: number = +req.params.userId;
   if (isInvalidInput(userId)) {
@@ -24,7 +24,7 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
     const userId: number = +req.params.userId;
     const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId).first(); //stores ID's of my contacts
     const listOfNicknames = await Knex.select('user_info.contact_nicknames').from('user_info').where('user_id', userId).first();
-    const retrievedUserInfo = await Knex.select('user_info.first_name', 'user_info.last_name')
+    const retrievedUserInfo = await Knex.select('user_info.first_name', 'user_info.last_name', 'user_info.email', 'user_info.phone')
       .from('user_info')
       .where(`user_info.user_id`, 'in', listOfContacts['contacts'])
       .andWhere(`user_info.user_id`, '<>', userId);
@@ -39,6 +39,33 @@ const getContactsByUserId = async (req: Request, res: Response, next: NextFuncti
         retrievedUserInfo[contact]['nickname'] = listOfNicknames['contact_nicknames'][String(id)];
       }
     });
+
+    if (!retrievedUserInfo) {
+      res.status(404).send(contactDNEError);
+      return;
+    }
+    res.status(200).send(retrievedUserInfo);
+  } catch (error: any) {
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
+  }
+};
+
+const getUsersByUsername = async (req: Request, res: Response, next: NextFunction) => {
+  logging.info(NAMESPACE, `GETTING USER INFO BY USERNAME`);
+  const userId: number = +req.params.userId;
+  const userName: string = req.body.username;
+  if (isInvalidInput(userId)) {
+    res.status(400).send(contactNegativeOrNanInputError);
+    return;
+  }
+
+  try {
+    const retrievedUserInfo = await Knex.select('username', 'first_name', 'last_name')
+      .from('user')
+      .join('user_info', 'user.id', 'user_info.user_id')
+      .where('username', 'like', '%' + userName + '%')
+      .andWhere(`user_info.user_id`, '<>', userId);
 
     if (!retrievedUserInfo) {
       res.status(404).send(contactDNEError);
@@ -167,4 +194,4 @@ const addContactById = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export default { getContacts, getContactsByUserId, editNicknameOfContacts, deleteContactById, addContactById };
+export default { getAllContactLists, getContactsOfUserId, getUsersByUsername, editNicknameOfContacts, deleteContactById, addContactById };
