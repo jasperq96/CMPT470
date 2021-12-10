@@ -262,21 +262,16 @@ export default function Tasks() {
     console.log(parsed_columns);
     console.log('heloooooooooooooooo', task.col_id);
     const column_array = [...parsed_columns];
-    const column = parsed_columns.filter((col) => col.id === task.col_id);
+    const column = parsed_columns[column_index];
     console.log('these are the columns', column);
-    console.log('these are the column tasks', column[0].col_tasks);
-    const copied_tasks = [...column[0].col_tasks];
+    console.log('these are the column tasks', column.col_tasks);
+    const copied_tasks = [...column.col_tasks];
     console.log('these are the copied tasks', copied_tasks);
     copied_tasks.splice(index, 1);
     copied_tasks.forEach((task, index) => (task.index = index));
     console.log(column_array[task.col_id]);
     console.log(task.col_id);
-    for (let i = 0; i < column_array.length; i++) {
-      if (column_array[i].id === task.col_id) {
-        console.log('test');
-        column_array[i].col_tasks = copied_tasks;
-      }
-    }
+    column_array[column_index].col_tasks = copied_tasks;
     //column_array[task.col_id].col_tasks = copied_tasks;
     console.log(column_array);
     setParsed_Columns(column_array);
@@ -305,79 +300,84 @@ export default function Tasks() {
                       {(provided, snapshot) => {
                         return (
                           <Col md="auto" ref={provided.innerRef} {...provided.draggableProps}>
-                            <h2 {...provided.dragHandleProps} style={{ margin: 8, justifyContent: 'center' }}>
-                              {column.label}
-                            </h2>
-                            <div style={{ margin: 8 }}>
-                              <Droppable droppableId={column.col_order.toString()} type="task" key={column.col_order}>
-                                {(provided, snapshot) => {
-                                  return (
-                                    <ListGroup
-                                      md="auto"
-                                      ref={provided.innerRef}
-                                      {...provided.droppableProps}
-                                      style={{
-                                        background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                                        minHeight: 50,
-                                        minWidth: 300
-                                      }}
-                                    >
-                                      {column.col_tasks.map((task, index) => {
-                                        return (
-                                          <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-                                            {(provided, snapshot) => {
-                                              return (
-                                                <ListGroupItem
-                                                  {...provided.draggableProps}
-                                                  {...provided.dragHandleProps}
-                                                  ref={provided.innerRef}
-                                                  style={{
-                                                    userSelect: 'none',
-                                                    padding: '50',
-                                                    margin: '0 0 5px 0',
-                                                    minHeight: '50',
-                                                    background: snapshot.isDragging ? '#263B4A' : '#456C86',
-                                                    color: 'white',
-                                                    ...provided.draggableProps.style
-                                                  }}
-                                                >
-                                                  {task.id}
-                                                  {task.notes}
-                                                  <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
-                                                    <Modal_tasks index={task_index} show={task_modal} task={task} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+                            <ListGroup>
+                              <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center' }}>
+                                {column.label}
+                              </ListGroupItem>
+                              <div style={{ margin: 8 }}>
+                                <Droppable droppableId={column.col_order.toString()} type="task" key={column.col_order}>
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <ListGroup
+                                        md="auto"
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                        style={{
+                                          background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                                          minHeight: 50,
+                                          minWidth: 300
+                                        }}
+                                      >
+                                        {column.col_tasks.map((task, index) => {
+                                          return (
+                                            <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                              {(provided, snapshot) => {
+                                                return (
+                                                  <ListGroupItem
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    ref={provided.innerRef}
+                                                    style={{
+                                                      userSelect: 'none',
+                                                      padding: '50',
+                                                      margin: '0 0 5px 0',
+                                                      minHeight: '50',
+                                                      background: snapshot.isDragging ? '#263B4A' : '#456C86',
+                                                      color: 'white',
+                                                      ...provided.draggableProps.style
+                                                    }}
+                                                  >
+                                                    {task.id}
+                                                    {task.notes}
+                                                    <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
+                                                      <Modal_tasks index={task_index} show={task_modal} task={task} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
 
-                                                    <Button
-                                                      variant="danger"
-                                                      onClick={(e) => {
-                                                        onDeleteModal(e);
-                                                        setTask_Index(task.index);
-                                                      }}
-                                                    >
-                                                      X
-                                                    </Button>
-                                                    {console.log(task_modal)}
-                                                    <Button
-                                                      variant="dark"
-                                                      onClick={(e) => {
-                                                        onDeleteModal(e);
-                                                        setTask_Index(task.index);
-                                                      }}
-                                                    >
-                                                      Edit{' '}
-                                                    </Button>
-                                                  </ListGroup>
-                                                </ListGroupItem>
-                                              );
-                                            }}
-                                          </Draggable>
-                                        );
-                                      })}
-                                      {provided.placeholder}
-                                    </ListGroup>
-                                  );
-                                }}
-                              </Droppable>
-                            </div>
+                                                      <Button
+                                                        variant="danger"
+                                                        onClick={(e) => {
+                                                          onDeleteModal(e);
+                                                          setTask_Index(task.index);
+                                                          setColumn_Index(column.col_order);
+                                                        }}
+                                                      >
+                                                        X
+                                                      </Button>
+                                                      {console.log(task_modal)}
+                                                      <Button
+                                                        variant="dark"
+                                                        onClick={(e) => {
+                                                          onDeleteModal(e);
+                                                          setTask_Index(task.index);
+                                                          console.log('this is the column order', column_index);
+                                                          setColumn_Index(column.col_order);
+                                                        }}
+                                                      >
+                                                        Edit{' '}
+                                                      </Button>
+                                                    </ListGroup>
+                                                  </ListGroupItem>
+                                                );
+                                              }}
+                                            </Draggable>
+                                          );
+                                        })}
+                                        {provided.placeholder}
+                                      </ListGroup>
+                                    );
+                                  }}
+                                </Droppable>
+                              </div>
+                            </ListGroup>
                           </Col>
                         );
                       }}
