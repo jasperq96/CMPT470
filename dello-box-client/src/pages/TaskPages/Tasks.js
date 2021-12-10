@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Col, Container, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
+import './Task.css';
 const tasksfrombackend = [
   {
     id: 3,
     user_id: 1,
-    col_id: 1,
+    col_id: 20,
     index: 0,
     start_date: '2021-11-14T10:30:00.000Z',
     end_date: '2021-11-18T16:30:00.000Z',
@@ -16,7 +16,7 @@ const tasksfrombackend = [
   {
     id: 2,
     user_id: 1,
-    col_id: 2,
+    col_id: 20,
     index: 0,
     start_date: '2021-11-16T09:00:00.000Z',
     end_date: '2021-11-24T18:30:00.000Z',
@@ -26,7 +26,7 @@ const tasksfrombackend = [
   {
     id: 5,
     user_id: 1,
-    col_id: 1,
+    col_id: 20,
     index: 1,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
@@ -36,7 +36,7 @@ const tasksfrombackend = [
   {
     id: 4,
     user_id: 1,
-    col_id: 2,
+    col_id: 20,
     index: 1,
     start_date: '2021-11-17T09:00:00.000Z',
     end_date: '2021-11-25T18:30:00.000Z',
@@ -46,7 +46,7 @@ const tasksfrombackend = [
   {
     id: 6,
     user_id: 1,
-    col_id: 1,
+    col_id: 20,
     index: 2,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
@@ -56,7 +56,7 @@ const tasksfrombackend = [
   {
     id: 7,
     user_id: 1,
-    col_id: 1,
+    col_id: 20,
     index: 3,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
@@ -66,7 +66,7 @@ const tasksfrombackend = [
   {
     id: 8,
     user_id: 1,
-    col_id: 1,
+    col_id: 20,
     index: 4,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
@@ -96,94 +96,148 @@ const tasksfrombackend = [
 ];
 const columnsfrombackend = [
   {
-    id: 1,
+    id: 20,
     label: 'first column',
     col_order: 0
   },
   {
-    id: 2,
+    id: 21,
     label: 'second column',
     col_order: 1
   },
   {
-    id: 3,
+    id: 22,
     label: 'third column',
     col_order: 2
   },
   {
-    id: 4,
+    id: 23,
     label: 'third column',
     col_order: 3
   },
   {
-    id: 5,
+    id: 24,
     label: 'third column',
     col_order: 4
-  },
-  {
-    id: 6,
-    label: 'third column',
-    col_order: 5
-  },
-  {
-    id: 7,
-    label: 'third column',
-    col_order: 6
-  },
-  {
-    id: 8,
-    label: 'third column',
-    col_order: 7
-  },
-  {
-    id: 9,
-    label: 'third column',
-    col_order: 8
-  },
-  {
-    id: 10,
-    label: 'last column',
-    col_order: 9
   }
+  // {
+  //   id: 25,
+  //   label: 'third column',
+  //   col_order: 5
+  // },
+  // {
+  //   id: 26,
+  //   label: 'third column',
+  //   col_order: 6
+  // },
+  // {
+  //   id: 27,
+  //   label: 'third column',
+  //   col_order: 7
+  // },
+  // {
+  //   id: 28,
+  //   label: 'third column',
+  //   col_order: 8
+  // },
+  // {
+  //   id: 29,
+  //   label: 'last column',
+  //   col_order: 9
+  // },
+  // {
+  //   id: 30,
+  //   label: 'last column',
+  //   col_order: 10
+  // },
+  // {
+  //   id: 31,
+  //   label: 'This is a really long column with a really long title',
+  //   col_order: 11
+  // },
+  // {
+  //   id: 32,
+  //   label: 'last column',
+  //   col_order: 12
+  // },
+  // {
+  //   id: 33,
+  //   label: 'last column',
+  //   col_order: 13
+  // },
+  // {
+  //   id: 34,
+  //   label: 'last column',
+  //   col_order: 14
+  // },
+  // {
+  //   id: 35,
+  //   label: 'last column',
+  //   col_order: 15
+  // }
 ];
+
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
   console.log('i am dragging');
   if (result.destination === null) {
     return;
   }
-  const { source, destination } = result;
-  if (source.droppableId !== destination.droppableId) {
-    const from_column = parsed_columns[source.droppableId];
-    const to_column = parsed_columns[destination.droppableId];
+  const { source, destination, type } = result;
+  console.log('before i move columns');
+  console.log(type);
+  if (type === 'column') {
     const column_array = [...parsed_columns];
-    const from_tasks = [...from_column.col_tasks];
-    const to_tasks = [...to_column.col_tasks];
-    const [removed] = from_tasks.splice(source.index, 1);
-    console.log('this is the removed task', removed);
-    console.log(to_column);
-    removed.col_id = to_column.id;
-    to_tasks.splice(destination.index, 0, removed);
-    to_tasks.forEach((task, index) => (task.index = index));
-    from_tasks.forEach((task, index) => (task.index = index));
-    column_array[source.droppableId].col_tasks = from_tasks;
-    column_array[destination.droppableId].col_tasks = to_tasks;
+    const [removed] = column_array.splice(source.index, 1);
+    column_array.splice(destination.index, 0, removed);
+    console.log('I am moving columns', column_array);
+    column_array.forEach((col, index) => (col.col_order = index));
     setParsed_Columns(column_array);
-    console.log('i tried to move between columns', from_tasks, to_tasks);
   } else {
-    const column_array = [...parsed_columns];
-    const column = parsed_columns[source.droppableId];
-    const copied_tasks = [...column.col_tasks];
-    const [removed] = copied_tasks.splice(source.index, 1);
-    copied_tasks.splice(destination.index, 0, removed);
-    copied_tasks.forEach((task, index) => (task.index = index));
-    column_array[source.droppableId].col_tasks = copied_tasks;
-    setParsed_Columns(column_array);
-    console.log('after setting parsed columns', column_array);
+    if (source.droppableId !== destination.droppableId) {
+      const from_column = parsed_columns[source.droppableId];
+      const to_column = parsed_columns[destination.droppableId];
+      const column_array = [...parsed_columns];
+      const from_tasks = [...from_column.col_tasks];
+      const to_tasks = [...to_column.col_tasks];
+      const [removed] = from_tasks.splice(source.index, 1);
+      console.log('this is the removed task', removed);
+      console.log(to_column);
+      removed.col_id = to_column.id;
+      to_tasks.splice(destination.index, 0, removed);
+      to_tasks.forEach((task, index) => (task.index = index));
+      from_tasks.forEach((task, index) => (task.index = index));
+      column_array[source.droppableId].col_tasks = from_tasks;
+      column_array[destination.droppableId].col_tasks = to_tasks;
+      setParsed_Columns(column_array);
+      console.log('i tried to move between columns', from_tasks, to_tasks);
+    } else {
+      const column_array = [...parsed_columns];
+      const column = parsed_columns[source.droppableId];
+      const copied_tasks = [...column.col_tasks];
+      const [removed] = copied_tasks.splice(source.index, 1);
+      copied_tasks.splice(destination.index, 0, removed);
+      copied_tasks.forEach((task, index) => (task.index = index));
+      column_array[source.droppableId].col_tasks = copied_tasks;
+      setParsed_Columns(column_array);
+      console.log('after setting parsed columns', column_array);
+    }
   }
 };
+const onDeleteModal = (modal, setModal) => {
+  setModal(true);
+  return;
+};
+const onTaskDelete = (modal, setModal, parsed_columns, setParsed_Columns, task, index) => {
+  console.log('click', task, index);
+  setModal(false);
+  return;
+};
+
 export default function Tasks() {
   const [tasks, setTask] = useState(tasksfrombackend);
   const [columns, setColumns] = useState(columnsfrombackend);
+  const [task_modal, setTask_Modal] = useState(false);
+  const [column_modal, setColumn_Modal] = useState(false);
   //const [parsed_columns, setParsed_Columns] = useState([]);
   const parsing_columns = [];
   for (let i = 0; i < columns.length; i++) {
@@ -199,65 +253,113 @@ export default function Tasks() {
   const [parsed_columns, setParsed_Columns] = useState(parsing_columns);
   //setParsed_Columns(parsing_columns);
   console.log(parsed_columns);
-
+  //onDragEnd(result, parsed_columns, setParsed_Columns)
   return (
-    <div style={{ display: 'flex', justifyContent: 'left', height: '100%' }}>
+    <Container fluid style={{ paddingTop: 50 }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         {console.log('before the mapping', parsed_columns)}
-        {parsed_columns.map((column) => {
-          return (
-            <div>
-              <h2>{column.label}</h2>
-              <Droppable droppableId={column.col_order.toString()} type="task" key={column.col_order}>
-                {(provided, snapshot) => {
+        <Droppable droppableId="all_columns" direction="horizontal" type="column">
+          {(provided, snapshot) => {
+            return (
+              <div
+                className="justify-content-left"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                style={{ display: 'flex', flexDirection: 'row', background: snapshot.isDraggingOver ? 'lightblue' : 'white' }}
+              >
+                {parsed_columns.map((column, index) => {
                   return (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      style={{
-                        background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                        padding: 4,
-                        width: 250,
-                        minHeight: 50
-                      }}
-                    >
-                      {column.col_tasks.map((task, index) => {
+                    <Draggable key={column.id} draggableId={column.id.toString()} index={index}>
+                      {(provided, snapshot) => {
                         return (
-                          <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  ref={provided.innerRef}
-                                  style={{
-                                    userSelect: 'none',
-                                    padding: '16',
-                                    margin: '0 0 8px 0',
-                                    minHeight: '50',
-                                    background: snapshot.isDragging ? '#263B4A' : '#456C86',
-                                    color: 'white',
-                                    ...provided.draggableProps.style
-                                  }}
-                                >
-                                  {task.notes}
-                                  {console.log(task.id)}
-                                </div>
-                              );
-                            }}
-                          </Draggable>
+                          <Col md="auto" ref={provided.innerRef} {...provided.draggableProps}>
+                            <h2 {...provided.dragHandleProps} style={{ margin: 8, justifyContent: 'center' }}>
+                              {column.label}
+                            </h2>
+                            <div style={{ margin: 8 }}>
+                              <Droppable droppableId={column.col_order.toString()} type="task" key={column.col_order}>
+                                {(provided, snapshot) => {
+                                  return (
+                                    <ListGroup
+                                      md="auto"
+                                      ref={provided.innerRef}
+                                      {...provided.droppableProps}
+                                      style={{
+                                        background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                                        minHeight: 50,
+                                        minWidth: 300
+                                      }}
+                                    >
+                                      {column.col_tasks.map((task, index) => {
+                                        return (
+                                          <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                            {(provided, snapshot) => {
+                                              return (
+                                                <ListGroupItem
+                                                  {...provided.draggableProps}
+                                                  {...provided.dragHandleProps}
+                                                  ref={provided.innerRef}
+                                                  style={{
+                                                    userSelect: 'none',
+                                                    padding: '50',
+                                                    margin: '0 0 5px 0',
+                                                    minHeight: '50',
+                                                    background: snapshot.isDragging ? '#263B4A' : '#456C86',
+                                                    color: 'white',
+                                                    ...provided.draggableProps.style
+                                                  }}
+                                                >
+                                                  {index}
+                                                  {task.notes}
+                                                  <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
+                                                    <Button variant="danger" onClick={() => onDeleteModal(task_modal, setTask_Modal)}>
+                                                      X
+                                                    </Button>
+                                                    <Modal show={task_modal}>
+                                                      <Modal.Header closeButton onHide={() => setTask_Modal(false)}>
+                                                        <Modal.Title>Are you Sure you want to delete this task</Modal.Title>
+                                                      </Modal.Header>
+                                                      <Modal.Body>
+                                                        <h3>{task.title}</h3>
+                                                        {task.notes}
+                                                      </Modal.Body>
+                                                      <Modal.Footer>
+                                                        <Button variant="outline-dark" onClick={() => setTask_Modal(false)}>
+                                                          Woops
+                                                        </Button>
+                                                        <Button variant="danger" onClick={() => onTaskDelete(task_modal, setTask_Modal, parsed_columns, setParsed_Columns, task, index)}>
+                                                          Delete
+                                                        </Button>
+                                                      </Modal.Footer>
+                                                    </Modal>
+
+                                                    <Button variant="dark">Edit</Button>
+                                                  </ListGroup>
+                                                </ListGroupItem>
+                                              );
+                                            }}
+                                          </Draggable>
+                                        );
+                                      })}
+                                      {provided.placeholder}
+                                    </ListGroup>
+                                  );
+                                }}
+                              </Droppable>
+                            </div>
+                          </Col>
                         );
-                      })}
-                      {provided.placeholder}
-                    </div>
+                      }}
+                    </Draggable>
                   );
-                }}
-              </Droppable>
-            </div>
-          );
-        })}
+                })}
+                {provided.placeholder}
+              </div>
+            );
+          }}
+        </Droppable>
       </DragDropContext>
-    </div>
+    </Container>
   );
   // <div>
   //   {columns.map((column_Order) => {
