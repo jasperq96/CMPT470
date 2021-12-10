@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments().primary();
     table.boolean('is_public').notNullable();
     table.integer('user_id').unsigned().notNullable().references('id').inTable('user');
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
+    table.timestamp('created_at').defaultTo(knex.fn.now());
     table.text('filename').notNullable();
     table.text('filepath').notNullable();
     table.text('mimetype').notNullable();

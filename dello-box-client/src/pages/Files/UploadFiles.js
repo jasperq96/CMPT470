@@ -14,7 +14,17 @@ const UploadFiles = () => {
     setUploadedFileState(event.target.files[0]);
   };
 
-  const uploadFile = async () => {
+  const uploadFile = async (url, formData, configureContentType) => {
+    try {
+      await httpService.post(url, formData, configureContentType);
+      toast.success('Successfully uploaded a file!');
+      history.push('/files/view');
+    } catch (error) {
+      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+    }
+  };
+
+  const uploadFileValidator = () => {
     if (uploadedFile.length < 1) {
       toast.error(`Error: No file selected!`);
       return;
@@ -27,20 +37,14 @@ const UploadFiles = () => {
         'content-type': 'multipart/form-data'
       }
     };
-    try {
-      await httpService.post(url, formData, configureContentType);
-      toast.success('Successfully uploaded a file!');
-      history.push('/files/view');
-    } catch (error) {
-      toast.error('Error: '.concat(capitalize(error.response.data.error)));
-    }
+    uploadFile(url, formData, configureContentType);
   };
 
   return (
     <div>
       <h1>Upload Files</h1>
       <input type="file" name="file" id="file" onChange={validateFileExtension} />
-      <button onClick={uploadFile}>Upload File</button>
+      <button onClick={uploadFileValidator}>Upload File</button>
     </div>
   );
 };

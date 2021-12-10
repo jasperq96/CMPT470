@@ -3,11 +3,11 @@ import httpService from '../services/httpService';
 import { toast } from 'react-toastify';
 import { capitalize } from '../utils/capitalizeString';
 
-const FileElement = (props) => {
+const ViewFileElement = ({ fileData }) => {
   const [file, setFile] = useState('');
 
   const getFile = async () => {
-    const url = `/file/${props.data.id}`;
+    const url = `/file/${fileData.id}`;
     try {
       await httpService
         .get(url, {
@@ -30,16 +30,17 @@ const FileElement = (props) => {
       <tbody>
         <tr>
           <td>
-            <a href={file} download={`${props.data.filename}`}>
-              {props.data.filename}
+            <a href={file} download={`${fileData.filename}`}>
+              {fileData.filename}
             </a>
           </td>
-          <td>{props.data.mimetype}</td>
-          <td>{props.data.size}</td>
+          <td>{fileData.created_at}</td>
+          <td>{fileData.mimetype}</td>
+          <td>{fileData.size}</td>
         </tr>
       </tbody>
     </React.Fragment>
   );
 };
 
-export default FileElement;
+export default ViewFileElement;

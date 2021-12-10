@@ -1,9 +1,10 @@
+import '../../App.css';
 import React, { useContext, useEffect, useState } from 'react';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../hooks/UserContext';
 import { capitalize } from '../../utils/capitalizeString';
-import FileElement from '../../components/File';
+import ViewFileElement from '../../components/ViewFile';
 
 const ViewFiles = () => {
   const userContext = useContext(UserContext);
@@ -26,18 +27,21 @@ const ViewFiles = () => {
   return (
     <React.Fragment>
       <h1>View Files</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Filename</th>
-            <th>Mimetype</th>
-            <th>Size (Bytes)</th>
-          </tr>
-        </thead>
-        {files.map((file, index) => (
-          <FileElement id={index} data={file} />
-        ))}
-      </table>
+      <div className="file-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Date Created</th>
+              <th>Mimetype</th>
+              <th>Size (Bytes)</th>
+            </tr>
+          </thead>
+          {files.map((file, index) => (
+            <ViewFileElement id={index} fileData={file} />
+          ))}
+        </table>
+      </div>
     </React.Fragment>
   );
 };
