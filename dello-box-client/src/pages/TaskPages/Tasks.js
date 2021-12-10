@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './Task.css';
+import Modal_tasks from '../../components/Modal_tasks';
+import { render } from 'react-dom';
 const tasksfrombackend = [
   {
     id: 3,
@@ -17,7 +19,7 @@ const tasksfrombackend = [
     id: 2,
     user_id: 1,
     col_id: 20,
-    index: 0,
+    index: 1,
     start_date: '2021-11-16T09:00:00.000Z',
     end_date: '2021-11-24T18:30:00.000Z',
     title: 'task2',
@@ -27,7 +29,7 @@ const tasksfrombackend = [
     id: 5,
     user_id: 1,
     col_id: 20,
-    index: 1,
+    index: 2,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -37,7 +39,7 @@ const tasksfrombackend = [
     id: 4,
     user_id: 1,
     col_id: 20,
-    index: 1,
+    index: 3,
     start_date: '2021-11-17T09:00:00.000Z',
     end_date: '2021-11-25T18:30:00.000Z',
     title: 'task4',
@@ -47,7 +49,7 @@ const tasksfrombackend = [
     id: 6,
     user_id: 1,
     col_id: 20,
-    index: 2,
+    index: 4,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -57,7 +59,7 @@ const tasksfrombackend = [
     id: 7,
     user_id: 1,
     col_id: 20,
-    index: 3,
+    index: 5,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -67,7 +69,7 @@ const tasksfrombackend = [
     id: 8,
     user_id: 1,
     col_id: 20,
-    index: 4,
+    index: 6,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -77,7 +79,7 @@ const tasksfrombackend = [
     id: 9,
     user_id: 1,
     col_id: 1,
-    index: 5,
+    index: 7,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -87,7 +89,7 @@ const tasksfrombackend = [
     id: 10,
     user_id: 1,
     col_id: 1,
-    index: 6,
+    index: 8,
     start_date: '2021-11-13T10:30:00.000Z',
     end_date: '2021-11-19T16:30:00.000Z',
     title: 'task3',
@@ -223,22 +225,24 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
     }
   }
 };
-const onDeleteModal = (modal, setModal) => {
-  setModal(true);
-  return;
-};
-const onTaskDelete = (modal, setModal, parsed_columns, setParsed_Columns, task, index) => {
-  console.log('click', task, index);
-  setModal(false);
-  return;
-};
 
 export default function Tasks() {
   const [tasks, setTask] = useState(tasksfrombackend);
   const [columns, setColumns] = useState(columnsfrombackend);
   const [task_modal, setTask_Modal] = useState(false);
   const [column_modal, setColumn_Modal] = useState(false);
+  const [column_index, setColumn_Index] = useState(0);
+  const [task_index, setTask_Index] = useState(0);
   //const [parsed_columns, setParsed_Columns] = useState([]);
+  const onDeleteModal = (evt) => {
+    evt.stopPropagation();
+    setTask_Modal(true);
+  };
+  const onModalClose = () => {
+    setTask_Modal(false);
+    return;
+  };
+
   const parsing_columns = [];
   for (let i = 0; i < columns.length; i++) {
     console.log(columns[i].label);
@@ -254,6 +258,34 @@ export default function Tasks() {
   //setParsed_Columns(parsing_columns);
   console.log(parsed_columns);
   //onDragEnd(result, parsed_columns, setParsed_Columns)
+  const onTaskDelete = (task, index) => {
+    console.log(parsed_columns);
+    console.log('heloooooooooooooooo', task.col_id);
+    const column_array = [...parsed_columns];
+    const column = parsed_columns.filter((col) => col.id === task.col_id);
+    console.log('these are the columns', column);
+    console.log('these are the column tasks', column[0].col_tasks);
+    const copied_tasks = [...column[0].col_tasks];
+    console.log('these are the copied tasks', copied_tasks);
+    copied_tasks.splice(index, 1);
+    copied_tasks.forEach((task, index) => (task.index = index));
+    console.log(column_array[task.col_id]);
+    console.log(task.col_id);
+    for (let i = 0; i < column_array.length; i++) {
+      if (column_array[i].id === task.col_id) {
+        console.log('test');
+        column_array[i].col_tasks = copied_tasks;
+      }
+    }
+    //column_array[task.col_id].col_tasks = copied_tasks;
+    console.log(column_array);
+    setParsed_Columns(column_array);
+    console.log(parsed_columns);
+    console.log('click', task, index);
+    setTask_Modal(false);
+    return;
+  };
+
   return (
     <Container fluid style={{ paddingTop: 50 }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
@@ -309,31 +341,30 @@ export default function Tasks() {
                                                     ...provided.draggableProps.style
                                                   }}
                                                 >
-                                                  {index}
+                                                  {task.id}
                                                   {task.notes}
                                                   <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
-                                                    <Button variant="danger" onClick={() => onDeleteModal(task_modal, setTask_Modal)}>
+                                                    <Modal_tasks index={task_index} show={task_modal} task={task} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+
+                                                    <Button
+                                                      variant="danger"
+                                                      onClick={(e) => {
+                                                        onDeleteModal(e);
+                                                        setTask_Index(task.index);
+                                                      }}
+                                                    >
                                                       X
                                                     </Button>
-                                                    <Modal show={task_modal}>
-                                                      <Modal.Header closeButton onHide={() => setTask_Modal(false)}>
-                                                        <Modal.Title>Are you Sure you want to delete this task</Modal.Title>
-                                                      </Modal.Header>
-                                                      <Modal.Body>
-                                                        <h3>{task.title}</h3>
-                                                        {task.notes}
-                                                      </Modal.Body>
-                                                      <Modal.Footer>
-                                                        <Button variant="outline-dark" onClick={() => setTask_Modal(false)}>
-                                                          Woops
-                                                        </Button>
-                                                        <Button variant="danger" onClick={() => onTaskDelete(task_modal, setTask_Modal, parsed_columns, setParsed_Columns, task, index)}>
-                                                          Delete
-                                                        </Button>
-                                                      </Modal.Footer>
-                                                    </Modal>
-
-                                                    <Button variant="dark">Edit</Button>
+                                                    {console.log(task_modal)}
+                                                    <Button
+                                                      variant="dark"
+                                                      onClick={(e) => {
+                                                        onDeleteModal(e);
+                                                        setTask_Index(task.index);
+                                                      }}
+                                                    >
+                                                      Edit{' '}
+                                                    </Button>
                                                   </ListGroup>
                                                 </ListGroupItem>
                                               );
