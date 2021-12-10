@@ -24,7 +24,7 @@ const getContactsOfUserId = async (req: Request, res: Response, next: NextFuncti
     const userId: number = +req.params.userId;
     const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId).first(); //stores ID's of my contacts
     const listOfNicknames = await Knex.select('user_info.contact_nicknames').from('user_info').where('user_id', userId).first();
-    const retrievedUserInfo = await Knex.select('user_info.first_name', 'user_info.last_name')
+    const retrievedUserInfo = await Knex.select('user_info.first_name', 'user_info.last_name', 'user_info.email', 'user_info.phone')
       .from('user_info')
       .where(`user_info.user_id`, 'in', listOfContacts['contacts'])
       .andWhere(`user_info.user_id`, '<>', userId);
@@ -51,7 +51,7 @@ const getContactsOfUserId = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-const getUserInfoByUsername = async (req: Request, res: Response, next: NextFunction) => {
+const getUsersByUsername = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING USER INFO BY USERNAME`);
   const userId: number = +req.params.userId;
   const userName: string = req.body.username;
@@ -61,7 +61,7 @@ const getUserInfoByUsername = async (req: Request, res: Response, next: NextFunc
   }
 
   try {
-    const retrievedUserInfo = await Knex.select('username', 'first_name', 'last_name', 'email')
+    const retrievedUserInfo = await Knex.select('username', 'first_name', 'last_name')
       .from('user')
       .join('user_info', 'user.id', 'user_info.user_id')
       .where('username', 'like', '%' + userName + '%')
@@ -194,4 +194,4 @@ const addContactById = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export default { getAllContactLists, getContactsOfUserId, getUserInfoByUsername, editNicknameOfContacts, deleteContactById, addContactById };
+export default { getAllContactLists, getContactsOfUserId, getUsersByUsername, editNicknameOfContacts, deleteContactById, addContactById };

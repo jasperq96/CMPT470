@@ -10,10 +10,12 @@ import { validateUsername } from 'middlewares/validateUsername.mw';
 const router = express.Router();
 
 router.get('', controller.getAllContactLists);
-router.get('/:userId/filter', registerUsername, validateUsername, controller.getUserInfoByUsername);
+router.get('/:userId/filter', registerUsername, validateUsername, controller.getUsersByUsername);
 router.get('/:userId', controller.getContactsOfUserId);
-router.put('/:userId', registerNickName, validateNickname, controller.editNicknameOfContacts);
+
+router.put('/:userId/nickname', registerNickName, validateNickname, controller.editNicknameOfContacts);
+router.put('/:userId/add', registerContactId, validateContactId, controller.addContactById);
+
 router.delete('/:userId', registerContactId, validateContactId, controller.deleteContactById);
-router.put('/:userId', registerContactId, validateContactId, controller.addContactById);
 
 export = router;

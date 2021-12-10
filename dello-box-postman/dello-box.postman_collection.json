@@ -202,13 +202,16 @@
 					"response": []
 				},
 				{
-					"name": "PUT nickname by userId",
+					"name": "GET user info by username",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 3,\r\n    \"newNickname\": \"Third\"\r\n}",
+							"raw": "{\r\n    \"username\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,14 +219,73 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/contacts/1",
+							"raw": "localhost:8080/contacts/1/filter",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"contacts",
-								"1"
+								"1",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT nickname by userId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Third\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/contacts/1/nickname",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts",
+								"1",
+								"nickname"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT add contact by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactId\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/contacts/1/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"contacts",
+								"1",
+								"add"
 							]
 						}
 					},
@@ -252,66 +314,6 @@
 							"path": [
 								"contacts",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT add contact by id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET user info by username",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/1/filter",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								"1",
-								"filter"
 							]
 						}
 					},
