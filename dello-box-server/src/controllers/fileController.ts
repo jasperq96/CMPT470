@@ -44,6 +44,10 @@ const getFileById = async (req: Request, res: Response, next: NextFunction) => {
 
 const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `CREATING AN ${TABLE_NAME.toUpperCase()}`);
+  if (!req.file || !req.file.path) {
+    res.status(400).send(fileMimetypeError);
+    return;
+  }
   const filepath = req.file.path;
   const mimetype = req.file.mimetype;
   const userId: number = +req.params.userId;
@@ -60,7 +64,8 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
     logging.info(NAMESPACE, `CREATED ${TABLE_NAME.toUpperCase()}`, retrievedCreatedFile);
     res.status(201).send(retrievedCreatedFile);
   } catch (error: any) {
-    res.status(400).send(fileMimetypeError);
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
   }
 };
 
