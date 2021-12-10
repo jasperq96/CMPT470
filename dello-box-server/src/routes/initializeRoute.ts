@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import userRoutes from './userRoute';
+import userPublicRoutes from './userPublicRoute';
+import userPrivateRoutes from './userPrivateRoute';
 import taskRoutes from './taskRoute';
 import userInfoRoutes from './userInfoRoute';
 import fileRoutes from './fileRoute';
@@ -11,19 +12,23 @@ import passport from 'passport';
 const authRouter = Router();
 authRouter.use('/auth', authenticationRoutes);
 
-const apiRouter = Router();
+const publicRouter = Router();
+publicRouter.use('/user', userPublicRoutes);
+
+const privateRouter = Router();
 // Uncomment the follow line to restrict routes
-// apiRouter.use(passport.authenticate('authAll', { session: false }));
-apiRouter.use('/auth', authenticationRoutes);
-apiRouter.use('/user-info', userInfoRoutes);
-apiRouter.use('/file', fileRoutes);
-apiRouter.use('/file-list', fileListRoutes);
-apiRouter.use('/user', userRoutes);
-apiRouter.use('/task', taskRoutes);
-apiRouter.use('/contacts', contactRoutes);
+// privateRouter.use(passport.authenticate('authAll', { session: false }));
+privateRouter.use('/auth', authenticationRoutes);
+privateRouter.use('/user-info', userInfoRoutes);
+privateRouter.use('/file', fileRoutes);
+privateRouter.use('/file-list', fileListRoutes);
+privateRouter.use('/user', userPrivateRoutes);
+privateRouter.use('/task', taskRoutes);
+privateRouter.use('/contacts', contactRoutes);
 
 const initializeRouter = Router();
 initializeRouter.use(authRouter);
-initializeRouter.use(apiRouter);
+initializeRouter.use(publicRouter);
+initializeRouter.use(privateRouter);
 
 export default initializeRouter;

@@ -11,7 +11,7 @@ import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Signup from './pages/Signup/Signup';
 import PrivateRoute from './hocs/privateRoutes';
 import PublicRoute from './hocs/publicRoutes';
 
