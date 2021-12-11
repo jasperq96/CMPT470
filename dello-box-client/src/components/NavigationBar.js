@@ -1,7 +1,19 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { UserContext } from '../hooks/UserContext';
+import { useHistory } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 function Navigationbar() {
+  let history = useHistory();
+  const userContext = useContext(UserContext);
+  const onClickLogOutHandler = async () => {
+    await userContext.logout();
+    toast.success('Successfully logged out!');
+    history.push('/');
+  };
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -18,14 +30,29 @@ function Navigationbar() {
               <Nav.Link as={Link} to={'/tasks'}>
                 Tasks
               </Nav.Link>
-              <Nav.Link as={Link} to={'/files'}>
-                Files
-              </Nav.Link>
+              <NavDropdown title="Files" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={'/files/upload'}>
+                  Upload A File
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/files/manage'}>
+                  Manage Your Files
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/files/view'}>
+                  View Files
+                </NavDropdown.Item>
+              </NavDropdown>
               <Nav.Link as={Link} to={'/contacts'}>
                 Contacts
               </Nav.Link>
             </Nav>
-            <Nav></Nav>
+            <Nav className="float-right">
+              <NavDropdown title={userContext.user?.username} id="basic-nav-dropdown">
+                <NavDropdown.Item>Settings</NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link as={Link} onClick={onClickLogOutHandler}>
+                Sign Out
+              </Nav.Link>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

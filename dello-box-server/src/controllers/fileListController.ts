@@ -1,32 +1,17 @@
-import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
-import { Knex } from '../config/postgres';
-import { fileByUserIdNegativeOrNanInputError, filesDNEError } from 'utils/errorMessages';
-import { isInvalidInput } from 'utils/isInvalidInput';
+import { NAMESPACE_FILE, TABLE_FILE, getFilesByUserId, queryAllFiles, queryPublicFiles, queryPrivateFiles } from './requestTemplates/fileListRequest';
+import { getItemsByCustomQuery } from './requestTemplates/getAllRequest';
 
-const NAMESPACE = 'File List Control';
-const TABLE_NAME = 'file';
-
-const getFilesByUserId = async (req: Request, res: Response, next: NextFunction) => {
-  logging.info(NAMESPACE, `GETTING ALL ${TABLE_NAME.toUpperCase()}S FOR BY USER ID`);
-  const userId: number = +req.params.userId;
-  if (isInvalidInput(userId)) {
-    res.status(400).send(fileByUserIdNegativeOrNanInputError);
-    return;
-  }
-
-  try {
-    const retrievedFileInformation = await Knex.select('*').from(TABLE_NAME).where('user_id', '=', userId);
-    logging.info(NAMESPACE, `RETRIEVED ${TABLE_NAME.toUpperCase()} INFORMATION FOR USER ${userId}`, retrievedFileInformation);
-    if (!retrievedFileInformation.length) {
-      res.status(404).send(filesDNEError);
-      return;
-    }
-    res.status(200).send(retrievedFileInformation);
-  } catch (error: any) {
-    logging.error(NAMESPACE, error.message, error);
-    res.status(500).send(error);
-  }
+const getAllFilesByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  await getFilesByUserId(req, res, next, queryAllFiles(+req.params.userId));
 };
 
-export default { getFilesByUserId };
+const getPublicFiles = async (req: Request, res: Response, next: NextFunction) => {
+  await getItemsByCustomQuery(req, res, next, NAMESPACE_FILE, TABLE_FILE, queryPublicFiles());
+};
+
+const getPrivateFilesByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  await getFilesByUserId(req, res, next, queryPrivateFiles(+req.params.userId));
+};
+
+export default { getAllFilesByUserId, getPublicFiles, getPrivateFilesByUserId };

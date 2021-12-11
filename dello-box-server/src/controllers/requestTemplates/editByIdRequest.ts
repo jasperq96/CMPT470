@@ -2,6 +2,8 @@ import logging from '../../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../../config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
+import { Task } from 'db/models/taskModel';
+import { File } from 'db/models/fileModel';
 
 export const editItemById = async (
   req: Request,
@@ -27,7 +29,7 @@ export const editItemById = async (
       res.status(404).send(dneError);
       return;
     }
-    const retrievedEditedItem = await Knex.select('*').from(tableName).where(`${tableName}.${columnLabel}`, '=', columnId);
+    const retrievedEditedItem: Task | File = await Knex.select('*').from(tableName).where(`${tableName}.${columnLabel}`, '=', columnId).first();
     logging.info(namespace, `EDITED ${tableName.toUpperCase()} WITH ID ${columnId}`, retrievedEditedItem);
     res.status(201).send(retrievedEditedItem);
   } catch (error: any) {

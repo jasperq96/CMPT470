@@ -1,35 +1,44 @@
+import '../../App.css';
 import React, { useState } from 'react';
 import { Navbar, Container, Form, Button, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-export default function Signup() {
-  const [values, setValue] = useState({
-    username: '',
-    firstname: '',
-    lastname: '',
-    phonenumber: '',
-    email: '',
-    password: ''
-  });
+import { useHistory } from 'react-router-dom';
+import httpService from '../../services/httpService';
+import { toast } from 'react-toastify';
+import initialSignup from './initialSignup.json';
+import { createUserObject } from '../../models/userModel';
+import { capitalize } from '../../utils/capitalizeString';
+
+const Signup = () => {
+  let history = useHistory();
+  const [values, setValue] = useState(initialSignup);
+
+  const createUser = async (newUser) => {
+    const url = `/user`;
+    try {
+      await httpService.post(url, newUser);
+      toast.success('Successfully created a new user with username!');
+      history.push('/login');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  };
+
   const handleChange = (evt) => {
     setValue({
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.name);
-    }
   };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(`submitted values are ${values.username}
-        ${values.firstname}
-        ${values.lastname}
-        ${values.phonenumber}
-        ${values.email}
-        ${values.password}`);
+    createUser(createUserObject(values));
   };
+
   return (
-    <div>
+    <div className="body-color">
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
@@ -43,8 +52,12 @@ export default function Signup() {
         <Col xs>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 mt-5" controlId="formBasicUsername">
-              <Form.Label>User Name</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control placeholder="Enter Username" name="username" value={values.username} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" name="password" value={values.password} onChange={handleChange} />
             </Form.Group>
             <Row>
               <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicFirstName">
@@ -56,29 +69,22 @@ export default function Signup() {
                 <Form.Control type="LastName" placeholder="Enter Last Name" name="lastname" value={values.lastname} onChange={handleChange} />
               </Form.Group>
             </Row>
-            <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control type="PhoneNumber" placeholder="Enter Phone Number" name="phonenumber" value={values.phonenumber} onChange={handleChange} />
-            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control type="Email" placeholder="Enter Email" name="email" value={values.email} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password" value={values.password} onChange={handleChange} />
+            <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control type="PhoneNumber" placeholder="Enter Phone Number" name="phonenumber" value={values.phonenumber} onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Sign Up
             </Button>
-            <Link to="/inprogress">
-              <Button variant="primary" type="submit">
-                Redirect
-              </Button>
-            </Link>
           </Form>
         </Col>
       </Container>
     </div>
   );
-}
+};
+
+export default Signup;
