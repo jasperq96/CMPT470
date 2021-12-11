@@ -3,6 +3,8 @@ import controller from '../controllers/fileListController';
 
 const router = express.Router();
 
-router.get('/:userId', controller.getFilesByUserId);
+router.get('/:userId/all', controller.getAllFilesByUserId);
+router.get('/public', controller.getPublicFiles);
+router.get('/:userId/private', controller.getPrivateFilesByUserId);
 
 export = router;

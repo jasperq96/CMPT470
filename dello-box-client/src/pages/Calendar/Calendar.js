@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import '../../App.css';
+import React, { useState, useContext } from 'react';
 import Calendarlib from 'react-calendar';
+import { UserContext } from '../../hooks/UserContext';
 import DatePicker from 'react-datepicker';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'react-calendar/dist/Calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
-export default function Calendar() {
+
+const Calendar = () => {
+  const userContext = useContext(UserContext);
   const [date, setDate] = useState(new Date());
   const onDate = (newDate) => {
     if (newDate !== null) {
@@ -37,7 +41,7 @@ export default function Calendar() {
             {temp_dates
               .filter((stored_date) => stored_date.date.substring(0, 10) === date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
-                <li>{filtered_Dates.info}</li>
+                <li className="body-color">{filtered_Dates.info}</li>
               ))}
             {console.log(date.toISOString)}
           </Col>
@@ -45,4 +49,6 @@ export default function Calendar() {
       </Container>
     </div>
   );
-}
+};
+
+export default Calendar;

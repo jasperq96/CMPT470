@@ -3,17 +3,10 @@ import cors from 'cors';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import userRoutes from './routes/userRoute';
-import taskRoutes from './routes/taskRoute';
-import userInfoRoutes from './routes/userInfoRoute';
-import fileRoutes from './routes/fileRoute';
-import contactRoutes from './routes/contactsRoute';
-import fileListRoutes from './routes/fileListRoute';
-import columnRoutes from './routes/columnRoute';
-import authenticationRoutes from './routes/authenticationRoute';
 import './middlewares/passportStrategy.mw';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import initializeRouter from 'routes/initializeRoute';
 
 export const createServer = () => {
   const router: Application = express();
@@ -64,14 +57,7 @@ export const enableLogging = (router: Application, namespace: string) => {
 };
 
 export const enableRoutes = (router: Application) => {
-  router.use('/auth', authenticationRoutes);
-  router.use('/user-info', userInfoRoutes);
-  router.use('/file', fileRoutes);
-  router.use('/file-list', fileListRoutes);
-  router.use('/user', userRoutes);
-  router.use('/task', taskRoutes);
-  router.use('/contacts', contactRoutes);
-  router.use('/column', columnRoutes);
+  router.use(initializeRouter);
 };
 
 export const enableErrorHandling = (router: Application) => {
