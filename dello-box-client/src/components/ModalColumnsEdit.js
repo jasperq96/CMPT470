@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
-export default function Modal_columns_edit(props) {
+export default function ModalColumnsEdit(props) {
   const [values, setValue] = useState({
     title: ''
   });

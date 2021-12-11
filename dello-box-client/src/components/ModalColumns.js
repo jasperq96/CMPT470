@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
-
-export default function Modal_tasks(props) {
+import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
+export default function ModalColumns(props) {
   return (
     // <h1>
     //   {props.index.toString()}
@@ -11,16 +10,16 @@ export default function Modal_tasks(props) {
     // onModalClose
     // </h1>
 
-    <Modal show={props.show} onHide={props.onModalClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>WARNING</Modal.Title>
+    <Modal show={props.show}>
+      <Modal.Header closeButton onHide={() => props.onModalClose()}>
+        <Modal.Title>Are you Sure you want to delete this column</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you Sure you want to delete this task</Modal.Body>
+      <Modal.Body></Modal.Body>
       <Modal.Footer>
         <Button variant="outline-dark" onClick={() => props.onModalClose()}>
           Woops
         </Button>
-        <Button variant="danger" onClick={() => props.onTaskDelete(props.task, props.index)}>
+        <Button variant="danger" onClick={() => props.onColumnDelete(props.index)}>
           Delete
         </Button>
       </Modal.Footer>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 
-export default function Modal_task_edit(props) {
+export default function ModalTaskEdit(props) {
   const [values, setValue] = useState({
     title: '',
     start_date: '',

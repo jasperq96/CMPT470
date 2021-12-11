@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './Task.css';
-import Modal_tasks from '../../components/Modal_tasks';
-import Modal_columns from '../../components/Modal_columns';
-import Modal_columns_edit from '../../components/Modal_columns_edit';
-import Modal_task_edit from '../../components/Modal_task_edit';
+import ModalTasks from '../../components/ModalTasks';
+import ModalColumns from '../../components/ModalColumns';
+import ModalColumnsEdit from '../../components/ModalColumnsEdit';
+import ModalTaskEdit from '../../components/ModalTaskEdit';
 const tasksfrombackend = [
   {
     id: 3,
@@ -371,15 +371,8 @@ export default function Tasks() {
                             <ListGroup>
                               <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center' }}>
                                 {column.title}
-                                <Modal_columns index={column_index} show={column_modal} task={column} onModalClose={onModalClose_column} onColumnDelete={onColumnDelete} />
-                                <Modal_columns_edit
-                                  show={column_edit}
-                                  handleClose={onEditColClose}
-                                  column={selected_column}
-                                  onColUpdate={onColUpdate}
-                                  task_index={task_index}
-                                  col_index={column_index}
-                                />
+                                <ModalColumns index={column_index} show={column_modal} task={column} onModalClose={onModalClose_column} onColumnDelete={onColumnDelete} />
+                                <ModalColumnsEdit show={column_edit} handleClose={onEditColClose} column={selected_column} onColUpdate={onColUpdate} task_index={task_index} col_index={column_index} />
                                 <Button
                                   style={{ display: 'inline-flex', float: 'right' }}
                                   variant="danger"
@@ -439,8 +432,8 @@ export default function Tasks() {
                                                     {task.id}
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
-                                                      <Modal_tasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
-                                                      <Modal_task_edit
+                                                      <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+                                                      <ModalTaskEdit
                                                         show={task_edit}
                                                         handleClose={onEditTaskClose}
                                                         task={selected_task}
