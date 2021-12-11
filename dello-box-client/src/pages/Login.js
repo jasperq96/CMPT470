@@ -1,3 +1,4 @@
+import '../App.css';
 import React, { useState, useContext } from 'react';
 import { Navbar, Container, Form, Button, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -43,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="body-color">
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>

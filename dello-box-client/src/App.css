@@ -37,6 +37,10 @@
   }
 }
 
+.body-color {
+  color: #ffffff;
+}
+
 .file-container {
   display: flex;
   flex-direction: column;

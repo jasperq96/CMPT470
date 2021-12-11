@@ -26,21 +26,23 @@ const ViewFiles = () => {
 
   return (
     <React.Fragment>
-      <h1>View Files</h1>
-      <div className="file-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th>Date Created</th>
-              <th>Mimetype</th>
-              <th>Size (Bytes)</th>
-            </tr>
-          </thead>
-          {files.map((file, index) => (
-            <ViewFileElement id={index} fileData={file} />
-          ))}
-        </table>
+      <div className="body-color">
+        <h1>View Files</h1>
+        <div className="file-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Filename</th>
+                <th>Date Created</th>
+                <th>Mimetype</th>
+                <th>Size (Bytes)</th>
+              </tr>
+            </thead>
+            {files.map((file, index) => (
+              <ViewFileElement id={index} fileData={file} />
+            ))}
+          </table>
+        </div>
       </div>
     </React.Fragment>
   );
