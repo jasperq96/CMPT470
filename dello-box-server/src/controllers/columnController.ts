@@ -1,7 +1,7 @@
 import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
-import { isInvalidInput } from 'utils/isInvalidInput';
+import { isInvalidUserId } from 'utils/isInvalidUserId';
 import { columnPostInputError, columnLabelInputError } from 'utils/errorMessages';
 import { getItemsByCustomQuery } from './requestTemplates/getAllRequest';
 import { Column } from 'db/models/columnModel';
@@ -31,8 +31,7 @@ const getColumns = async (req: Request, res: Response, next: NextFunction) => {
 
 const createColumn = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
-  const retrievedUser = await Knex.select('*').from('user').where('id', userId);
-  if (isInvalidInput(userId) || !retrievedUser.length) {
+  if (await isInvalidUserId(userId)) {
     res.status(400).send(columnPostInputError);
     return;
   }

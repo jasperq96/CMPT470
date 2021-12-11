@@ -24,6 +24,7 @@ const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:use
 const userInfoDNEError = dneError('user', 'does not exist');
 const tasksNegativeOrNanInputError = negativeOrNanInputError('/task/:userId');
 const tasksDNEError = dneError('tasks', 'do not exist for this user or user does not exist');
+const taskPostInputError = inputError('/task/:userId');
 const taskNegativeOrNanInputError = negativeOrNanInputError('/task/view/:id');
 const taskDNEError = dneError('task', 'does not exist');
 const taskEditDeleteNegativeOrNanInputError = negativeOrNanInputError('/task/:id');
@@ -46,6 +47,7 @@ export {
   userInfoDNEError,
   tasksNegativeOrNanInputError,
   tasksDNEError,
+  taskPostInputError,
   taskNegativeOrNanInputError,
   taskDNEError,
   taskEditDeleteNegativeOrNanInputError,
