@@ -1,4 +1,5 @@
 import '../../App.css';
+import '../../stylesheets/calendarTask.css'
 import React, { useState, useContext, useEffect} from 'react';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
@@ -48,10 +49,10 @@ const Calendar = () => {
               .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) &&
               stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
-                <ul>
-                  <li className="body-color">{filtered_Dates.title}</li>
+                <ul className='task-look'>
+                  <li className='task-title'>{filtered_Dates.title}</li>
                   <ul>
-                  <li className="body-color">{filtered_Dates.notes}</li>
+                    <li>{filtered_Dates.notes}</li>
                   </ul>
                 </ul>
                 
