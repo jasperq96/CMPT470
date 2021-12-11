@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function Modal_tasks(props) {
   return (
@@ -15,7 +15,6 @@ export default function Modal_tasks(props) {
       <Modal.Header closeButton>
         <Modal.Title>WARNING</Modal.Title>
       </Modal.Header>
-      {console.log(props.column, props.task_modal, props.parsed_columns)}
       <Modal.Body>Are you Sure you want to delete this task</Modal.Body>
       <Modal.Footer>
         <Button variant="outline-dark" onClick={() => props.onModalClose()}>

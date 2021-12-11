@@ -102,32 +102,27 @@ const columnsfrombackend = [
   {
     id: 20,
     title: 'first column',
-    col_order: 0,
-    col_length: 0
+    col_order: 0
   },
   {
     id: 21,
     title: 'second column',
-    col_order: 1,
-    col_length: 0
+    col_order: 1
   },
   {
     id: 22,
     title: 'third column',
-    col_order: 2,
-    col_length: 0
+    col_order: 2
   },
   {
     id: 23,
     title: 'third column',
-    col_order: 3,
-    col_length: 0
+    col_order: 3
   },
   {
     id: 24,
     title: 'third column',
-    col_order: 4,
-    col_length: 0
+    col_order: 4
   }
   // {
   //   id: 25,
@@ -187,22 +182,22 @@ const columnsfrombackend = [
 ];
 
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
-  console.log('i am dragging');
+  //console.log('i am dragging');
   if (result.destination === null) {
     return;
   }
   const { source, destination, type } = result;
-  console.log('before i move columns');
-  console.log(type);
+  //console.log('before i move columns');
   if (type === 'column') {
     const column_array = [...parsed_columns];
     //column_array
     const [removed] = column_array.splice(source.index, 1);
     // removed object is the column being moved
     column_array.splice(destination.index, 0, removed);
-
-    console.log('I am moving columns', column_array);
-    column_array.forEach((col, index) => (col.col_order = index)); //reformat this to pass column array normally
+    //console.log('I am moving columns', column_array);
+    column_array.forEach((col, index) => (col.col_order = index));
+    const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
+    console.log('BACKEND what i pass when i move the columns', pass_backend); //reformat this to pass column array normally Done BACKEND
     //of the columns
     setParsed_Columns(column_array);
   } else {
@@ -214,26 +209,30 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       const from_tasks = [...from_column.col_tasks];
       const to_tasks = [...to_column.col_tasks];
       const [removed] = from_tasks.splice(source.index, 1);
-      console.log('this is the removed task', removed);
-      console.log(to_column);
+      //console.log('this is the removed task', removed);
       removed.col_id = to_column.id;
       to_tasks.splice(destination.index, 0, removed);
       to_tasks.forEach((task, index) => (task.index = index));
       from_tasks.forEach((task, index) => (task.index = index));
       column_array[source.droppableId].col_tasks = from_tasks;
-      column_array[destination.droppableId].col_tasks = to_tasks; // reformat this to pass both tasks lists in a single list make sure indeces arent fucked
+      column_array[destination.droppableId].col_tasks = to_tasks; // reformat this to pass both tasks lists in a single list make sure indeces arent fucked BACKEND
+      const pass_double_task = [...from_tasks, ...to_tasks];
+      console.log("BACKEND these are the tasks i'm passing to backend when you move between columns col_id and indeces change", pass_double_task);
       setParsed_Columns(column_array);
-      console.log('i tried to move between columns', from_tasks, to_tasks);
+      //console.log('i tried to move between columns', from_tasks, to_tasks);
     } else {
+      //moving withing a column
       const column_array = [...parsed_columns];
       const column = parsed_columns[source.droppableId];
       const copied_tasks = [...column.col_tasks];
       const [removed] = copied_tasks.splice(source.index, 1);
       copied_tasks.splice(destination.index, 0, removed);
       copied_tasks.forEach((task, index) => (task.index = index));
-      column_array[source.droppableId].col_tasks = copied_tasks; // reformat this to pass back single task list affected
+      const pass_task = [...copied_tasks];
+      console.log("BACKEND this is what i'm passing to back end when i change tasks within a column", pass_task); // reformat this to pass back single task list affected BACKEND
+      column_array[source.droppableId].col_tasks = copied_tasks;
       setParsed_Columns(column_array);
-      console.log('after setting parsed columns', column_array);
+      //console.log('after setting parsed columns', column_array);
     }
   }
 };
@@ -289,7 +288,6 @@ export default function Tasks() {
 
   const parsing_columns = [];
   for (let i = 0; i < columns.length; i++) {
-    console.log(columns[i].title);
     const parsed_object = {
       id: columns[i].id,
       title: columns[i].title,
@@ -307,21 +305,23 @@ export default function Tasks() {
     const column = parsed_columns[column_index];
     const copied_tasks = [...column.col_tasks];
     console.log('these are the copied tasks', copied_tasks);
-    copied_tasks.splice(index, 1);
+    const [removed] = copied_tasks.splice(index, 1);
     copied_tasks.forEach((task, index) => (task.index = index));
+    console.log('BACKEND this is the task that is deleted', removed);
+    console.log('BACKEND this is the list of tasks after you delete the task', copied_tasks);
     column_array[column_index].col_tasks = copied_tasks;
-    //column_array[task.col_id].col_tasks = copied_tasks;
-    setParsed_Columns(column_array); //send the taskid of the one thats deleted
+    setParsed_Columns(column_array); //send the taskid of the one thats deleted BACKEND
     setTask_Modal(false);
     return;
   };
   const onColumnDelete = (index) => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
-    console.log('this is the deleted column', column);
+    console.log('BACKEND this is the deleted column', column); //send the columnid of the one thats deleted and all the tasks
+    console.log('BACKEND these are the tasks of said column', column.col_tasks);
     column_array.splice(index, 1);
     column_array.forEach((col, index) => (col.col_order = index));
-    setParsed_Columns(column_array); //send the columnid of the one thats deleted
+    setParsed_Columns(column_array);
     setColumn_Modal(false);
     return;
   };
@@ -330,35 +330,29 @@ export default function Tasks() {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
     const copied_tasks = [...column.col_tasks];
-    console.log('these are the copied tasks before update', copied_tasks);
+    //console.log('these are the copied tasks before update', copied_tasks);
     copied_tasks[task_index].notes = notes;
     copied_tasks[task_index].title = title;
     copied_tasks[task_index].start_date = start_date;
     copied_tasks[task_index].end_date = end_date;
-    console.log('these are the copied tasks after update', copied_tasks[task_index]);
+    console.log('BACKEND this is the task after update', copied_tasks[task_index]);
     setParsed_Columns(column_array);
     return;
   };
-  // id: 9,
-  // user_id: 1,
-  // col_id: 1,
-  // index: 6,
-  // start_date: '2021-11-13T10:30:00.000Z',
-  // end_date: '2021-11-19T16:30:00.000Z',
-  // title: 'task3',
-  // notes: 'More notes here'
   const onColUpdate = (title) => {
     const column_array = [...parsed_columns];
-    console.log('before title update', column_array[column_index].title);
+    //console.log('before title update', column_array[column_index].title);
     column_array[column_index].title = title;
-    console.log('title after update', column_array[column_index].title);
+    console.log('BACKEND this is the column with title change', column_array[column_index]);
     setParsed_Columns(column_array);
     return;
   };
   return (
     <Container fluid style={{ paddingTop: 50 }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
-        {console.log('before the mapping', parsed_columns)}
+        {
+          //console.log('before the mapping', parsed_columns)
+        }
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
@@ -396,7 +390,6 @@ export default function Tasks() {
                                 >
                                   X
                                 </Button>
-                                {console.log(column_modal)}
                                 <Button
                                   style={{ display: 'inline-flex', float: 'right' }}
                                   variant="dark"
@@ -508,26 +501,4 @@ export default function Tasks() {
       </DragDropContext>
     </Container>
   );
-  // <div>
-  //   {columns.map((column_Order) => {
-  //     console.log(column_Order.col_order);
-  //     const desired_tasks = tasks.filter((des_tasks) => des_tasks.col_id === column_Order.id);
-  //     console.log(desired_tasks);
-  //     {
-  //       return desired_tasks.map((des_tasks) => (
-  //         <ListGroupItem>
-  //           {des_tasks.id} {des_tasks.notes}
-  //         </ListGroupItem>
-  //       ));
-  //     }
-  //   })}
-  //   {columns.map((column_Order) => (
-  //     <Container>
-  //       <Row>
-  //         <Col>{column_Order.label}</Col>
-  //       </Row>
-  //     </Container>
-  //   ))}
-  //   {console.log(columns.col_id)}
-  // </div>
 }

@@ -14,7 +14,6 @@ export default function Modal_columns(props) {
       <Modal.Header closeButton onHide={() => props.onModalClose()}>
         <Modal.Title>Are you Sure you want to delete this column</Modal.Title>
       </Modal.Header>
-      {console.log(props.task, props.task_modal, props.parsed_columns)}
       <Modal.Body></Modal.Body>
       <Modal.Footer>
         <Button variant="outline-dark" onClick={() => props.onModalClose()}>
