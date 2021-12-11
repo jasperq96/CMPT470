@@ -108,7 +108,7 @@
           "response": []
         },
         {
-          "name": "PUT a column label by id",
+          "name": "PUT a column title by id",
           "request": {
             "method": "PUT",
             "header": [],
@@ -513,7 +513,7 @@
           "response": []
         },
         {
-          "name": "DELETE a user by Id",
+          "name": "DELETE a user by id",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -689,7 +689,7 @@
           "response": []
         },
         {
-          "name": "PUT a task by id",
+          "name": "PUT a task's fields by id",
           "request": {
             "method": "PUT",
             "header": [],
