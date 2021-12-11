@@ -307,8 +307,11 @@ export default function Tasks() {
     console.log('these are the copied tasks', copied_tasks);
     const [removed] = copied_tasks.splice(index, 1);
     copied_tasks.forEach((task, index) => (task.index = index));
-    console.log('BACKEND this is the task that is deleted', removed);
-    console.log('BACKEND this is the list of tasks after you delete the task', copied_tasks);
+    const Back_End_Bundle = {
+      task_id: removed.id,
+      list_of_tasks: copied_tasks
+    };
+    console.log('BACKEND This is the bundle for when you delete tasks', Back_End_Bundle);
     column_array[column_index].col_tasks = copied_tasks;
     setParsed_Columns(column_array); //send the taskid of the one thats deleted BACKEND
     setTask_Modal(false);
@@ -317,10 +320,15 @@ export default function Tasks() {
   const onColumnDelete = (index) => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
-    console.log('BACKEND this is the deleted column', column); //send the columnid of the one thats deleted and all the tasks
-    console.log('BACKEND these are the tasks of said column', column.col_tasks);
     column_array.splice(index, 1);
     column_array.forEach((col, index) => (col.col_order = index));
+    const array_without_tasks = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
+    const Back_End_Bundle = {
+      col_id: column.id,
+      list_of_tasks: column.col_tasks,
+      list_of_columns: array_without_tasks
+    };
+    console.log('BACKEND col_id, listoftasks and listofcolumns all bundled up', Back_End_Bundle);
     setParsed_Columns(column_array);
     setColumn_Modal(false);
     return;
@@ -343,8 +351,10 @@ export default function Tasks() {
     const column_array = [...parsed_columns];
     //console.log('before title update', column_array[column_index].title);
     column_array[column_index].title = title;
-    console.log('BACKEND this is the column with title change', column_array[column_index]);
+    const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
+    console.log('BACKEND this is the column with title change', pass_backend[column_index]);
     setParsed_Columns(column_array);
+    console.log(parsed_columns);
     return;
   };
   return (
