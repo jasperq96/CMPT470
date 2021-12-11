@@ -60,7 +60,6 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
   try {
     const listOfUsersWithMeAdded = await Knex.select('*').from('contact_list').where('contact_list.user_id', '<>', userId);
     const updateNicknameForAllUsers = await Knex.select('user_id', 'contact_nicknames').from('user_info').where('user_id', '<>', userId);
-    logging.info(NAMESPACE, `List of Users with me added `, listOfUsersWithMeAdded);
 
     listOfUsersWithMeAdded.forEach(async (row: any) => {
       if (row['contacts'].includes(userId)) {
@@ -77,7 +76,6 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
     updateNicknameForAllUsers.forEach(async (row: any) => {
       row['contact_nicknames'] = JSON.parse(row['contact_nicknames']);
       if (row['contact_nicknames'].hasOwnProperty(String(userId))) {
-        logging.info(NAMESPACE, `WORKED`);
         delete row['contact_nicknames'][String(userId)];
         var new_nicknames = [JSON.stringify(row['contact_nicknames'])];
         const editUserInfoByUserId = await Knex.update({ contact_nicknames: new_nicknames }).into('user_info').where('user_info.user_id', '=', row['user_id']);
@@ -85,8 +83,6 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
           res.status(404).send(userInfoDNEError);
           return;
         }
-      } else {
-        logging.info(NAMESPACE, `FAILED with array`, row['contact_nicknames']);
       }
     });
 
