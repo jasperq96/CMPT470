@@ -8,10 +8,10 @@ import { Contacts } from 'db/models/contactModel';
 import { Column } from 'db/models/columnModel';
 import { File } from 'db/models/fileModel';
 
-export const getItems = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string) => {
+export const getItems = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string, columnName: string) => {
   logging.info(namespace, `GETTING LIST OF ${tableName.toUpperCase()}S`);
   try {
-    const items: User[] | UserInfo[] | Task[] | Contacts[] | Column[] = await Knex.select('*').from(tableName).orderBy('id');
+    const items: User[] | UserInfo[] | Task[] | Contacts[] | Column[] = await Knex.select('*').from(tableName).orderBy(`${columnName}`);
     logging.info(namespace, `RETRIEVED ${tableName.toUpperCase()}S:`, items);
     res.status(200).send(items);
   } catch (error: any) {

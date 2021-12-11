@@ -18,7 +18,7 @@ const inputtedReqBody = (req: Request) => {
 };
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_NAME);
+  await getItems(req, res, next, NAMESPACE, TABLE_NAME, 'id');
 };
 
 const getTasksByUserId = async (req: Request, res: Response, next: NextFunction) => {

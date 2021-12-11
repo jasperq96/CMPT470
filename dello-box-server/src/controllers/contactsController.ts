@@ -9,7 +9,7 @@ const NAMESPACE = 'Contact List Control';
 const TABLE_NAME = 'contact_list';
 
 const getAllContactLists = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_NAME);
+  await getItems(req, res, next, NAMESPACE, TABLE_NAME, 'id');
 };
 
 const getContactsOfUserId = async (req: Request, res: Response, next: NextFunction) => {

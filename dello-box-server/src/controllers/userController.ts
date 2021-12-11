@@ -31,7 +31,7 @@ const retrieveUserByUserName = async (username: string): Promise<User> => {
 };
 
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_USER);
+  await getItems(req, res, next, NAMESPACE, TABLE_USER, 'id');
 };
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {

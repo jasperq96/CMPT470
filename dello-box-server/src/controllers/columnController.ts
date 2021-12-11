@@ -1,33 +1,61 @@
+import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
-import { getItems } from './requestTemplates/getAllRequest';
+import { Knex } from '../config/postgres';
+import { isInvalidInput } from 'utils/isInvalidInput';
+import { columnPostInputError, columnLabelInputError } from 'utils/errorMessages';
+import { getItemsByCustomQuery } from './requestTemplates/getAllRequest';
+import { Column } from 'db/models/columnModel';
 import { createItem } from './requestTemplates/createRequest';
-import { editItemById } from './requestTemplates/editByIdRequest';
-import { columnLabelNegativeOrNanInputError, columnOrderNegativeOrNanInputError, columnDNEError } from 'utils/errorMessages';
+import { generateUUID } from 'utils/generateUUID';
 
 const NAMESPACE = 'Column Control';
 const TABLE_NAME = 'column';
 
-const createInputtedReqBody = (req: Request) => {
-  const { label, order } = req.body;
-  return { label: label, order: order };
+const createInputtedReqBody = (req: Request, userId: number, colOrder: number) => {
+  const { title } = req.body;
+  return { id: generateUUID(), user_id: userId, title: title, col_order: colOrder };
 };
 
 const editLabelInputtedReqBody = (req: Request) => {
-  const { label } = req.body;
-  return { label: label };
+  const { title } = req.body;
+  return { title: title };
+};
+
+const queryAllByUserIdAndColOrder = () => {
+  return Knex.select('*').from(TABLE_NAME).orderBy('user_id').orderBy('col_order');
 };
 
 const getColumns = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_NAME);
+  await getItemsByCustomQuery(req, res, next, NAMESPACE, TABLE_NAME, queryAllByUserIdAndColOrder());
 };
 
 const createColumn = async (req: Request, res: Response, next: NextFunction) => {
-  await createItem(req, res, next, NAMESPACE, TABLE_NAME, createInputtedReqBody(req));
+  const userId: number = +req.params.userId;
+  const retrievedUser = await Knex.select('*').from('user').where('id', userId);
+  if (isInvalidInput(userId) || !retrievedUser.length) {
+    res.status(400).send(columnPostInputError);
+    return;
+  }
+  const numColumnsForUser = await Knex(TABLE_NAME).count('col_order AS total').where('user_id', userId).first();
+  await createItem(req, res, next, NAMESPACE, TABLE_NAME, createInputtedReqBody(req, userId, parseInt(numColumnsForUser.total)));
 };
 
 const editColumnLabelById = async (req: any, res: Response, next: NextFunction) => {
-  const columnId: number = +req.params.id;
-  await editItemById(req, res, next, NAMESPACE, TABLE_NAME, columnLabelNegativeOrNanInputError, columnDNEError, editLabelInputtedReqBody(req), columnId, 'id');
+  logging.info(NAMESPACE, `EDITING A ${TABLE_NAME.toUpperCase()} BY ID`);
+  const columnId: string = req.params.id;
+  const retrieveColumnWithColumnId: Column = await Knex.select('*').from(TABLE_NAME).where('id', columnId).first();
+  if (!retrieveColumnWithColumnId) {
+    res.status(400).send(columnLabelInputError);
+    return;
+  }
+  try {
+    const retrievedEditedColumn = await Knex.update(editLabelInputtedReqBody(req)).into(TABLE_NAME).where('id', columnId).returning('*');
+    logging.info(NAMESPACE, `EDITED COLUMN WITH ID ${retrievedEditedColumn[0].id}`, retrievedEditedColumn);
+    res.status(201).send(retrievedEditedColumn);
+  } catch (error: any) {
+    logging.error(NAMESPACE, error.message, error);
+    res.status(500).send(error);
+  }
 };
 
 export default { getColumns, createColumn, editColumnLabelById };
