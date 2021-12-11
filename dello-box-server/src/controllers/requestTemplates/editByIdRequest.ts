@@ -4,6 +4,7 @@ import { Knex } from '../../config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { Task } from 'db/models/taskModel';
 import { File } from 'db/models/fileModel';
+import { Column } from 'db/models/columnModel';
 
 export const editItemById = async (
   req: Request,
@@ -29,7 +30,7 @@ export const editItemById = async (
       res.status(404).send(dneError);
       return;
     }
-    const retrievedEditedItem: Task | File = await Knex.select('*').from(tableName).where(`${tableName}.${columnLabel}`, '=', columnId).first();
+    const retrievedEditedItem: Task | File | Column = await Knex.select('*').from(tableName).where(`${tableName}.${columnLabel}`, '=', columnId).first();
     logging.info(namespace, `EDITED ${tableName.toUpperCase()} WITH ID ${columnId}`, retrievedEditedItem);
     res.status(201).send(retrievedEditedItem);
   } catch (error: any) {

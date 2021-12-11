@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
 import { fileNegativeOrNanInputError, fileDNEError, fileMimetypeError, filePostInputError } from 'utils/errorMessages';
 import { isInvalidInput } from 'utils/isInvalidInput';
+import { isInvalidUserId } from 'utils/isInvalidUserId';
 import { deleteUploadedFile } from 'utils/removeAssetFile';
 import { editItemById } from './requestTemplates/editByIdRequest';
 import { File } from 'db/models/fileModel';
@@ -51,8 +52,7 @@ const addFileByUserId = async (req: any, res: Response, next: NextFunction) => {
   const filepath = req.file.path;
   const mimetype = req.file.mimetype;
   const userId: number = +req.params.userId;
-  const retrievedUser = await Knex.select('*').from('user').where('id', userId);
-  if (isInvalidInput(userId) || !retrievedUser.length || isNaN(userId)) {
+  if (await isInvalidUserId(userId)) {
     deleteUploadedFile(NAMESPACE, '/home/node/app/'.concat(filepath));
     res.status(400).send(filePostInputError);
     return;

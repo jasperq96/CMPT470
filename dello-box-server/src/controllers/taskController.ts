@@ -2,23 +2,29 @@ import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from 'config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
-import { tasksNegativeOrNanInputError, tasksDNEError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError } from 'utils/errorMessages';
+import { tasksNegativeOrNanInputError, tasksDNEError, taskPostInputError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError, columnDNEError } from 'utils/errorMessages';
 import { Task } from 'db/models/taskModel';
 import { getItems } from './requestTemplates/getAllRequest';
 import { createItem } from './requestTemplates/createRequest';
 import { editItemById } from './requestTemplates/editByIdRequest';
 import { deleteItemById } from './requestTemplates/deleteByIdRequest';
+import { isInvalidUserId } from 'utils/isInvalidUserId';
 
 const NAMESPACE = 'Task Control';
 const TABLE_NAME = 'task';
 
-const inputtedReqBody = (req: Request) => {
-  const { userId, startDate, endDate, title, notes } = req.body;
-  return { user_id: userId, start_date: startDate, end_date: endDate, title: title, notes: notes };
+const createInputtedReqBody = (req: Request, userId: number, colId: string, index: number) => {
+  const { startDate, endDate, title, notes } = req.body;
+  return { user_id: userId, col_id: colId, index: index, start_date: startDate, end_date: endDate, title: title, notes: notes };
+};
+
+const editFieldsInputtedReqBody = (req: Request) => {
+  const { startDate, endDate, title, notes } = req.body;
+  return { start_date: startDate, end_date: endDate, title: title, notes: notes };
 };
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_NAME);
+  await getItems(req, res, next, NAMESPACE, TABLE_NAME, 'id');
 };
 
 const getTasksByUserId = async (req: Request, res: Response, next: NextFunction) => {
@@ -30,7 +36,11 @@ const getTasksByUserId = async (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const retrievedTasks: Task[] = await Knex.select(`${TABLE_NAME}.*`).from(TABLE_NAME).join('user', 'user.id', '=', `${TABLE_NAME}.user_id`).where(`${TABLE_NAME}.user_id`, '=', userId);
+    const retrievedTasks: Task[] = await Knex.select(`${TABLE_NAME}.*`)
+      .from(TABLE_NAME)
+      .join('user', 'user.id', '=', `${TABLE_NAME}.user_id`)
+      .where(`${TABLE_NAME}.user_id`, '=', userId)
+      .orderBy('id');
     logging.info(NAMESPACE, `RETRIEVED TASKS FOR USER ${userId}`, retrievedTasks);
     if (!retrievedTasks.length) {
       res.status(404).send(tasksDNEError);
@@ -66,16 +76,29 @@ const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const createTask = async (req: Request, res: Response, next: NextFunction) => {
-  await createItem(req, res, next, NAMESPACE, TABLE_NAME, inputtedReqBody(req));
+  const colId: string = req.body.colId;
+  const retrievedColumn = await Knex.select('*').from('column').where('id', colId);
+  if (!retrievedColumn.length) {
+    res.status(400).send(columnDNEError);
+    return;
+  }
+  const userId: number = +req.params.userId;
+  if (await isInvalidUserId(userId)) {
+    res.status(400).send(taskPostInputError);
+    return;
+  }
+  const numTasksForColumn = await Knex(TABLE_NAME).count('index AS total').where('col_id', colId).first();
+  logging.info(NAMESPACE, 'NUM TASKS FOR COLUMN', numTasksForColumn);
+  await createItem(req, res, next, NAMESPACE, TABLE_NAME, createInputtedReqBody(req, userId, colId, parseInt(numTasksForColumn.total)));
 };
 
-const editTaskById = async (req: Request, res: Response, next: NextFunction) => {
+const editTaskFieldsById = async (req: Request, res: Response, next: NextFunction) => {
   const taskId: number = +req.params.id;
-  await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, inputtedReqBody(req), taskId, 'id');
+  await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, editFieldsInputtedReqBody(req), taskId, 'id');
 };
 
 const deleteTaskById = async (req: Request, res: Response, next: NextFunction) => {
   await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskById, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, deleteTaskById };

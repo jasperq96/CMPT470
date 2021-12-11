@@ -24,11 +24,17 @@ const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:use
 const userInfoDNEError = dneError('user', 'does not exist');
 const tasksNegativeOrNanInputError = negativeOrNanInputError('/task/:userId');
 const tasksDNEError = dneError('tasks', 'do not exist for this user or user does not exist');
+const taskPostInputError = inputError('/task/:userId');
 const taskNegativeOrNanInputError = negativeOrNanInputError('/task/view/:id');
 const taskDNEError = dneError('task', 'does not exist');
 const taskEditDeleteNegativeOrNanInputError = negativeOrNanInputError('/task/:id');
 const contactDNEError = dneError('Contacts', 'do not exist for this user');
 const contactNegativeOrNanInputError = negativeOrNanInputError('/contacts/:userId');
+const columnPostInputError = inputError('/column/:userId');
+const columnLabelInputError = inputError('/column/:id/label');
+const columnLabelNegativeOrNanInputError = negativeOrNanInputError('/column/:id/label');
+const columnOrderNegativeOrNanInputError = negativeOrNanInputError('/column/:id/order');
+const columnDNEError = dneError('column', 'does not exist');
 
 export {
   fileNegativeOrNanInputError,
@@ -41,9 +47,15 @@ export {
   userInfoDNEError,
   tasksNegativeOrNanInputError,
   tasksDNEError,
+  taskPostInputError,
   taskNegativeOrNanInputError,
   taskDNEError,
   taskEditDeleteNegativeOrNanInputError,
   contactDNEError,
-  contactNegativeOrNanInputError
+  contactNegativeOrNanInputError,
+  columnPostInputError,
+  columnLabelInputError,
+  columnLabelNegativeOrNanInputError,
+  columnOrderNegativeOrNanInputError,
+  columnDNEError
 };
