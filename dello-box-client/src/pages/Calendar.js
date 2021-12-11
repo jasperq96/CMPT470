@@ -1,3 +1,4 @@
+import '../App.css';
 import React, { useState, useContext } from 'react';
 import Calendarlib from 'react-calendar';
 import { UserContext } from '../hooks/UserContext';
@@ -39,7 +40,7 @@ export default function Calendar() {
             {temp_dates
               .filter((stored_date) => stored_date.date.substring(0, 10) === date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
-                <li>{filtered_Dates.info}</li>
+                <li className="body-color">{filtered_Dates.info}</li>
               ))}
             {console.log(date.toISOString)}
           </Col>

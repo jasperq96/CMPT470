@@ -71,22 +71,24 @@ const ManageFiles = () => {
 
   return (
     <React.Fragment>
-      <h1>Manage Files</h1>
-      <div className="file-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th>Date Created</th>
-              <th>Mimetype</th>
-              <th>Size (Bytes)</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          {files.map((file, index) => (
-            <ManageFileElement id={index} data={file} handleVisibility={handleVisibility} handleDelete={handleDelete} />
-          ))}
-        </table>
+      <div className="body-color">
+        <h1>Manage Files</h1>
+        <div className="file-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Filename</th>
+                <th>Date Created</th>
+                <th>Mimetype</th>
+                <th>Size (Bytes)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            {files.map((file, index) => (
+              <ManageFileElement id={index} data={file} handleVisibility={handleVisibility} handleDelete={handleDelete} />
+            ))}
+          </table>
+        </div>
       </div>
     </React.Fragment>
   );

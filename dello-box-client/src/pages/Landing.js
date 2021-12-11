@@ -1,12 +1,12 @@
+import '../App.css';
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel'
+import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../stylesheets/landing.css'
+import '../stylesheets/landing.css';
 
 const Navigationbar = () => {
-
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -20,80 +20,57 @@ const Navigationbar = () => {
                 Sign in
               </Nav.Link>
               <Nav.Link as={Link} to={'/signup'}>
-                {' '}
-                Sign up{' '}
+                Sign up
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      
-      <Carousel
-        indicators={false}
-      >
+
+      <Carousel indicators={false}>
         <Carousel.Item>
-        <img
-            className="d-block w-100"
-            src='https://pt-static.z-dn.net/files/d14/f0517e80cc1fe426a2d7767047986b02.jpg'
-            alt="Third slide"
-          />
-          <Carousel.Caption >
+          <img className="d-block w-100" src="https://pt-static.z-dn.net/files/d14/f0517e80cc1fe426a2d7767047986b02.jpg" alt="Third slide" />
+          <Carousel.Caption>
             <h3>What is Dello-box?</h3>
             <p>Inpisred by Trello and Drop-box, Dello-box is a centralized application that combines unique functionalities found in both aforementioned applications</p>
           </Carousel.Caption>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://www.microtool.de/wp-content/uploads/2018/11/board-f%C3%BCr-alle-zust%C3%A4nde.png"
-            alt="Second slide"
-          />
+          <img className="d-block w-100" src="https://www.microtool.de/wp-content/uploads/2018/11/board-f%C3%BCr-alle-zust%C3%A4nde.png" alt="Second slide" />
 
           <Carousel.Caption>
             <h3>Task Board</h3>
-            <p>Our task board puts the simple in simplistic, keeping descriptions of tasks hidden until clicked upon.
-              With only the task name displayed, users have an easier time locating their desired task. If needed they can still
-              click on the desired task to display any information related to it.
+            <p>
+              Our task board puts the simple in simplistic, keeping descriptions of tasks hidden until clicked upon. With only the task name displayed, users have an easier time locating their desired
+              task. If needed they can still click on the desired task to display any information related to it.
             </p>
           </Carousel.Caption>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src='https://static1.anpoimages.com/wordpress/wp-content/uploads/2020/06/08/dropbox-dark-hero.png?q=50&fit=contain&w=1500&h=&dpr=1.5'
-            alt="Third slide"
-          />
+          <img className="d-block w-100" src="https://static1.anpoimages.com/wordpress/wp-content/uploads/2020/06/08/dropbox-dark-hero.png?q=50&fit=contain&w=1500&h=&dpr=1.5" alt="Third slide" />
 
           <Carousel.Caption>
             <h3>Dropbox?</h3>
-            <p>Similar to Dropbox, users can upload any file they wish. They can also view all public typed files that other users have uploaded. Don't worry, by default,
-              users upload private typed files, so no accidental pictures to the world.
+            <p>
+              Similar to Dropbox, users can upload any file they wish. They can also view all public typed files that other users have uploaded. Don't worry, by default, users upload private typed
+              files, so no accidental pictures to the world.
             </p>
           </Carousel.Caption>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src='https://wallpapercave.com/wp/wp8938645.jpg'
-            alt="Third slide"
-          />
+          <img className="d-block w-100" src="https://wallpapercave.com/wp/wp8938645.jpg" alt="Third slide" />
 
           <Carousel.Caption>
             <h3>Make Contacts!</h3>
-            <p>Like what others upload? Have a group member forget to attach a needed file for a task? Add them as a contact and view all their public files as soon as they are uploaded!
-            </p>
+            <p>Like what others upload? Have a group member forget to attach a needed file for a task? Add them as a contact and view all their public files as soon as they are uploaded!</p>
           </Carousel.Caption>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src='https://www.ppt-backgrounds.net/thumbs/black-coming-soon-text-download-presentation-backgrounds.jpg'
-            alt="Third slide"
-          />
+          <img className="d-block w-100" src="https://www.ppt-backgrounds.net/thumbs/black-coming-soon-text-download-presentation-backgrounds.jpg" alt="Third slide" />
 
           <Carousel.Caption>
             <h3>Did we miss something?</h3>
@@ -103,7 +80,6 @@ const Navigationbar = () => {
       </Carousel>
     </div>
   );
-
 };
 
 export default Navigationbar;

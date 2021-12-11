@@ -1,3 +1,4 @@
+import '../../App.css';
 import React, { useState } from 'react';
 import { Navbar, Container, Form, Button, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -37,7 +38,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="body-color">
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>

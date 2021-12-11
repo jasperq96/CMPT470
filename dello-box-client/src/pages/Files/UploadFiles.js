@@ -41,7 +41,7 @@ const UploadFiles = () => {
   };
 
   return (
-    <div>
+    <div className="body-color">
       <h1>Upload Files</h1>
       <input type="file" name="file" id="file" onChange={validateFileExtension} />
       <button onClick={uploadFileValidator}>Upload File</button>
