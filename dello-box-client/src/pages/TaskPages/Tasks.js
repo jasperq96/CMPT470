@@ -237,6 +237,8 @@ export default function Tasks() {
   const [task_index, setTask_Index] = useState(0);
   const [task_edit, setTask_edit] = useState(false);
   const [column_edit, setColumn_edit] = useState(false);
+  const [selected_task, setSelected_task] = useState({});
+  const [selected_column, setSelected_column] = useState({});
   //const [parsed_columns, setParsed_Columns] = useState([]);
   const onDeleteModal_task = (evt) => {
     evt.stopPropagation();
@@ -337,7 +339,7 @@ export default function Tasks() {
                               <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center' }}>
                                 {column.title}
                                 <Modal_columns index={column_index} show={column_modal} task={column} onModalClose={onModalClose_column} onColumnDelete={onColumnDelete} />
-                                <Modal_columns_edit show={column_edit} handleClose={onEditColClose} />
+                                <Modal_columns_edit show={column_edit} handleClose={onEditColClose} column={selected_column} done={onEditColClose} />
                                 <Button
                                   style={{ display: 'inline-flex', float: 'right' }}
                                   variant="danger"
@@ -356,6 +358,7 @@ export default function Tasks() {
                                     onEditModal_column(e);
                                     console.log('this is the column order', column_index);
                                     setColumn_Index(column.col_order);
+                                    setSelected_column(parsed_columns[column.col_order]);
                                   }}
                                 >
                                   Edit{' '}
@@ -398,7 +401,7 @@ export default function Tasks() {
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
                                                       <Modal_tasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
-                                                      <Modal_task_edit show={task_edit} handleClose={onEditTaskClose} />
+                                                      <Modal_task_edit show={task_edit} handleClose={onEditTaskClose} task={selected_task} />
                                                       <Button
                                                         variant="danger"
                                                         onClick={(e) => {
@@ -414,8 +417,12 @@ export default function Tasks() {
                                                         onClick={(e) => {
                                                           onEditModal_task(e);
                                                           setTask_Index(task.index);
-                                                          console.log('this is the column order', column_index);
                                                           setColumn_Index(column.col_order);
+                                                          console.log('this is the column order', column.col_order);
+                                                          console.log('this is the task order', task.index);
+                                                          console.log('this is the selected task', parsed_columns[column.col_order].col_tasks[task.index]);
+                                                          setSelected_task(parsed_columns[column.col_order].col_tasks[task.index]);
+                                                          console.log('this is the selected task state', selected_task);
                                                         }}
                                                       >
                                                         Edit{' '}
