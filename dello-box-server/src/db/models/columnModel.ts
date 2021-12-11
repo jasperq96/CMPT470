@@ -1,5 +1,6 @@
 export interface Column {
-  id: number;
-  label: string;
-  order: number;
+  id: string;
+  user_id: number;
+  title: string;
+  col_order: number;
 }
