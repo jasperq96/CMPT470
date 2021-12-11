@@ -94,6 +94,7 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
     controller.deleteFileById;
     await deleteUser(req, res, next, NAMESPACE, 'file');
     await deleteUser(req, res, next, NAMESPACE, 'task');
+    await deleteUser(req, res, next, NAMESPACE, 'column');
     await deleteUser(req, res, next, NAMESPACE, 'user');
 
     const retrievedUsers = await Knex.select('*').from('user');

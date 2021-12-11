@@ -1,875 +1,743 @@
 {
-	"info": {
-		"_postman_id": "e39816f6-899c-4003-bda2-579b972838e6",
-		"name": "dello-box",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Authentication",
-			"item": [
-				{
-					"name": "LOGIN",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"user1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AUTHENTICATE",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/auth/authenticate",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"authenticate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "LOGOUT",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/auth/logout",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"logout"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Column",
-			"item": [
-				{
-					"name": "GET all columns",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/column",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"column"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST a column",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"label\": \"On Hold\",\r\n    \"order\": 4\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/column",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"column"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT a column label by id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"label\": \"To-Do List\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/column/:id/label",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"column",
-								":id",
-								"label"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Contacts",
-			"item": [
-				{
-					"name": "GET all contacts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/contacts",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET contacts by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/contacts/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET user info by username",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/:userId/filter",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								":userId",
-								"filter"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT nickname by userId",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 1,\r\n    \"newNickname\": \"The First nickname\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/2/nickname",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								"2",
-								"nickname"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT add contact by id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/:userId/add",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								":userId",
-								"add"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE contact by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contactId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/contacts/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"contacts",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Default",
-			"item": [
-				{
-					"name": "GET homepage message",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080",
-							"host": [
-								"localhost"
-							],
-							"port": "8080"
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "File",
-			"item": [
-				{
-					"name": "GET all file information by user id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/file-list/:userId/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file-list",
-								":userId",
-								"all"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET public file information",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/file-list/public",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file-list",
-								"public"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET private file information by user id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/file-list/:userId/private",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file-list",
-								":userId",
-								"private"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET a file by file id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/file/:fileId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file",
-								":fileId"
-							],
-							"variable": [
-								{
-									"key": "fileId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST a file by user id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": []
-								}
-							]
-						},
-						"url": {
-							"raw": "localhost:8080/file/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT a file by id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"isPublic\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/file/:fileId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file",
-								":fileId"
-							],
-							"variable": [
-								{
-									"key": "fileId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE a file by file id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/file/:fileId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"file",
-								":fileId"
-							],
-							"variable": [
-								{
-									"key": "fileId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "GET all users",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/user",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST a user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"reeeeeeee\",\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Stone\",\r\n    \"email\": \"chrisstoe@hotmail.com\",\r\n    \"phone\": \"778-321-7654\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/user",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DEL user by Id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/user/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User Information",
-			"item": [
-				{
-					"name": "GET all user information",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/user-info",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user-info"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET user information by user id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/user-info/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user-info",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT user information by user id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Jimmy\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"jimmysmith@hotmail.com\",\r\n    \"phone\": \"778-123-4567\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/user-info/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user-info",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Task",
-			"item": [
-				{
-					"name": "GET all tasks",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/task",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET all tasks by user id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/task/:userId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET a task by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/task/view/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task",
-								"view",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST a task",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 1,\r\n    \"startDate\": \"2021-11-03T05:30:00\",\r\n    \"endDate\": \"2021-11-29T21:30:00\",\r\n    \"title\": \"A task\",\r\n    \"notes\": \"giggity\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/task",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT a task by id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 1,\r\n    \"startDate\": \"2021-11-09T19:30:00\",\r\n    \"endDate\": \"2021-11-27T13:45:00\",\r\n    \"title\": \"my new task\",\r\n    \"notes\": \"hehehehehehehehehehe kekekekekekekekekekeke\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/task/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE a task by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/task/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"task",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "25a85695-f516-4a86-8ccf-5090a80c17c6",
+    "name": "dello-box",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "LOGIN",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"user1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/auth/login",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AUTHENTICATE",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/auth/authenticate",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["auth", "authenticate"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOGOUT",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/auth/logout",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Column",
+      "item": [
+        {
+          "name": "GET all columns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/column",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a column",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"On Hold\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a column label by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"New title\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column/:id/label",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column", ":id", "label"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "GET all contacts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/contacts",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET contacts by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/contacts/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user info by username",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/filter",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "filter"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT nickname by userId",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2,\r\n    \"newNickname\": \"Third\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/nickname",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "nickname"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT add contact by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId/add",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId", "add"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE contact by id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"contactId\" : 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/contacts/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["contacts", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Default",
+      "item": [
+        {
+          "name": "GET homepage message",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080",
+              "host": ["localhost"],
+              "port": "8080"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "File",
+      "item": [
+        {
+          "name": "GET all file information by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file-list/:userId/all",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file-list", ":userId", "all"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET public file information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file-list/public",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file-list", "public"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET private file information by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file-list/:userId/private",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file-list", ":userId", "private"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET a file by file id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file/:fileId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":fileId"],
+              "variable": [
+                {
+                  "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a file by user id",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:8080/file/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a file by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isPublic\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/file/:fileId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":fileId"],
+              "variable": [
+                {
+                  "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a file by file id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/file/:fileId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["file", ":fileId"],
+              "variable": [
+                {
+                  "key": "fileId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "GET all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/user",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"reeeeeeee\",\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Stone\",\r\n    \"email\": \"chrisstoe@hotmail.com\",\r\n    \"phone\": \"778-321-7654\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/user",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a user by Id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/user/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Information",
+      "item": [
+        {
+          "name": "GET all user information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/user-info",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user-info"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user information by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/user-info/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user-info", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT user information by user id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Jimmy\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"jimmysmith@hotmail.com\",\r\n    \"phone\": \"778-123-4567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/user-info/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["user-info", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Task",
+      "item": [
+        {
+          "name": "GET all tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all tasks by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET a task by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task/view/:id",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", "view", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a task",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"colId\": \"--insert valid column id here--\",\r\n    \"startDate\": \"2021-11-03T05:30:00\",\r\n    \"endDate\": \"2021-11-29T21:30:00\",\r\n    \"title\": \"WOW\",\r\n    \"notes\": \"giggity\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a task by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"startDate\": \"2021-11-09T19:30:00\",\r\n    \"endDate\": \"2021-11-27T13:45:00\",\r\n    \"title\": \"my new task\",\r\n    \"notes\": \"hehehehehehehehehehe kekekekekekekekekekeke\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task/:id",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a task by id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task/:id",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
