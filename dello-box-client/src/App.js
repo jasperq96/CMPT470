@@ -4,8 +4,13 @@ import Navigationbar from './components/NavigationBar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
+<<<<<<< HEAD
 import Calendar from './pages/Calendarpages/Calendar';
 import Tasks from './pages/TaskPages/Tasks';
+=======
+import Calendar from './pages/Calendar/Calendar';
+import Tasks from './pages/Tasks/Tasks';
+>>>>>>> 5dbbd29ffb8ec845f36e7d40a70f65c6d22e94fe
 import UploadFiles from './pages/Files/UploadFiles';
 import ManageFiles from './pages/Files/ManageFiles';
 import ViewFiles from './pages/Files/ViewFiles';

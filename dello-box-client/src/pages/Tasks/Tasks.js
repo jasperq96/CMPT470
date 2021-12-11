@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Col, Container, ListGroup, ListGroupItem, Button, Modal, Form } from 'react-bootstrap';
+import { Col, Container, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './Task.css';
+import './Tasks.css';
 import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
@@ -124,61 +124,6 @@ const columnsfrombackend = [
     title: 'third column',
     col_order: 4
   }
-  // {
-  //   id: 25,
-  //   label: 'third column',
-  //   col_order: 5
-  // },
-  // {
-  //   id: 26,
-  //   label: 'third column',
-  //   col_order: 6
-  // },
-  // {
-  //   id: 27,
-  //   label: 'third column',
-  //   col_order: 7
-  // },
-  // {
-  //   id: 28,
-  //   label: 'third column',
-  //   col_order: 8
-  // },
-  // {
-  //   id: 29,
-  //   label: 'last column',
-  //   col_order: 9
-  // },
-  // {
-  //   id: 30,
-  //   label: 'last column',
-  //   col_order: 10
-  // },
-  // {
-  //   id: 31,
-  //   label: 'This is a really long column with a really long title',
-  //   col_order: 11
-  // },
-  // {
-  //   id: 32,
-  //   label: 'last column',
-  //   col_order: 12
-  // },
-  // {
-  //   id: 33,
-  //   label: 'last column',
-  //   col_order: 13
-  // },
-  // {
-  //   id: 34,
-  //   label: 'last column',
-  //   col_order: 14
-  // },
-  // {
-  //   id: 35,
-  //   label: 'last column',
-  //   col_order: 15
-  // }
 ];
 
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {

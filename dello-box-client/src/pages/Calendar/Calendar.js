@@ -6,7 +6,8 @@ import DatePicker from 'react-datepicker';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'react-calendar/dist/Calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
-export default function Calendar() {
+
+const Calendar = () => {
   const userContext = useContext(UserContext);
   const [date, setDate] = useState(new Date());
   const onDate = (newDate) => {
@@ -48,4 +49,6 @@ export default function Calendar() {
       </Container>
     </div>
   );
-}
+};
+
+export default Calendar;
