@@ -11,6 +11,22 @@ import { generateUUID } from 'utils/generateUUID';
 const NAMESPACE = 'Column Control';
 const TABLE_NAME = 'column';
 
+export const insertNewUserColumns = async (userId: number): Promise<Column[]> => {
+  const columnSeed: Column[] = [];
+  const columnTitles: string[] = ['To-Do', 'In-Progress', 'Complete'];
+
+  for (let i = 0; i < 3; i++) {
+    const newColumn: Column = {
+      id: generateUUID(),
+      user_id: userId,
+      title: columnTitles[i],
+      col_order: i
+    };
+    columnSeed.push(newColumn);
+  }
+  return await Knex(TABLE_NAME).insert(columnSeed).returning('*');
+};
+
 const createInputtedReqBody = (req: Request, userId: number, colOrder: number) => {
   const { title } = req.body;
   return { id: generateUUID(), user_id: userId, title: title, col_order: colOrder };
