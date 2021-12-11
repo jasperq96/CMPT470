@@ -24,17 +24,22 @@ export default function Modal_task_edit(props) {
             ${values.end_date}
             ${values.notes}
             task id is ${props.task.id}`);
+    props.onTaskUpdate(values.notes, values.title, values.start_date, values.end_date);
+    props.handleClose();
   };
   return (
     <Modal show={props.show} onHide={props.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Editing a Task</Modal.Title>
+        <Modal.Title>
+          Editing a Task {props.task_index}
+          {props.col_index}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 mt-5" controlId="formBasicUsername">
             <Form.Label>Title</Form.Label>
-            <Form.Control placeholder={props.task.title} name="title" value={values.title} onChange={handleChange} />
+            <Form.Control type="text" placeholder="First name" name="title" value={values.title} onChange={handleChange} />
           </Form.Group>
           <Row>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicFirstName">

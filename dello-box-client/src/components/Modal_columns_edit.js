@@ -16,12 +16,16 @@ export default function Modal_columns_edit(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     alert(`submitted values are ${values.title}`);
-    props.done();
+    props.onColUpdate(values.title);
+    props.handleClose();
   };
   return (
     <Modal show={props.show} onHide={props.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>
+          Editing a column {props.task_index}
+          {props.col_index}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
