@@ -3,7 +3,7 @@ import { Column } from '../../src/db/models/columnModel';
 import { generateUUID } from '../../src/utils/generateUUID';
 
 export async function insertColumn(knex: Knex): Promise<void> {
-  const columnSeed: Column[] = [];
+  let columnSeed: Column[] = [];
   const columnTitles: string[] = ['To-Do', 'In-Progress', 'Complete'];
 
   // For the three default users, create three columns each
