@@ -79,7 +79,7 @@
           "response": []
         },
         {
-          "name": "POST a column",
+          "name": "POST a column by user id",
           "request": {
             "method": "POST",
             "header": [],
@@ -660,7 +660,7 @@
           "response": []
         },
         {
-          "name": "POST a task",
+          "name": "POST a task by user id",
           "request": {
             "method": "POST",
             "header": [],
