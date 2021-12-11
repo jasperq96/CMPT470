@@ -8,7 +8,7 @@ import { getItems } from './requestTemplates/getAllRequest';
 import { insertItem } from './requestTemplates/createRequest';
 import { User } from 'db/models/userModel';
 import { UserInfo } from 'db/models/userInfoModel';
-import { userInfoDNEError, contactDNEError } from 'utils/errorMessages';
+import { userInfoDNEError } from 'utils/errorMessages';
 import { deleteUser } from './requestTemplates/deleteUserById';
 import controller from './fileController';
 
@@ -86,19 +86,20 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
       }
     });
 
-    await deleteUser(req, res, next, NAMESPACE, 'user_info', userInfoDNEError);
-    await deleteUser(req, res, next, NAMESPACE, 'contact_list', userInfoDNEError);
+    await deleteUser(req, res, next, NAMESPACE, 'user_info');
+    await deleteUser(req, res, next, NAMESPACE, 'contact_list');
     controller.deleteFileById;
-    await deleteUser(req, res, next, NAMESPACE, 'file', userInfoDNEError);
-    await deleteUser(req, res, next, NAMESPACE, 'task', userInfoDNEError);
-    await deleteUser(req, res, next, NAMESPACE, 'user', userInfoDNEError);
+    await deleteUser(req, res, next, NAMESPACE, 'file');
+    await deleteUser(req, res, next, NAMESPACE, 'task');
+    await deleteUser(req, res, next, NAMESPACE, 'user');
 
     const retrievedUsers = await Knex.select('*').from('user');
     if (!retrievedUsers) {
       res.status(404).send(userInfoDNEError);
       return;
     }
-    res.status(200).send(retrievedUsers);
+    logging.info(NAMESPACE, 'RETRIEVING REMAINING USERS', retrievedUsers);
+    res.sendStatus(204);
   } catch (error: any) {
     logging.error(NAMESPACE, error.message, error);
     res.status(500).send(error);
