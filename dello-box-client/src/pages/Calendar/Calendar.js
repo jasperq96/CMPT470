@@ -30,7 +30,7 @@ const Calendar = () => {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
     }
   };
-  
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -48,7 +48,13 @@ const Calendar = () => {
               .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) &&
               stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
-                <li className="body-color">{filtered_Dates.title}</li>
+                <ul>
+                  <li className="body-color">{filtered_Dates.title}</li>
+                  <ul>
+                  <li className="body-color">{filtered_Dates.notes}</li>
+                  </ul>
+                </ul>
+                
               ))}
             {console.log(date.toISOString)}
           </Col>
