@@ -1,8 +1,8 @@
 import { check } from 'express-validator';
 
 const userInfoSchema = [
-  check('firstName').trim().escape().isLength({ min: 1 }).withMessage('Must have a length of at least 1 character'),
-  check('lastName').trim().escape().isLength({ min: 1 }).withMessage('Must have a length of at least 1 character'),
+  check('firstName').trim().escape().isLength({ min: 1 }).isString().withMessage('Must have a length of at least 1 character'),
+  check('lastName').trim().escape().isLength({ min: 1 }).isString().withMessage('Must have a length of at least 1 character'),
   check('email').isEmail().trim().escape().normalizeEmail().withMessage('Must be a valid email'),
   check('phone')
     .notEmpty()

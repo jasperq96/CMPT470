@@ -35,4 +35,17 @@ const editFieldsTaskSchema = [
   check('notes').trim().escape().isLength({ min: 1 }).withMessage('Must have a length of at least 1 character')
 ];
 
-export { createTaskSchema as registerCreateTask, editFieldsTaskSchema as registerEditFieldsTask };
+const editOrderTaskSchema = [
+  check('tasks.*.id').trim().escape().notEmpty().isNumeric().withMessage('Must be a number'),
+  check('tasks.*.col_id').trim().escape().isLength({ min: 1 }).isString().withMessage('Must have a length of at least 1 character'),
+  check('tasks.*.index').trim().escape().notEmpty().isNumeric().withMessage('Must be a number')
+];
+
+const deleteTaskSchema = [
+  check('task_id').trim().escape().notEmpty().isNumeric().withMessage('Must be a number'),
+  check('list_of_tasks.*.id').trim().escape().notEmpty().isNumeric().withMessage('Must be a number'),
+  check('list_of_tasks.*.col_id').trim().escape().isLength({ min: 1 }).isString().withMessage('Must have a length of at least 1 character'),
+  check('list_of_tasks.*.index').trim().escape().notEmpty().isNumeric().withMessage('Must be a number')
+];
+
+export { createTaskSchema as registerCreateTask, editFieldsTaskSchema as registerEditFieldsTask, editOrderTaskSchema as registerEditOrderTask, deleteTaskSchema as registerDeleteTask };

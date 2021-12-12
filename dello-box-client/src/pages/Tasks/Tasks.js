@@ -11,24 +11,47 @@ import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
 
+const editColumnOrder = async (updatedColumns) => {
+  const url = '/column/order';
+  try {
+    await httpService.put(url, updatedColumns);
+    toast.success('Successfully saved!');
+  } catch (error) {
+    // Will display the first input error message
+    const errorBody = error.response.data.errors[0];
+    toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    return false;
+  }
+};
+
+const editTaskOrder = async (updatedTasks) => {
+  const url = '/task/order';
+  try {
+    await httpService.put(url, updatedTasks);
+    toast.success('Successfully saved!');
+  } catch (error) {
+    // Will display the first input error message
+    const errorBody = error.response.data.errors[0];
+    toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    return false;
+  }
+};
+
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
-  //console.log('i am dragging');
   if (result.destination === null) {
     return;
   }
   const { source, destination, type } = result;
-  //console.log('before i move columns');
   if (type === 'column') {
     const column_array = [...parsed_columns];
     //column_array
     const [removed] = column_array.splice(source.index, 1);
     // removed object is the column being moved
     column_array.splice(destination.index, 0, removed);
-    //console.log('I am moving columns', column_array);
     column_array.forEach((col, index) => (col.col_order = index));
     const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
-    console.log('BACKEND what i pass when i move the columns', pass_backend); //reformat this to pass column array normally Done BACKEND
     //of the columns
+    editColumnOrder({ columns: pass_backend });
     setParsed_Columns(column_array);
   } else {
     if (source.droppableId !== destination.droppableId) {
@@ -39,7 +62,6 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       const from_tasks = [...from_column.col_tasks];
       const to_tasks = [...to_column.col_tasks];
       const [removed] = from_tasks.splice(source.index, 1);
-      //console.log('this is the removed task', removed);
       removed.col_id = to_column.id;
       to_tasks.splice(destination.index, 0, removed);
       to_tasks.forEach((task, index) => (task.index = index));
@@ -47,9 +69,8 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       column_array[source.droppableId].col_tasks = from_tasks;
       column_array[destination.droppableId].col_tasks = to_tasks; // reformat this to pass both tasks lists in a single list make sure indeces arent fucked BACKEND
       const pass_double_task = [...from_tasks, ...to_tasks];
-      console.log("BACKEND these are the tasks i'm passing to backend when you move between columns col_id and indeces change", pass_double_task);
+      editTaskOrder({ tasks: pass_double_task });
       setParsed_Columns(column_array);
-      //console.log('i tried to move between columns', from_tasks, to_tasks);
     } else {
       //moving withing a column
       const column_array = [...parsed_columns];
@@ -59,10 +80,9 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       copied_tasks.splice(destination.index, 0, removed);
       copied_tasks.forEach((task, index) => (task.index = index));
       const pass_task = [...copied_tasks];
-      console.log("BACKEND this is what i'm passing to back end when i change tasks within a column", pass_task); // reformat this to pass back single task list affected BACKEND
       column_array[source.droppableId].col_tasks = copied_tasks;
+      editTaskOrder({ tasks: copied_tasks });
       setParsed_Columns(column_array);
-      //console.log('after setting parsed columns', column_array);
     }
   }
 };
@@ -115,6 +135,30 @@ const Tasks = () => {
     return;
   };
 
+  const deleteColumn = async (deletedColumn) => {
+    const url = '/column';
+    try {
+      await httpService.del(url, { data: deletedColumn });
+      toast.success('Successfully deleted column!');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  };
+
+  const deleteTask = async (deletedTask) => {
+    const url = '/task';
+    try {
+      await httpService.del(url, { data: deletedTask });
+      toast.success('Successfully deleted task!');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  };
+
   const getColumnsByUserId = async () => {
     const url = `/column/${userContext.user?.id}`;
     try {
@@ -131,9 +175,28 @@ const Tasks = () => {
       const response = await httpService.get(url);
       parseColumns(fetchedColumns, response.data);
     } catch (error) {
+      parseColumns(fetchedColumns, []);
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
     }
   };
+
+  /** Fix if have time */
+  // const parseTasks = (columns, tasks) => {
+  //   const parsing_tasks = tasks.filter((desired_tasks) => columns === desired_tasks.col_id);
+  //   for (let i = 0; i < tasks.length; i++) {
+  //     const parsed_object = {
+  //       id: tasks[i].id,
+  //       user_id: tasks[i].user_id,
+  //       col_id: tasks[i].col_id,
+  //       index: i,
+  //       start_date: tasks[i].start_date,
+  //       end_date: tasks[i].end_date,
+  //       title: tasks[i].title,
+  //       notes: tasks[i].notes
+  //     };
+  //     parsing_tasks.push(parsed_object);
+  //   }
+  // };
 
   const parseColumns = (columns, tasks) => {
     const parsing_columns = [];
@@ -141,7 +204,7 @@ const Tasks = () => {
       const parsed_object = {
         id: columns[i].id,
         title: columns[i].title,
-        col_order: columns[i].col_order,
+        col_order: i,
         col_tasks: tasks.filter((desired_tasks) => columns[i].id === desired_tasks.col_id)
       };
       parsing_columns.push(parsed_object);
@@ -155,20 +218,18 @@ const Tasks = () => {
 
   const [parsed_columns, setParsed_Columns] = useState([]);
   //setParsed_Columns(parsing_columns);
-  console.log(parsed_columns);
   //onDragEnd(result, parsed_columns, setParsed_Columns)
   const onTaskDelete = (task, index) => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
     const copied_tasks = [...column.col_tasks];
-    console.log('these are the copied tasks', copied_tasks);
     const [removed] = copied_tasks.splice(index, 1);
     copied_tasks.forEach((task, index) => (task.index = index));
     const Back_End_Bundle = {
       task_id: removed.id,
       list_of_tasks: copied_tasks
     };
-    console.log('BACKEND This is the bundle for when you delete tasks', Back_End_Bundle);
+    deleteTask(Back_End_Bundle);
     column_array[column_index].col_tasks = copied_tasks;
     setParsed_Columns(column_array); //send the taskid of the one thats deleted BACKEND
     setTask_Modal(false);
@@ -177,15 +238,17 @@ const Tasks = () => {
   const onColumnDelete = (index) => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
+    const list_of_tasks_length = column_array[index].col_tasks.length;
     column_array.splice(index, 1);
     column_array.forEach((col, index) => (col.col_order = index));
     const array_without_tasks = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
     const Back_End_Bundle = {
       col_id: column.id,
+      list_of_tasks_length: list_of_tasks_length,
       list_of_tasks: column.col_tasks,
       list_of_columns: array_without_tasks
     };
-    console.log('BACKEND col_id, listoftasks and listofcolumns all bundled up', Back_End_Bundle);
+    deleteColumn(Back_End_Bundle);
     setParsed_Columns(column_array);
     setColumn_Modal(false);
     return;
@@ -195,32 +258,23 @@ const Tasks = () => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
     const copied_tasks = [...column.col_tasks];
-    //console.log('these are the copied tasks before update', copied_tasks);
     copied_tasks[task_index].notes = notes;
     copied_tasks[task_index].title = title;
     copied_tasks[task_index].start_date = start_date;
     copied_tasks[task_index].end_date = end_date;
-    console.log('BACKEND this is the task after update', copied_tasks[task_index]);
     setParsed_Columns(column_array);
     return;
   };
 
   const onColUpdate = (title) => {
     const column_array = [...parsed_columns];
-    //console.log('before title update', column_array[column_index].title);
     column_array[column_index].title = title;
-    const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
-    console.log('BACKEND this is the column with title change', pass_backend[column_index]);
     setParsed_Columns(column_array);
-    console.log(parsed_columns);
     return;
   };
   return (
     <Container fluid style={{ paddingTop: 50 }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
-        {
-          //console.log('before the mapping', parsed_columns)
-        }
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
@@ -256,7 +310,6 @@ const Tasks = () => {
                                   variant="dark"
                                   onClick={(e) => {
                                     onEditModal_column(e);
-                                    console.log('this is the column order', column_index);
                                     setColumn_Index(column.col_order);
                                     setSelected_column(parsed_columns[column.col_order]);
                                   }}
@@ -297,7 +350,7 @@ const Tasks = () => {
                                                       ...provided.draggableProps.style
                                                     }}
                                                   >
-                                                    {task.id}
+                                                    <h1>{task.title}</h1>
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
                                                       <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
@@ -325,14 +378,10 @@ const Tasks = () => {
                                                           onEditModal_task(e);
                                                           setTask_Index(task.index);
                                                           setColumn_Index(column.col_order);
-                                                          console.log('this is the column order', column.col_order);
-                                                          console.log('this is the task order', task.index);
-                                                          console.log('this is the selected task', parsed_columns[column.col_order].col_tasks[task.index]);
                                                           setSelected_task(parsed_columns[column.col_order].col_tasks[task.index]);
-                                                          console.log('this is the selected task state', selected_task);
                                                         }}
                                                       >
-                                                        Edit{' '}
+                                                        Edit
                                                       </Button>
                                                     </ListGroup>
                                                   </ListGroupItem>
