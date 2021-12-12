@@ -61,7 +61,7 @@ const getUsersByUsername = async (req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const retrievedUserInfo = await Knex.select('username', 'first_name', 'last_name')
+    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name')
       .from('user')
       .join('user_info', 'user.id', 'user_info.user_id')
       .where('username', 'like', '%' + userName + '%')
