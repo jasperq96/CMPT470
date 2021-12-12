@@ -7,7 +7,7 @@ import { UserContext } from '../../hooks/UserContext';
 
 export default function CreateTask() {
   const userContext = useContext(UserContext);
-  const [cols, setCols] = useState({});
+  const [cols, setCols] = useState([]);
   const [values, setValue] = useState({
     title: '',
     notes: '',
@@ -65,7 +65,6 @@ export default function CreateTask() {
       title: parsing_Object.title,
       notes: parsing_Object.notes
     };
-    console.log('This is for', forBackend);
     const url =`/task/${userContext.user?.id}`;
     createTaskOrColumn(url, forBackend);
   };
@@ -75,7 +74,6 @@ export default function CreateTask() {
     const forBackend = {
       title: colValue.title
     };
-    console.log('This is for Backend', forBackend);
     const url = `/column/${userContext.user?.id}`
     createTaskOrColumn(url, forBackend);
   };
@@ -83,9 +81,11 @@ export default function CreateTask() {
   const createTaskOrColumn = async (url, formData) =>{
     try {
       await httpService.post(url, formData);
-      toast.success('Successfully created a Task!');
+      toast.success('Successfully created a Task/Column!');
     } catch (error) {
-      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
     }
   };
 
@@ -94,7 +94,6 @@ export default function CreateTask() {
     try {
       const response = await httpService.get(url);
       setCols(response.data);
-      // console.log("This is the Column data that was grabbed:", response.data);
     } catch (error) {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
     }
