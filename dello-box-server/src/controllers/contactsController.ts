@@ -54,14 +54,14 @@ const getContactsOfUserId = async (req: Request, res: Response, next: NextFuncti
 const getUsersByUsername = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING USER INFO BY USERNAME`);
   const userId: number = +req.params.userId;
-  const userName: string = req.body.username;
+  const userName: string = req.params.userName;
   if (isInvalidInput(userId)) {
     res.status(400).send(contactNegativeOrNanInputError);
     return;
   }
 
   try {
-    const retrievedUserInfo = await Knex.select('username', 'first_name', 'last_name')
+    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name')
       .from('user')
       .join('user_info', 'user.id', 'user_info.user_id')
       .where('username', 'like', '%' + userName + '%')

@@ -5,7 +5,7 @@ import { UserContext } from '../../hooks/UserContext';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import { capitalize } from '../../utils/capitalizeString';
-import './Tasks.css';
+import '../../stylesheets/Tasks.css';
 import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
