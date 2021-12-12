@@ -74,7 +74,7 @@ export default function CreateTask() {
     const forBackend = {
       title: colValue.title
     };
-    const url = `/column/${userContext.user?.id}`
+    const url = `/column/${userContext.user?.id}`;
     createTaskOrColumn(url, forBackend);
   };
 
@@ -82,6 +82,7 @@ export default function CreateTask() {
     try {
       await httpService.post(url, formData);
       toast.success('Successfully created a Task/Column!');
+      window.location.reload(false);
     } catch (error) {
       // Will display the first input error message
       const errorBody = error.response.data.errors[0];
