@@ -25,7 +25,7 @@ export default function Contacts() {
 
   
   const getContacts = async () => {
-    const url = '/contacts/' + userContext.user?.id;
+    const url = `/contacts/${userContext.user?.id}`;
     console.log("url:" + url)
     try {
       console.log("Getting contacts...")

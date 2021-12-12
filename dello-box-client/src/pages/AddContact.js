@@ -19,7 +19,7 @@ export default function AddContact() {
 
 
   const getUsers = async () => {
-    const url = '/user-info';
+    const url = `/user-info/${userContext.user?.id}/filter`;
     console.log("GET users url:" + url)
     try {
       const response = await httpService.get(url);
@@ -36,7 +36,7 @@ export default function AddContact() {
 
   const addContact = async (id) => {
 
-    const url = "/contacts/" + userContext.user?.id + "/add";
+    const url = `/contacts/${userContext.user?.id}/add`;
 
     try {
       const response = await httpService.put(url, {"contactId":id});
