@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { editTaskFieldsObject } from '../models/taskModel';
 import { capitalize } from '../utils/capitalizeString';
 
-export default function ModalTaskEdit(props) {
+const ModalTaskEdit = (props) => {
   const [values, setValue] = useState({
     title: '',
     start_date: '',
@@ -32,7 +32,6 @@ export default function ModalTaskEdit(props) {
       ...values,
       [evt.target.name]: evt.target.value
     });
-
     console.log(evt.target.value);
   };
 
@@ -91,4 +90,6 @@ export default function ModalTaskEdit(props) {
       </Modal.Footer>
     </Modal>
   );
-}
+};
+
+export default ModalTaskEdit;

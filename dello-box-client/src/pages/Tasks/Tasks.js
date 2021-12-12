@@ -204,6 +204,7 @@ const Tasks = () => {
     setParsed_Columns(column_array);
     return;
   };
+
   const onColUpdate = (title) => {
     const column_array = [...parsed_columns];
     //console.log('before title update', column_array[column_index].title);

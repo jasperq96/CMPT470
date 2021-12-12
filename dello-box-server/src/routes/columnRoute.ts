@@ -8,6 +8,6 @@ const router = express.Router();
 router.get('', controller.getColumns);
 router.get('/:userId', controller.getColumnsByUserId);
 router.post('/:userId', registerCreateEditColumn, validateColumn, controller.createColumn);
-router.put('/:id/label', registerCreateEditColumn, validateColumn, controller.editColumnLabelById);
+router.put('/:id/title', registerCreateEditColumn, validateColumn, controller.editColumnTitleById);
 
 export = router;

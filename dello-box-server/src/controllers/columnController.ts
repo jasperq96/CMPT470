@@ -61,7 +61,7 @@ const createColumn = async (req: Request, res: Response, next: NextFunction) => 
   await createItem(req, res, next, NAMESPACE, TABLE_NAME, createInputtedReqBody(req, userId, parseInt(numColumnsForUser.total)));
 };
 
-const editColumnLabelById = async (req: any, res: Response, next: NextFunction) => {
+const editColumnTitleById = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `EDITING A ${TABLE_NAME.toUpperCase()} BY ID`);
   const columnId: string = req.params.id;
   const retrieveColumnWithColumnId: Column = await Knex.select('*').from(TABLE_NAME).where('id', columnId).first();
@@ -79,4 +79,4 @@ const editColumnLabelById = async (req: any, res: Response, next: NextFunction) 
   }
 };
 
-export default { getColumns, getColumnsByUserId, createColumn, editColumnLabelById };
+export default { getColumns, getColumnsByUserId, createColumn, editColumnTitleById };
