@@ -30,6 +30,8 @@ const taskDNEError = dneError('task', 'does not exist');
 const taskEditDeleteNegativeOrNanInputError = negativeOrNanInputError('/task/:id');
 const contactDNEError = dneError('Contacts', 'do not exist for this user');
 const contactNegativeOrNanInputError = negativeOrNanInputError('/contacts/:userId');
+const columnsNegativeOrNanInputError = negativeOrNanInputError('/column/:userId');
+const columnsDNEError = dneError('columns', 'do not exist for this user or user does not exist');
 const columnPostInputError = inputError('/column/:userId');
 const columnLabelInputError = inputError('/column/:id/label');
 const columnLabelNegativeOrNanInputError = negativeOrNanInputError('/column/:id/label');
@@ -53,6 +55,8 @@ export {
   taskEditDeleteNegativeOrNanInputError,
   contactDNEError,
   contactNegativeOrNanInputError,
+  columnsNegativeOrNanInputError,
+  columnsDNEError,
   columnPostInputError,
   columnLabelInputError,
   columnLabelNegativeOrNanInputError,
