@@ -273,7 +273,7 @@ const Tasks = () => {
     return;
   };
   return (
-    <Container fluid style={{ paddingTop: 50 }}>
+    <Container fluid style={{ paddingTop: 50, overflow: 'scroll' }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
