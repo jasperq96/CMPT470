@@ -12,10 +12,12 @@ import ViewFiles from './pages/Files/ViewFiles';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
+import AddContact from './pages/AddContact'
 import Login from './pages/Login';
 import Signup from './pages/Signup/Signup';
 import PrivateRoute from './hocs/privateRoutes';
 import PublicRoute from './hocs/publicRoutes';
+
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
             <PrivateRoute exact path="/files/manage" component={ManageFiles} />
             <PrivateRoute exact path="/files/view" component={ViewFiles} />
             <PrivateRoute exact path="/contacts" component={Contacts} />
+            <PrivateRoute exact path="/contacts/add" component={AddContact} />
           </div>
         </Switch>
       </Router>

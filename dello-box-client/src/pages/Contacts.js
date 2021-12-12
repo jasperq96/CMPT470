@@ -2,21 +2,28 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import httpService from '../services/httpService';
 import '../stylesheets/contacts.css'
+import { useHistory } from "react-router-dom";
 
 export default function Contacts() {
 
   const userContext = useContext(UserContext);
+  const history = useHistory();
 
-  const [departmentState, setDepartmentState] = useState({
-    departments: []
+  const [contactState, setContactState] = useState({
+    contacts: []
   });
 
+  const routeChange = () =>{
+    let path = `/contacts/add`;
+    history.push(path);
+  }
+
   useEffect(() => {
-    getDepartments();
-  }, [setDepartmentState]);
+    getContacts();
+  }, [setContactState]);
 
   
-  const getDepartments = async () => {
+  const getContacts = async () => {
     const url = '/contacts/' + userContext.user?.id;
     console.log("url:" + url)
     try {
@@ -24,8 +31,8 @@ export default function Contacts() {
       const response = await httpService.get(url);
       const { data } = response;
       console.log("data: " + data);
-      setDepartmentState({
-        departments: data
+      setContactState({
+        contacts: data
         }
       );
     } catch (error) {
@@ -33,21 +40,22 @@ export default function Contacts() {
     }
   };
 
-  console.log("cool:" + departmentState.departments[0])
+  console.log("cool:" + contactState.contacts[0])
 
   return (
     <div>
       <h1>Contacts List</h1>
-      <div>-
-      {departmentState.departments.map((department) => {
+      <div>
+      {contactState.contacts.map((contact) => {
             return (
               <div className="contact-card">
-                  <p className="p-title">{department.first_name} {department.last_name} ({department.nickname})</p>
-                  <p className="p-email">{department.email}</p>
-                  <p className="p-phone">{department.phone}</p>
+                  <p className="p-title">{contact.first_name} {contact.last_name} ({contact.nickname})</p>
+                  <p className="p-email">{contact.email}</p>
+                  <p className="p-phone">{contact.phone}</p>
               </div>
             );
           })}
+        <button onClick={routeChange}>Add Contact</button>
       </div>
     </div>
   );
