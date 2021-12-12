@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Row, Col, Form, Button, Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import httpService from '../services/httpService';
+import { capitalize } from '../utils/capitalizeString';
+import { UserContext } from '../hooks/UserContext';
 
 const dummy_data = {
   user_id: 1,
@@ -11,6 +14,8 @@ const dummy_data = {
 };
 
 export default function EditUser() {
+  const userContext = useContext(UserContext);
+  const [info, setInfo] = useState([]);
   const [values, setValue] = useState({
     user_id: 1,
     first_name: dummy_data.first_name,
@@ -18,26 +23,51 @@ export default function EditUser() {
     email: dummy_data.email,
     phone: dummy_data.phone
   });
+
   const handleChange = (evt) => {
     setValue({
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
       console.log(evt.target.value);
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const forBackend = {
+      firstName: values.first_name,
+      lastName: values.last_name,
+      email: values.email,
+      phone: values.phone,
+    }
+    try{
+      await httpService.put(`/user-info/${userContext.user?.id}`, forBackend);
+      toast.success('Successfully editted User Info');
+    }catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
     }
   };
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    alert(`these are the entered values ${values.first_name}
-    ${values.last_name}
-    ${values.email}
-    ${values.phone}`);
-  };
+
+  const updateInfo = async () =>{
+    try{
+      const updated_info = await httpService.get(`/user-info/${userContext.user?.id}`)
+      setValue(updated_info.data);
+    }catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  }
+
+  useEffect(() => {
+    updateInfo();
+  }, []);
 
   return (
     <Container fluid>
-      <h1 className="WhiteHeaders">Creating a Task</h1>
+      <h1 className="WhiteHeaders">Edit User Information</h1>
       <Form>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
