@@ -1,30 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-const dummy_data = [
-  {
-    id: '20',
-    title: 'Second column',
-    col_order: 0
-  },
-  {
-    id: '21',
-    title: 'Third column',
-    col_order: 1
-  },
-  {
-    id: '22',
-    title: 'Fourth column',
-    col_order: 2
-  },
-  {
-    id: '23',
-    title: 'first column',
-    col_order: 3
-  }
-];
+import httpService from '../../services/httpService';
+import { capitalize } from '../../utils/capitalizeString';
+import { UserContext } from '../../hooks/UserContext';
+
 export default function CreateTask() {
-  const [data, setData] = useState(dummy_data);
+  const userContext = useContext(UserContext);
+  const [cols, setCols] = useState([]);
   const [values, setValue] = useState({
     title: '',
     notes: '',
@@ -34,9 +17,11 @@ export default function CreateTask() {
     end_time: '',
     col_id: ''
   });
+
   const [colValue, setColValue] = useState({
     title: ''
   });
+
   const handleChange = (evt) => {
     setValue({
       ...values,
@@ -46,6 +31,7 @@ export default function CreateTask() {
       console.log(evt.target.value);
     }
   };
+
   const handleChangeCol = (evt) => {
     setColValue({
       ...colValue,
@@ -55,6 +41,7 @@ export default function CreateTask() {
       console.log(evt.target.value);
     }
   };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const parsing_Object = { ...values };
@@ -78,41 +65,44 @@ export default function CreateTask() {
       title: parsing_Object.title,
       notes: parsing_Object.notes
     };
-    console.log('This is for', forBackend);
+    const url =`/task/${userContext.user?.id}`;
+    createTaskOrColumn(url, forBackend);
   };
+
   const handleSubmitCol = (evt) => {
     evt.preventDefault();
     const forBackend = {
       title: colValue.title
     };
-    console.log('This is for Backend', forBackend);
-    // if (new Date(comb_start) !== null) {
-    //   const newStartDate = new Date(comb_start).toISOString();
-    //   console.log(newStartDate);
-    // }
-    //console.log(new Date(comb_Start));
-    //console.log(comb_Start);
-    //console.log(comb_Start.toISOString());
+    const url = `/column/${userContext.user?.id}`
+    createTaskOrColumn(url, forBackend);
   };
-  //   Task:
-  //   {
-  //     id: 3,
-  //     user_id: 1,
-  //     col_id: 20,
-  //     index: 0,
-  //     start_date: '2021-11-14T10:30:00.000Z',
-  //     end_date: '2021-11-18T16:30:00.000Z',
-  //     title: 'task1',
-  //     notes: 'Some notes here'
-  //   }
 
-  // Column:
-  //   {
-  //     id: 20,
-  //     title: 'first column',
-  //     col_order: 0
-  //   },
-  //<Form.Control type="Username" placeholder="Enter Username" name="username" value={values.username} onChange={handleChange} />
+  const createTaskOrColumn = async (url, formData) =>{
+    try {
+      await httpService.post(url, formData);
+      toast.success('Successfully created a Task/Column!');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  };
+
+  const getCols = async () => {
+    const url = `/column/${userContext.user?.id}`;
+    try {
+      const response = await httpService.get(url);
+      setCols(response.data);
+    } catch (error) {
+      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+    }
+  };
+
+  useEffect(() => {
+    getCols();
+  }, []);
+
   return (
     <Container fluid>
       <h1 className="WhiteHeaders">Creating a Task</h1>
@@ -148,8 +138,8 @@ export default function CreateTask() {
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label className="WhiteHeaders">Column</Form.Label>
           <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
-            {data.map((col) => (
-              <option value={col.id}>{col.title} </option>
+            {cols.map((col) => (
+              <option value={col.id}>{col.title}</option>
             ))}
           </Form.Select>
         </Form.Group>

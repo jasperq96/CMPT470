@@ -2,10 +2,11 @@ import logging from '../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../config/postgres';
 import { isInvalidUserId } from 'utils/isInvalidUserId';
-import { columnPostInputError, columnLabelInputError } from 'utils/errorMessages';
+import { columnsNegativeOrNanInputError, columnsDNEError, columnPostInputError, columnLabelInputError } from 'utils/errorMessages';
 import { getItemsByCustomQuery } from './requestTemplates/getAllRequest';
-import { Column } from 'db/models/columnModel';
+import { getItemsByUserId } from './requestTemplates/getByUserIdRequest';
 import { createItem } from './requestTemplates/createRequest';
+import { Column } from 'db/models/columnModel';
 import { generateUUID } from 'utils/generateUUID';
 
 const NAMESPACE = 'Column Control';
@@ -45,6 +46,11 @@ const getColumns = async (req: Request, res: Response, next: NextFunction) => {
   await getItemsByCustomQuery(req, res, next, NAMESPACE, TABLE_NAME, queryAllByUserIdAndColOrder());
 };
 
+const getColumnsByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  const userId: number = +req.params.userId;
+  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, columnsNegativeOrNanInputError, columnsDNEError, userId, 'col_order');
+};
+
 const createColumn = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
   if (await isInvalidUserId(userId)) {
@@ -55,7 +61,7 @@ const createColumn = async (req: Request, res: Response, next: NextFunction) => 
   await createItem(req, res, next, NAMESPACE, TABLE_NAME, createInputtedReqBody(req, userId, parseInt(numColumnsForUser.total)));
 };
 
-const editColumnLabelById = async (req: any, res: Response, next: NextFunction) => {
+const editColumnTitleById = async (req: any, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `EDITING A ${TABLE_NAME.toUpperCase()} BY ID`);
   const columnId: string = req.params.id;
   const retrieveColumnWithColumnId: Column = await Knex.select('*').from(TABLE_NAME).where('id', columnId).first();
@@ -73,4 +79,4 @@ const editColumnLabelById = async (req: any, res: Response, next: NextFunction) 
   }
 };
 
-export default { getColumns, createColumn, editColumnLabelById };
+export default { getColumns, getColumnsByUserId, createColumn, editColumnTitleById };

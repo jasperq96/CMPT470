@@ -5,6 +5,7 @@ import { isInvalidInput } from 'utils/isInvalidInput';
 import { tasksNegativeOrNanInputError, tasksDNEError, taskPostInputError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError, columnDNEError } from 'utils/errorMessages';
 import { Task } from 'db/models/taskModel';
 import { getItems } from './requestTemplates/getAllRequest';
+import { getItemsByUserId } from './requestTemplates/getByUserIdRequest';
 import { createItem } from './requestTemplates/createRequest';
 import { editItemById } from './requestTemplates/editByIdRequest';
 import { deleteItemById } from './requestTemplates/deleteByIdRequest';
@@ -28,29 +29,8 @@ const getTasks = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getTasksByUserId = async (req: Request, res: Response, next: NextFunction) => {
-  logging.info(NAMESPACE, `GETTING ${TABLE_NAME.toLocaleUpperCase()}S BY USER ID`);
   const userId: number = +req.params.userId;
-  if (isInvalidInput(userId)) {
-    res.status(400).send(tasksNegativeOrNanInputError);
-    return;
-  }
-
-  try {
-    const retrievedTasks: Task[] = await Knex.select(`${TABLE_NAME}.*`)
-      .from(TABLE_NAME)
-      .join('user', 'user.id', '=', `${TABLE_NAME}.user_id`)
-      .where(`${TABLE_NAME}.user_id`, '=', userId)
-      .orderBy('id');
-    logging.info(NAMESPACE, `RETRIEVED TASKS FOR USER ${userId}`, retrievedTasks);
-    if (!retrievedTasks.length) {
-      res.status(404).send(tasksDNEError);
-      return;
-    }
-    res.status(200).send(retrievedTasks);
-  } catch (error: any) {
-    logging.error(NAMESPACE, error.message, error);
-    res.status(500).send(error);
-  }
+  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, tasksNegativeOrNanInputError, tasksDNEError, userId, 'id');
 };
 
 const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
