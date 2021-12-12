@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import httpService from '../services/httpService';
+import { toast } from 'react-toastify';
+import { editTaskFieldsObject } from '../models/taskModel';
+import { capitalize } from '../utils/capitalizeString';
 
 export default function ModalTaskEdit(props) {
   const [values, setValue] = useState({
@@ -8,25 +12,39 @@ export default function ModalTaskEdit(props) {
     end_date: '',
     notes: ''
   });
+
+  const editTaskFieldsById = async (taskId, editedTaskFields) => {
+    const url = `/task/${taskId}`;
+    try {
+      await httpService.put(url, editedTaskFields);
+      toast.success('Successfully edited task fields!');
+      return true;
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+      return false;
+    }
+  };
+
   const handleChange = (evt) => {
     setValue({
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.value);
+
+    console.log(evt.target.value);
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const isSuccessful = await editTaskFieldsById(props.task.id, editTaskFieldsObject(values));
+    if (isSuccessful) {
+      props.onTaskUpdate(values.notes, values.title, values.start_date, values.end_date);
+      props.handleClose();
     }
   };
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    alert(`submitted values are ${values.title}
-            ${values.start_date}
-            ${values.end_date}
-            ${values.notes}
-            task id is ${props.task.id}`);
-    props.onTaskUpdate(values.notes, values.title, values.start_date, values.end_date);
-    props.handleClose();
-  };
+
   return (
     <Modal show={props.show} onHide={props.handleClose}>
       <Modal.Header closeButton>
