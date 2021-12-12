@@ -1,43 +1,13 @@
 import logging from '../../config/logging';
 import { Request, Response, NextFunction } from 'express';
 import { Knex } from '../../config/postgres';
+import { invalidateId } from 'utils/invalidateId';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { Task, TaskOrder } from 'db/models/taskModel';
 import { File } from 'db/models/fileModel';
 import { Column, ColumnOrder } from 'db/models/columnModel';
 import { editTaskOrderInputtedReqBody } from 'controllers/taskController';
 import { editColumnOrderInputtedReqBody } from 'controllers/columnController';
-import { columnDNEError, taskDNEError } from 'utils/errorMessages';
-
-const invalidateId = async (res: Response, item: any, templateIndicator: number) => {
-  switch (templateIndicator) {
-    case 1:
-      const retrieveColumnWithColumnId: Column = await Knex.select('*').from('column').where('id', item.col_id).first();
-      if (!retrieveColumnWithColumnId) {
-        res.status(400).send(columnDNEError);
-        return true;
-      }
-      if (isInvalidInput(item.id) || isNaN(item.id)) {
-        res.status(400).send(taskDNEError);
-        return true;
-      }
-      const retrievedTask = await Knex.select('*').from('task').where('id', item.id);
-      if (!retrievedTask.length) {
-        res.status(400).send(taskDNEError);
-        return true;
-      }
-      return false;
-    case 2:
-      const retrieveColumnWithId: Column = await Knex.select('*').from('column').where('id', item.id).first();
-      if (!retrieveColumnWithId) {
-        res.status(400).send(columnDNEError);
-        return true;
-      }
-      return false;
-    default:
-      return false;
-  }
-};
 
 const useInputtedBody = (item: any, templateIndicator: number) => {
   switch (templateIndicator) {
@@ -99,7 +69,7 @@ export const updateItems = async (req: Request, res: Response, next: NextFunctio
       const retrievedUpdatedItem: Task | Column = await Knex.select('*').from(tableName).where(`${tableName}.id`, updatedItems[i][0]).first();
       retrievedUpdatedItems.push(retrievedUpdatedItem);
     }
-    logging.info(namespace, 'RETRIEVED UPDATED INSTANCES OF ${tableName.toUpperCase()}', retrievedUpdatedItems);
+    logging.info(namespace, `RETRIEVED UPDATED INSTANCES OF ${tableName.toUpperCase()}`, retrievedUpdatedItems);
     return retrievedUpdatedItems;
   } catch (error: any) {
     logging.error(namespace, error.message, error);

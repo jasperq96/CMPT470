@@ -8,7 +8,7 @@ import { getItems } from './requestTemplates/getAllRequest';
 import { getItemsByUserId } from './requestTemplates/getByUserIdRequest';
 import { createItem } from './requestTemplates/createRequest';
 import { editItemById, updateItems } from './requestTemplates/editByIdRequest';
-import { deleteItemById } from './requestTemplates/deleteByIdRequest';
+import { removeItemById } from './requestTemplates/deleteByIdRequest';
 import { isInvalidUserId } from 'utils/isInvalidUserId';
 
 const NAMESPACE = 'Task Control';
@@ -88,8 +88,16 @@ const editTaskOrder = async (req: Request, res: Response, next: NextFunction) =>
   if (!res.headersSent) res.status(201).send(retrievedUpdatedTasks);
 };
 
-const deleteTaskById = async (req: Request, res: Response, next: NextFunction) => {
-  await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
+const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
+  const taskId: number = +req.body.task_id;
+  const tasksToDelete: boolean | undefined = await removeItemById(req, res, next, NAMESPACE, TABLE_NAME, taskId, TEMPLATE_VER);
+  if (tasksToDelete) {
+    res.status(404).send(taskDNEError);
+    return;
+  }
+  const tasksToUpdate: TaskOrder[] = req.body.list_of_tasks;
+  const retrievedUpdatedTasks: Task[] | boolean | undefined = await updateItems(req, res, next, NAMESPACE, TABLE_NAME, tasksToUpdate, TEMPLATE_VER);
+  if (!res.headersSent) res.sendStatus(204);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, editTaskOrder, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, editTaskOrder, deleteTask };

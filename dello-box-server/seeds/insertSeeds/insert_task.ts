@@ -1,6 +1,5 @@
 import { Knex as typeKnex } from 'knex';
 import { Knex } from '../../src/config/postgres';
-import logging from '../../src/config/logging';
 import { Column } from '../../src/db/models/columnModel';
 
 export async function insertTask(knex: typeKnex): Promise<void> {

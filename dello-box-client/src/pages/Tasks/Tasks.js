@@ -144,6 +144,18 @@ const Tasks = () => {
     return;
   };
 
+  const deleteTask = async (deletedTask) => {
+    const url = '/task';
+    try {
+      await httpService.del(url, { data: deletedTask });
+      toast.success('Successfully deleted task!');
+    } catch (error) {
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    }
+  };
+
   const getColumnsByUserId = async () => {
     const url = `/column/${userContext.user?.id}`;
     try {
@@ -164,13 +176,31 @@ const Tasks = () => {
     }
   };
 
+  /** Fix if have time */
+  // const parseTasks = (columns, tasks) => {
+  //   const parsing_tasks = tasks.filter((desired_tasks) => columns === desired_tasks.col_id);
+  //   for (let i = 0; i < tasks.length; i++) {
+  //     const parsed_object = {
+  //       id: tasks[i].id,
+  //       user_id: tasks[i].user_id,
+  //       col_id: tasks[i].col_id,
+  //       index: i,
+  //       start_date: tasks[i].start_date,
+  //       end_date: tasks[i].end_date,
+  //       title: tasks[i].title,
+  //       notes: tasks[i].notes
+  //     };
+  //     parsing_tasks.push(parsed_object);
+  //   }
+  // };
+
   const parseColumns = (columns, tasks) => {
     const parsing_columns = [];
     for (let i = 0; i < columns.length; i++) {
       const parsed_object = {
         id: columns[i].id,
         title: columns[i].title,
-        col_order: columns[i].col_order,
+        col_order: i,
         col_tasks: tasks.filter((desired_tasks) => columns[i].id === desired_tasks.col_id)
       };
       parsing_columns.push(parsed_object);
@@ -198,6 +228,8 @@ const Tasks = () => {
       list_of_tasks: copied_tasks
     };
     console.log('BACKEND This is the bundle for when you delete tasks', Back_End_Bundle);
+    console.log('task_id type ' + typeof Back_End_Bundle.task_id);
+    deleteTask(Back_End_Bundle);
     column_array[column_index].col_tasks = copied_tasks;
     setParsed_Columns(column_array); //send the taskid of the one thats deleted BACKEND
     setTask_Modal(false);
@@ -206,11 +238,14 @@ const Tasks = () => {
   const onColumnDelete = (index) => {
     const column_array = [...parsed_columns];
     const column = parsed_columns[column_index];
+    const list_of_tasks_length = column_array[index].col_tasks.length;
+    console.log(list_of_tasks_length);
     column_array.splice(index, 1);
     column_array.forEach((col, index) => (col.col_order = index));
     const array_without_tasks = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
     const Back_End_Bundle = {
       col_id: column.id,
+      list_of_tasks_length: list_of_tasks_length,
       list_of_tasks: column.col_tasks,
       list_of_columns: array_without_tasks
     };
