@@ -10,7 +10,7 @@ router.get('/:userId', controller.getTasksByUserId);
 router.get('/view/:id', controller.getTaskById);
 router.post('/:userId', registerCreateTask, validateTask, controller.createTask);
 router.put('/fields/:id', registerEditFieldsTask, validateTask, controller.editTaskFieldsById);
-router.put('/order', registerEditOrderTask, validateTask, controller.editTaskOrderById);
+router.put('/order', registerEditOrderTask, validateTask, controller.editTaskOrder);
 router.delete('/:id', controller.deleteTaskById);
 
 export = router;

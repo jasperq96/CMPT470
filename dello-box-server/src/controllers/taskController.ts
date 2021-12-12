@@ -82,7 +82,7 @@ const editTaskFieldsById = async (req: Request, res: Response, next: NextFunctio
   await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, editFieldsInputtedReqBody(req), taskId, 'id');
 };
 
-const editTaskOrderById = async (req: Request, res: Response, next: NextFunction) => {
+const editTaskOrder = async (req: Request, res: Response, next: NextFunction) => {
   const tasksToUpdate: TaskOrder[] = req.body.tasks;
   const retrievedUpdatedTasks: Task[] | boolean | undefined = await updateItems(req, res, next, NAMESPACE, TABLE_NAME, tasksToUpdate, TEMPLATE_VER);
   if (!res.headersSent) res.status(201).send(retrievedUpdatedTasks);
@@ -92,4 +92,4 @@ const deleteTaskById = async (req: Request, res: Response, next: NextFunction) =
   await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, editTaskOrderById, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, editTaskOrder, deleteTaskById };

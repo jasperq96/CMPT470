@@ -4,11 +4,12 @@ import { Knex } from '../../config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { Task, TaskOrder } from 'db/models/taskModel';
 import { File } from 'db/models/fileModel';
-import { Column } from 'db/models/columnModel';
+import { Column, ColumnOrder } from 'db/models/columnModel';
 import { editTaskOrderInputtedReqBody } from 'controllers/taskController';
+import { editColumnOrderInputtedReqBody } from 'controllers/columnController';
 import { columnDNEError, taskDNEError } from 'utils/errorMessages';
 
-const InvalidateId = async (res: Response, item: any, templateIndicator: number) => {
+const invalidateId = async (res: Response, item: any, templateIndicator: number) => {
   switch (templateIndicator) {
     case 1:
       const retrieveColumnWithColumnId: Column = await Knex.select('*').from('column').where('id', item.col_id).first();
@@ -42,6 +43,8 @@ const useInputtedBody = (item: any, templateIndicator: number) => {
   switch (templateIndicator) {
     case 1:
       return editTaskOrderInputtedReqBody(item.col_id, item.index);
+    case 2:
+      return editColumnOrderInputtedReqBody(item.col_order);
     default:
       return { error: -1 };
   }
@@ -80,20 +83,20 @@ export const editItemById = async (
   }
 };
 
-export const updateItems = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string, itemsToInsert: TaskOrder[], templateIndicator: number) => {
+export const updateItems = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string, itemsToInsert: TaskOrder[] | ColumnOrder[], templateIndicator: number) => {
   logging.info(namespace, `UPDATING INSTANCES OF ${tableName.toUpperCase()}`);
   let ERROR_DETECTED: boolean = false;
   try {
     let updatedItems: any[] = [];
     for (let i = 0; i < itemsToInsert.length; i++) {
-      ERROR_DETECTED = await InvalidateId(res, itemsToInsert[i], templateIndicator);
+      ERROR_DETECTED = await invalidateId(res, itemsToInsert[i], templateIndicator);
       if (ERROR_DETECTED) break;
       updatedItems.push(await Knex.update(useInputtedBody(itemsToInsert[i], templateIndicator)).into(tableName).where('id', itemsToInsert[i].id).returning('id'));
     }
     if (ERROR_DETECTED) return ERROR_DETECTED;
-    let retrievedUpdatedItems: Task[] = [];
+    let retrievedUpdatedItems: any[] = [];
     for (let i = 0; i < updatedItems.length; i++) {
-      const retrievedUpdatedItem: Task = await Knex.select('*').from(tableName).where(`${tableName}.id`, updatedItems[i][0]).first();
+      const retrievedUpdatedItem: Task | Column = await Knex.select('*').from(tableName).where(`${tableName}.id`, updatedItems[i][0]).first();
       retrievedUpdatedItems.push(retrievedUpdatedItem);
     }
     logging.info(namespace, 'RETRIEVED UPDATED INSTANCES OF ${tableName.toUpperCase()}', retrievedUpdatedItems);

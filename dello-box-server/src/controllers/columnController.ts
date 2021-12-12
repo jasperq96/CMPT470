@@ -6,11 +6,13 @@ import { columnsNegativeOrNanInputError, columnsDNEError, columnPostInputError, 
 import { getItemsByCustomQuery } from './requestTemplates/getAllRequest';
 import { getItemsByUserId } from './requestTemplates/getByUserIdRequest';
 import { createItem } from './requestTemplates/createRequest';
-import { Column } from 'db/models/columnModel';
+import { updateItems } from './requestTemplates/editByIdRequest';
+import { Column, ColumnOrder } from 'db/models/columnModel';
 import { generateUUID } from 'utils/generateUUID';
 
 const NAMESPACE = 'Column Control';
 const TABLE_NAME = 'column';
+const TEMPLATE_VER = 2;
 
 export const insertNewUserColumns = async (userId: number): Promise<Column[]> => {
   const columnSeed: Column[] = [];
@@ -36,6 +38,10 @@ const createInputtedReqBody = (req: Request, userId: number, colOrder: number) =
 const editLabelInputtedReqBody = (req: Request) => {
   const { title } = req.body;
   return { title: title };
+};
+
+export const editColumnOrderInputtedReqBody = (colOrder: string) => {
+  return { col_order: colOrder };
 };
 
 const queryAllByUserIdAndColOrder = () => {
@@ -79,4 +85,10 @@ const editColumnTitleById = async (req: any, res: Response, next: NextFunction) 
   }
 };
 
-export default { getColumns, getColumnsByUserId, createColumn, editColumnTitleById };
+const editColumnOrder = async (req: Request, res: Response, next: NextFunction) => {
+  const columnsToUpdate: ColumnOrder[] = req.body.columns;
+  const retrievedUpdatedColumns: Column[] | boolean | undefined = await updateItems(req, res, next, NAMESPACE, TABLE_NAME, columnsToUpdate, TEMPLATE_VER);
+  if (!res.headersSent) res.status(201).send(retrievedUpdatedColumns);
+};
+
+export default { getColumns, getColumnsByUserId, createColumn, editColumnTitleById, editColumnOrder };
