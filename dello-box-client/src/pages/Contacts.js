@@ -4,6 +4,7 @@ import httpService from '../services/httpService';
 import '../stylesheets/contacts.css'
 import { useHistory } from "react-router-dom";
 import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 export default function Contacts() {
 
@@ -30,34 +31,40 @@ export default function Contacts() {
 
   const getContacts = async () => {
     const url = `/contacts/${userContext.user?.id}`;
-    console.log("url:" + url)
     try {
-      console.log("Getting contacts...")
       const response = await httpService.get(url);
       const { data } = response;
-      console.log("data: " + data);
       setContactState({
         contacts: data
         }
       );
     } catch (error) {
-      console.log('Error: Unable to fetch from ' + url);
+      console.log(error);
     }
   };
 
-  const searchContact = async (id) => {
+  const searchContact = async () => {
 
-    const url = `/contacts/${userContext.user?.id}/filter`;
+    if (document.getElementById('search-bar').value.length < 4) {
+
+      toast.error(`Please enter a minimum of 4 characters!`);
+      setQueryContactState({
+        queryContacts: []
+      });
+      return;
+    }
+    toast.dismiss();
+
+    const url = `/contacts/filter/${userContext.user?.id}/${document.getElementById('search-bar').value}`;
 
     try {
       const response = await httpService.get(url, {"contactId": "user"});
       const { data } = response;
-      console.log("put response: " + data);
       setQueryContactState({
         queryContacts: data
       });
     } catch (error) {
-      console.log('Error: Unable to fetch from ' + url);
+      console.log(error);
     }
 
     let path = `/contacts`;
@@ -65,6 +72,38 @@ export default function Contacts() {
 
     return undefined;
   }
+
+  const addContact = async (id) => {
+    const url = `/contacts/${userContext.user?.id}/add`;
+
+    try {
+      const response = await httpService.put(url, {"contactId":id});
+      const { data } = response;
+    } catch (error) {
+      console.log(error);
+    }
+
+    await getContacts();
+
+    return undefined;
+  }
+
+  const removeContact = async (id) => {
+
+    const url = `/contacts/${userContext.user?.id}/add`;
+
+    try {
+      const response = await httpService.delete(url, {"contactId":id});
+      const { data } = response;
+    } catch (error) {
+      console.log(error);
+    }
+
+    await getContacts();
+
+    return undefined;
+  }
+
 
   return (
 
@@ -78,6 +117,7 @@ export default function Contacts() {
                 <p className="p-title">{contact.first_name} {contact.last_name} ({contact.nickname})</p>
                 <p className="p-email">{contact.email}</p>
                 <p className="p-phone">{contact.phone}</p>
+                <button onClick={() => removeContact(contact.user_id)}>Remove from contacts</button>
               </div>
             );
           })}
@@ -85,7 +125,7 @@ export default function Contacts() {
         <td>
           <h1>Add Contact</h1>
           <Form.Group className="mb-3" controlId="formSearch">
-            <Form.Control id="search-bar" type="search" placeholder="Search contacts..." ></Form.Control>
+            <Form.Control id="search-bar" type="search" placeholder="Search friend's username..." ></Form.Control>
           </Form.Group>
           <button onClick={searchContact}>Search</button>
           {queryContactState.queryContacts.map((contact) => {
@@ -94,7 +134,7 @@ export default function Contacts() {
                 <p className="p-title">{contact.first_name} {contact.last_name} ({contact.nickname})</p>
                 <p className="p-email">{contact.email}</p>
                 <p className="p-phone">{contact.phone}</p>
-                <button>Add contact</button>
+                <button onClick={() => addContact(contact.user_id)}>Add to Contacts</button>
               </div>
             );
           })}

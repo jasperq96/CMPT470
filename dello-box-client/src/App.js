@@ -41,7 +41,6 @@ const App = () => {
             <PrivateRoute exact path="/files/view" component={ViewFiles} />
             <PrivateRoute exact path="/userinfo" component={EditUser} />
             <PrivateRoute exact path="/contacts" component={Contacts} />
-            <PrivateRoute exact path="/contacts/add" component={AddContact} />
           </div>
         </Switch>
       </Router>
