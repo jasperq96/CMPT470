@@ -145,7 +145,9 @@ export default function CreateTask() {
           <Form.Label className="WhiteHeaders">Column</Form.Label>
           <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
             {cols.map((col) => (
-              <option value={col.id}>{col.title}</option>
+              <option value={col.id} key={col.id}>
+                {col.title}
+              </option>
             ))}
           </Form.Select>
         </Form.Group>
