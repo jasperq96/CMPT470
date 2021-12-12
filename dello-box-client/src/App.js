@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup/Signup';
 import PrivateRoute from './hocs/privateRoutes';
 import PublicRoute from './hocs/publicRoutes';
+import EditUser from './pages/EditUser';
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
             <PrivateRoute exact path="/files/upload" component={UploadFiles} />
             <PrivateRoute exact path="/files/manage" component={ManageFiles} />
             <PrivateRoute exact path="/files/view" component={ViewFiles} />
+            <PrivateRoute exact path="/userinfo" component={EditUser} />
             <PrivateRoute exact path="/contacts" component={Contacts} />
           </div>
         </Switch>
