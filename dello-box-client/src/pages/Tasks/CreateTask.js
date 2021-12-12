@@ -17,9 +17,11 @@ export default function CreateTask() {
     end_time: '',
     col_id: ''
   });
+
   const [colValue, setColValue] = useState({
     title: ''
   });
+
   const handleChange = (evt) => {
     setValue({
       ...values,
@@ -29,6 +31,7 @@ export default function CreateTask() {
       console.log(evt.target.value);
     }
   };
+
   const handleChangeCol = (evt) => {
     setColValue({
       ...colValue,
@@ -38,6 +41,7 @@ export default function CreateTask() {
       console.log(evt.target.value);
     }
   };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const parsing_Object = { ...values };
@@ -90,6 +94,7 @@ export default function CreateTask() {
     try {
       const response = await httpService.get(url);
       setCols(response.data);
+      // console.log("This is the Column data that was grabbed:", response.data);
     } catch (error) {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
     }
@@ -135,7 +140,7 @@ export default function CreateTask() {
           <Form.Label className="WhiteHeaders">Column</Form.Label>
           <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
             {cols.map((col) => (
-              <option value={col.id}>{col.title} </option>
+              <option value={col.id}>{col.title}</option>
             ))}
           </Form.Select>
         </Form.Group>
