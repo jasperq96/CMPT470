@@ -11,6 +11,19 @@ import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
 
+const editColumnOrder = async (updatedColumns) => {
+  const url = '/column/order';
+  try {
+    await httpService.put(url, updatedColumns);
+    toast.success('Successfully saved!');
+  } catch (error) {
+    // Will display the first input error message
+    const errorBody = error.response.data.errors[0];
+    toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    return false;
+  }
+};
+
 const editTaskOrder = async (updatedTasks) => {
   const url = '/task/order';
   try {
@@ -42,6 +55,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
     const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
     console.log('BACKEND what i pass when i move the columns', { columns: pass_backend }); //reformat this to pass column array normally Done BACKEND
     //of the columns
+    editColumnOrder({ columns: pass_backend });
     setParsed_Columns(column_array);
   } else {
     if (source.droppableId !== destination.droppableId) {
