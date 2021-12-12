@@ -65,9 +65,20 @@ export default function CreateTask() {
       title: parsing_Object.title,
       notes: parsing_Object.notes
     };
+
     console.log(forBackend);
     const url = `/task/${userContext.user?.id}`;
     createTaskOrColumn(url, forBackend);
+    setValue({
+      title: '',
+      notes: '',
+      start_date: '',
+      start_time: '',
+      end_date: '',
+      end_time: '',
+      col_id: ''
+    });
+    console.log(values);
   };
 
   const handleSubmitCol = (evt) => {
@@ -82,6 +93,9 @@ export default function CreateTask() {
     } else {
       toast.error('Title: Must have a length of at least 1 character');
     }
+    setColValue({
+      title: ''
+    });
   };
 
   const createTaskOrColumn = async (url, formData) => {
@@ -115,30 +129,30 @@ export default function CreateTask() {
       <Form>
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label className="WhiteHeaders">Task Title</Form.Label>
-          <Form.Control type="Text" placeholder="Task Title" name="title" onChange={handleChange} />
+          <Form.Control type="Text" placeholder="Task Title" name="title" value={values.title} onChange={handleChange} />
         </Form.Group>
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label className="WhiteHeaders">Task Notes</Form.Label>
-          <Form.Control type="Text" placeholder="Task Notes" as="textarea" rows={3} name="notes" onChange={handleChange} />
+          <Form.Control type="Text" placeholder="Task Notes" as="textarea" rows={3} name="notes" value={values.notes} onChange={handleChange} />
         </Form.Group>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label className="WhiteHeaders">Start Date</Form.Label>
-            <Form.Control type="Date" placeholder="First Day of The Task" name="start_date" onChange={handleChange} />
+            <Form.Control type="Date" placeholder="First Day of The Task" name="start_date" value={values.start_date} onChange={handleChange} />
           </Form.Group>
           <Form.Group as={Col} controlId="formGridPassword">
             <Form.Label className="WhiteHeaders">Time of Event</Form.Label>
-            <Form.Control type="Time" placeholder="Time of Event" name="start_time" onChange={handleChange} />
+            <Form.Control type="Time" placeholder="Time of Event" name="start_time" value={values.start_time} onChange={handleChange} />
           </Form.Group>
         </Row>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label className="WhiteHeaders">End Date</Form.Label>
-            <Form.Control type="Date" placeholder="First Day of The Task" name="end_date" onChange={handleChange} />
+            <Form.Control type="Date" placeholder="Last Day of The Task" name="end_date" value={values.end_date} onChange={handleChange} />
           </Form.Group>
           <Form.Group as={Col} controlId="formGridPassword">
             <Form.Label className="WhiteHeaders">Time of Event End</Form.Label>
-            <Form.Control type="Time" placeholder="Time of Event" name="end_time" onChange={handleChange} />
+            <Form.Control type="Time" placeholder="Time of Event End" name="end_time" value={values.end_time} onChange={handleChange} />
           </Form.Group>
         </Row>
         <Form.Group as={Col} controlId="formGridState">
