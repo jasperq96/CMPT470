@@ -14,6 +14,7 @@ export default function Contacts() {
   });
 
   const routeChange = () =>{
+
     let path = `/contacts/add`;
     history.push(path);
   }
@@ -46,6 +47,7 @@ export default function Contacts() {
     <div>
       <h1>Contacts List</h1>
       <div>
+
       {contactState.contacts.map((contact) => {
             return (
               <div className="contact-card">
