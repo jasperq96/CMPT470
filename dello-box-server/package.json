@@ -31,6 +31,7 @@
   "dependencies": {
     "@types/cors": "^2.8.12",
     "@types/pg": "^8.6.1",
+    "@types/uuid": "^8.3.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -48,6 +49,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
-    "tsconfig-paths": "^3.11.0"
+    "tsconfig-paths": "^3.11.0",
+    "uuid": "^8.3.2"
   }
 }

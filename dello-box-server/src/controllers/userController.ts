@@ -8,9 +8,11 @@ import { getItems } from './requestTemplates/getAllRequest';
 import { insertItem } from './requestTemplates/createRequest';
 import { User } from 'db/models/userModel';
 import { UserInfo } from 'db/models/userInfoModel';
+import { Column } from 'db/models/columnModel';
 import { userInfoDNEError } from 'utils/errorMessages';
 import { deleteUser } from './requestTemplates/deleteUserById';
 import controller from './fileController';
+import { insertNewUserColumns } from './columnController';
 
 const NAMESPACE = 'User Control';
 const TABLE_USER = 'user';
@@ -31,7 +33,7 @@ const retrieveUserByUserName = async (username: string): Promise<User> => {
 };
 
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_USER);
+  await getItems(req, res, next, NAMESPACE, TABLE_USER, 'id');
 };
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -46,7 +48,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       const createdUser: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);
       const newlyCreatedUser: User = await retrieveUserByUserName(newUser.username);
       const createdUserInfo: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER_INFO, userInfoInputtedReqBody(req, newlyCreatedUser.id));
-      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }]);
+      const createdColumns: Column[] = await insertNewUserColumns(newlyCreatedUser.id);
+      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }, { columns: createdColumns }]);
     }
   } catch (error: any) {
     logging.error(NAMESPACE, error.message, error);
@@ -91,6 +94,7 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
     controller.deleteFileById;
     await deleteUser(req, res, next, NAMESPACE, 'file');
     await deleteUser(req, res, next, NAMESPACE, 'task');
+    await deleteUser(req, res, next, NAMESPACE, 'column');
     await deleteUser(req, res, next, NAMESPACE, 'user');
 
     const retrievedUsers = await Knex.select('*').from('user');

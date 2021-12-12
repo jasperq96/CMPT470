@@ -7,6 +7,7 @@ import fileRoutes from './fileRoute';
 import contactRoutes from './contactsRoute';
 import fileListRoutes from './fileListRoute';
 import authenticationRoutes from './authenticationRoute';
+import columnRoutes from './columnRoute';
 import passport from 'passport';
 
 const authRouter = Router();
@@ -25,6 +26,7 @@ privateRouter.use('/file-list', fileListRoutes);
 privateRouter.use('/user', userPrivateRoutes);
 privateRouter.use('/task', taskRoutes);
 privateRouter.use('/contacts', contactRoutes);
+privateRouter.use('/column', columnRoutes);
 
 const initializeRouter = Router();
 initializeRouter.use(authRouter);

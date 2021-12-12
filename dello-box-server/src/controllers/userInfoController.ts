@@ -15,7 +15,7 @@ const inputtedReqBody = (req: Request) => {
 };
 
 const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
-  await getItems(req, res, next, NAMESPACE, TABLE_NAME);
+  await getItems(req, res, next, NAMESPACE, TABLE_NAME, 'id');
 };
 
 const getUserInfoByUserId = async (req: Request, res: Response, next: NextFunction) => {
