@@ -28,7 +28,7 @@ export const deleteItemById = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-export const removeItemById = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string, columnId: number, templateIndicator: number) => {
+export const removeItemById = async (req: Request, res: Response, next: NextFunction, namespace: string, tableName: string, columnId: number | string, templateIndicator: number) => {
   logging.info(namespace, `DELETING A ${tableName.toUpperCase()} BY ID`);
   try {
     const ERROR_DETECTED: boolean = await isInvalidId('id', columnId, tableName, templateIndicator);

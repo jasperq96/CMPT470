@@ -11,7 +11,6 @@ const ModalColumnsEdit = (props) => {
   });
 
   const editColumnTitleById = async (columnId, editedColumnTitle) => {
-    console.log(columnId);
     const url = `/column/title/${columnId}`;
     try {
       await httpService.put(url, editedColumnTitle);
@@ -30,12 +29,10 @@ const ModalColumnsEdit = (props) => {
       ...values,
       [evt.target.name]: evt.target.value
     });
-    console.log(evt.target.value);
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log('PROPS ' + props.column);
     const isSuccessful = await editColumnTitleById(props.column.id, editColumnTitleObject(values));
     if (isSuccessful) {
       props.onColUpdate(values.title);
@@ -46,10 +43,7 @@ const ModalColumnsEdit = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>
-          Editing a column {props.task_index}
-          {props.col_index}
-        </Modal.Title>
+        <Modal.Title>Editing a column</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>

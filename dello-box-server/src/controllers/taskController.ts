@@ -90,8 +90,8 @@ const editTaskOrder = async (req: Request, res: Response, next: NextFunction) =>
 
 const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   const taskId: number = +req.body.task_id;
-  const tasksToDelete: boolean | undefined = await removeItemById(req, res, next, NAMESPACE, TABLE_NAME, taskId, TEMPLATE_VER);
-  if (tasksToDelete) {
+  const taskToDelete: boolean | undefined = await removeItemById(req, res, next, NAMESPACE, TABLE_NAME, taskId, TEMPLATE_VER);
+  if (taskToDelete) {
     res.status(404).send(taskDNEError);
     return;
   }

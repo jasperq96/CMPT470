@@ -32,7 +32,6 @@ const ModalTaskEdit = (props) => {
       ...values,
       [evt.target.name]: evt.target.value
     });
-    console.log(evt.target.value);
   };
 
   const handleSubmit = async (evt) => {
@@ -47,16 +46,13 @@ const ModalTaskEdit = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>
-          Editing a Task {props.task_index}
-          {props.col_index}
-        </Modal.Title>
+        <Modal.Title>Editing a Task</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 mt-5" controlId="formBasicUsername">
             <Form.Label>Title</Form.Label>
-            <Form.Control type="text" placeholder="First name" name="title" value={values.title} onChange={handleChange} />
+            <Form.Control type="text" placeholder={props.task.title} name="title" value={values.title} onChange={handleChange} />
           </Form.Group>
           <Row>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicFirstName">

@@ -38,17 +38,17 @@ export const invalidateId = async (res: Response, item: any, templateIndicator: 
 export const isInvalidId = async (columnIdName: string, itemId: any, tableName: string, templateIndicator: number) => {
   switch (templateIndicator) {
     case 1:
-      const retrieveItemWithItemId: Column = await Knex.select('*').from(tableName).where(columnIdName, itemId).first();
-      if (!retrieveItemWithItemId) {
-        return true;
-      }
-      return false;
-    case 2:
       if (isInvalidInput(itemId) || isNaN(itemId)) {
         return true;
       }
       const retrievedItemWithId: Task = await Knex.select('*').from(tableName).where(columnIdName, itemId).first();
       if (!retrievedItemWithId) {
+        return true;
+      }
+      return false;
+    case 2:
+      const retrieveItemWithItemId: Column = await Knex.select('*').from(tableName).where(columnIdName, itemId).first();
+      if (!retrieveItemWithItemId) {
         return true;
       }
       return false;
