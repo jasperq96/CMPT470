@@ -76,3 +76,7 @@ th {
 td {
   background-color: rgb(156, 162, 165);
 }
+
+.WhiteHeaders {
+  color: white;
+}

@@ -27,9 +27,14 @@ function Navigationbar() {
               <Nav.Link as={Link} to={'/calendar'}>
                 Calendar
               </Nav.Link>
-              <Nav.Link as={Link} to={'/tasks'}>
-                Tasks
-              </Nav.Link>
+              <NavDropdown title="Tasks" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={'/tasks/dello'}>
+                  Board
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/tasks/create_tasks'}>
+                  Create a Task/Column
+                </NavDropdown.Item>
+              </NavDropdown>
               <NavDropdown title="Files" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to={'/files/upload'}>
                   Upload A File
