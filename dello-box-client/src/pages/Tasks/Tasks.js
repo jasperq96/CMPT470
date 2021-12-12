@@ -11,6 +11,19 @@ import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
 
+const editTaskOrder = async (updatedTasks) => {
+  const url = '/task/order';
+  try {
+    await httpService.put(url, updatedTasks);
+    toast.success('Successfully saved!');
+  } catch (error) {
+    // Will display the first input error message
+    const errorBody = error.response.data.errors[0];
+    toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
+    return false;
+  }
+};
+
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
   //console.log('i am dragging');
   if (result.destination === null) {
@@ -48,6 +61,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       column_array[destination.droppableId].col_tasks = to_tasks; // reformat this to pass both tasks lists in a single list make sure indeces arent fucked BACKEND
       const pass_double_task = [...from_tasks, ...to_tasks];
       console.log("BACKEND these are the tasks i'm passing to backend when you move between columns col_id and indeces change", { tasks: pass_double_task });
+      editTaskOrder({ tasks: pass_double_task });
       setParsed_Columns(column_array);
       //console.log('i tried to move between columns', from_tasks, to_tasks);
     } else {
@@ -61,6 +75,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       const pass_task = [...copied_tasks];
       console.log("BACKEND this is what i'm passing to back end when i change tasks within a column", { tasks: copied_tasks }); // reformat this to pass back single task list affected BACKEND
       column_array[source.droppableId].col_tasks = copied_tasks;
+      editTaskOrder({ tasks: copied_tasks });
       setParsed_Columns(column_array);
       //console.log('after setting parsed columns', column_array);
     }

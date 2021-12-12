@@ -35,7 +35,7 @@ const getTasks = async (req: Request, res: Response, next: NextFunction) => {
 
 const getTasksByUserId = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
-  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, tasksNegativeOrNanInputError, tasksDNEError, userId, 'id');
+  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, tasksNegativeOrNanInputError, tasksDNEError, userId, 'index');
 };
 
 const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
