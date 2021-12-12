@@ -48,7 +48,7 @@ const getColumns = async (req: Request, res: Response, next: NextFunction) => {
 
 const getColumnsByUserId = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
-  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, columnsNegativeOrNanInputError, columnsDNEError, userId, 'id');
+  await getItemsByUserId(req, res, next, NAMESPACE, TABLE_NAME, columnsNegativeOrNanInputError, columnsDNEError, userId, 'col_order');
 };
 
 const createColumn = async (req: Request, res: Response, next: NextFunction) => {

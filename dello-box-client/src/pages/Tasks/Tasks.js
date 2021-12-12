@@ -1,130 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Container, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { UserContext } from '../../hooks/UserContext';
+import httpService from '../../services/httpService';
+import { toast } from 'react-toastify';
+import { capitalize } from '../../utils/capitalizeString';
 import './Tasks.css';
 import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
-const tasksfrombackend = [
-  {
-    id: 3,
-    user_id: 1,
-    col_id: 20,
-    index: 0,
-    start_date: '2021-11-14T10:30:00.000Z',
-    end_date: '2021-11-18T16:30:00.000Z',
-    title: 'task1',
-    notes: 'Some notes here'
-  },
-  {
-    id: 2,
-    user_id: 1,
-    col_id: 20,
-    index: 1,
-    start_date: '2021-11-16T09:00:00.000Z',
-    end_date: '2021-11-24T18:30:00.000Z',
-    title: 'task2',
-    notes: 'Some other notes here'
-  },
-  {
-    id: 5,
-    user_id: 1,
-    col_id: 20,
-    index: 2,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  },
-  {
-    id: 4,
-    user_id: 1,
-    col_id: 20,
-    index: 3,
-    start_date: '2021-11-17T09:00:00.000Z',
-    end_date: '2021-11-25T18:30:00.000Z',
-    title: 'task4',
-    notes: 'Blah blah blah'
-  },
-  {
-    id: 6,
-    user_id: 1,
-    col_id: 20,
-    index: 4,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  },
-  {
-    id: 7,
-    user_id: 1,
-    col_id: 20,
-    index: 5,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  },
-  {
-    id: 8,
-    user_id: 1,
-    col_id: 22,
-    index: 0,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  },
-  {
-    id: 9,
-    user_id: 1,
-    col_id: 1,
-    index: 6,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  },
-  {
-    id: 10,
-    user_id: 1,
-    col_id: 1,
-    index: 7,
-    start_date: '2021-11-13T10:30:00.000Z',
-    end_date: '2021-11-19T16:30:00.000Z',
-    title: 'task3',
-    notes: 'More notes here'
-  }
-];
-const columnsfrombackend = [
-  {
-    id: 20,
-    title: 'first column',
-    col_order: 0
-  },
-  {
-    id: 21,
-    title: 'second column',
-    col_order: 1
-  },
-  {
-    id: 22,
-    title: 'third column',
-    col_order: 2
-  },
-  {
-    id: 23,
-    title: 'third column',
-    col_order: 3
-  },
-  {
-    id: 24,
-    title: 'third column',
-    col_order: 4
-  }
-];
 
 const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
   //console.log('i am dragging');
@@ -182,9 +67,8 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
   }
 };
 
-export default function Tasks() {
-  const [tasks, setTask] = useState(tasksfrombackend);
-  const [columns, setColumns] = useState(columnsfrombackend);
+const Tasks = () => {
+  const userContext = useContext(UserContext);
   const [task_modal, setTask_Modal] = useState(false);
   const [column_modal, setColumn_Modal] = useState(false);
   const [column_index, setColumn_Index] = useState(0);
@@ -231,17 +115,45 @@ export default function Tasks() {
     return;
   };
 
-  const parsing_columns = [];
-  for (let i = 0; i < columns.length; i++) {
-    const parsed_object = {
-      id: columns[i].id,
-      title: columns[i].title,
-      col_order: columns[i].col_order,
-      col_tasks: tasks.filter((desired_tasks) => columns[i].id === desired_tasks.col_id)
-    };
-    parsing_columns.push(parsed_object);
-  }
-  const [parsed_columns, setParsed_Columns] = useState(parsing_columns);
+  const getColumnsByUserId = async () => {
+    const url = `/column/${userContext.user?.id}`;
+    try {
+      const response = await httpService.get(url);
+      getTasksByUserId(response.data);
+    } catch (error) {
+      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+    }
+  };
+
+  const getTasksByUserId = async (fetchedColumns) => {
+    const url = `/task/${userContext.user?.id}`;
+    try {
+      const response = await httpService.get(url);
+      parseColumns(fetchedColumns, response.data);
+    } catch (error) {
+      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+    }
+  };
+
+  const parseColumns = (columns, tasks) => {
+    const parsing_columns = [];
+    for (let i = 0; i < columns.length; i++) {
+      const parsed_object = {
+        id: columns[i].id,
+        title: columns[i].title,
+        col_order: columns[i].col_order,
+        col_tasks: tasks.filter((desired_tasks) => columns[i].id === desired_tasks.col_id)
+      };
+      parsing_columns.push(parsed_object);
+    }
+    setParsed_Columns(parsing_columns);
+  };
+
+  useEffect(() => {
+    getColumnsByUserId();
+  }, []);
+
+  const [parsed_columns, setParsed_Columns] = useState([]);
   //setParsed_Columns(parsing_columns);
   console.log(parsed_columns);
   //onDragEnd(result, parsed_columns, setParsed_Columns)
@@ -449,4 +361,6 @@ export default function Tasks() {
       </DragDropContext>
     </Container>
   );
-}
+};
+
+export default Tasks;
