@@ -60,10 +60,10 @@ export default function CreateTask() {
     const newEndDate = new Date(comb_end).toISOString();
     const forBackend = {
       colId: parsing_Object.col_id,
-      startDate: newStartDate,
-      endDate: newEndDate,
-      title: parsing_Object.title.slice(0, 18),
-      notes: parsing_Object.notes.slice(0, 18)
+      startDate: newStartDate.slice(0, 19),
+      endDate: newEndDate.slice(0, 19),
+      title: parsing_Object.title,
+      notes: parsing_Object.notes
     };
     console.log(forBackend);
     const url = `/task/${userContext.user?.id}`;
