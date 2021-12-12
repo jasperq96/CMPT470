@@ -62,23 +62,29 @@ export default function CreateTask() {
       colId: parsing_Object.col_id,
       startDate: newStartDate,
       endDate: newEndDate,
-      title: parsing_Object.title,
-      notes: parsing_Object.notes
+      title: parsing_Object.title.slice(0, 18),
+      notes: parsing_Object.notes.slice(0, 18)
     };
-    const url =`/task/${userContext.user?.id}`;
+    console.log(forBackend);
+    const url = `/task/${userContext.user?.id}`;
     createTaskOrColumn(url, forBackend);
   };
 
   const handleSubmitCol = (evt) => {
-    evt.preventDefault();
-    const forBackend = {
-      title: colValue.title
-    };
-    const url = `/column/${userContext.user?.id}`
-    createTaskOrColumn(url, forBackend);
+    if (colValue.title !== '') {
+      evt.preventDefault();
+      const forBackend = {
+        title: colValue.title
+      };
+      const url = `/column/${userContext.user?.id}`;
+      createTaskOrColumn(url, forBackend);
+      window.location.reload();
+    } else {
+      toast.error('Title: Must have a length of at least 1 character');
+    }
   };
 
-  const createTaskOrColumn = async (url, formData) =>{
+  const createTaskOrColumn = async (url, formData) => {
     try {
       await httpService.post(url, formData);
       toast.success('Successfully created a Task/Column!');
