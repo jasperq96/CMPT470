@@ -27,7 +27,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
     //console.log('I am moving columns', column_array);
     column_array.forEach((col, index) => (col.col_order = index));
     const pass_backend = column_array.map(({ col_tasks, ...keptattr }) => keptattr);
-    console.log('BACKEND what i pass when i move the columns', pass_backend); //reformat this to pass column array normally Done BACKEND
+    console.log('BACKEND what i pass when i move the columns', { columns: pass_backend }); //reformat this to pass column array normally Done BACKEND
     //of the columns
     setParsed_Columns(column_array);
   } else {
@@ -47,7 +47,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       column_array[source.droppableId].col_tasks = from_tasks;
       column_array[destination.droppableId].col_tasks = to_tasks; // reformat this to pass both tasks lists in a single list make sure indeces arent fucked BACKEND
       const pass_double_task = [...from_tasks, ...to_tasks];
-      console.log("BACKEND these are the tasks i'm passing to backend when you move between columns col_id and indeces change", pass_double_task);
+      console.log("BACKEND these are the tasks i'm passing to backend when you move between columns col_id and indeces change", { tasks: pass_double_task });
       setParsed_Columns(column_array);
       //console.log('i tried to move between columns', from_tasks, to_tasks);
     } else {
@@ -59,7 +59,7 @@ const onDragEnd = (result, parsed_columns, setParsed_Columns) => {
       copied_tasks.splice(destination.index, 0, removed);
       copied_tasks.forEach((task, index) => (task.index = index));
       const pass_task = [...copied_tasks];
-      console.log("BACKEND this is what i'm passing to back end when i change tasks within a column", pass_task); // reformat this to pass back single task list affected BACKEND
+      console.log("BACKEND this is what i'm passing to back end when i change tasks within a column", { tasks: copied_tasks }); // reformat this to pass back single task list affected BACKEND
       column_array[source.droppableId].col_tasks = copied_tasks;
       setParsed_Columns(column_array);
       //console.log('after setting parsed columns', column_array);

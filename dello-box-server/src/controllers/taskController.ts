@@ -3,16 +3,17 @@ import { Request, Response, NextFunction } from 'express';
 import { Knex } from 'config/postgres';
 import { isInvalidInput } from 'utils/isInvalidInput';
 import { tasksNegativeOrNanInputError, tasksDNEError, taskPostInputError, taskNegativeOrNanInputError, taskDNEError, taskEditDeleteNegativeOrNanInputError, columnDNEError } from 'utils/errorMessages';
-import { Task } from 'db/models/taskModel';
+import { Task, TaskOrder } from 'db/models/taskModel';
 import { getItems } from './requestTemplates/getAllRequest';
 import { getItemsByUserId } from './requestTemplates/getByUserIdRequest';
 import { createItem } from './requestTemplates/createRequest';
-import { editItemById } from './requestTemplates/editByIdRequest';
+import { editItemById, updateItems } from './requestTemplates/editByIdRequest';
 import { deleteItemById } from './requestTemplates/deleteByIdRequest';
 import { isInvalidUserId } from 'utils/isInvalidUserId';
 
 const NAMESPACE = 'Task Control';
 const TABLE_NAME = 'task';
+const TEMPLATE_VER = 1;
 
 const createInputtedReqBody = (req: Request, userId: number, colId: string, index: number) => {
   const { startDate, endDate, title, notes } = req.body;
@@ -22,6 +23,10 @@ const createInputtedReqBody = (req: Request, userId: number, colId: string, inde
 const editFieldsInputtedReqBody = (req: Request) => {
   const { startDate, endDate, title, notes } = req.body;
   return { start_date: startDate, end_date: endDate, title: title, notes: notes };
+};
+
+export const editTaskOrderInputtedReqBody = (colId: string, index: number) => {
+  return { col_id: colId, index: index };
 };
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
@@ -77,8 +82,14 @@ const editTaskFieldsById = async (req: Request, res: Response, next: NextFunctio
   await editItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError, editFieldsInputtedReqBody(req), taskId, 'id');
 };
 
+const editTaskOrderById = async (req: Request, res: Response, next: NextFunction) => {
+  const tasksToUpdate: TaskOrder[] = req.body.tasks;
+  const retrievedUpdatedTasks: Task[] | boolean | undefined = await updateItems(req, res, next, NAMESPACE, TABLE_NAME, tasksToUpdate, TEMPLATE_VER);
+  if (!res.headersSent) res.status(201).send(retrievedUpdatedTasks);
+};
+
 const deleteTaskById = async (req: Request, res: Response, next: NextFunction) => {
   await deleteItemById(req, res, next, NAMESPACE, TABLE_NAME, taskEditDeleteNegativeOrNanInputError, taskDNEError);
 };
 
-export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, deleteTaskById };
+export default { getTasks, getTasksByUserId, getTaskById, createTask, editTaskFieldsById, editTaskOrderById, deleteTaskById };

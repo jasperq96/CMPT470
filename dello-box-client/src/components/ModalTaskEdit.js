@@ -14,7 +14,7 @@ const ModalTaskEdit = (props) => {
   });
 
   const editTaskFieldsById = async (taskId, editedTaskFields) => {
-    const url = `/task/${taskId}`;
+    const url = `/task/fields/${taskId}`;
     try {
       await httpService.put(url, editedTaskFields);
       toast.success('Successfully edited task fields!');

@@ -8,3 +8,9 @@ export interface Task {
   title: string;
   notes: string;
 }
+
+export interface TaskOrder {
+  id: number;
+  col_id: string;
+  index: number;
+}

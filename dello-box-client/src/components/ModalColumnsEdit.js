@@ -12,7 +12,7 @@ const ModalColumnsEdit = (props) => {
 
   const editColumnTitleById = async (columnId, editedColumnTitle) => {
     console.log(columnId);
-    const url = `/column/${columnId}/title`;
+    const url = `/column/title/${columnId}`;
     try {
       await httpService.put(url, editedColumnTitle);
       toast.success('Successfully edited column title!');
