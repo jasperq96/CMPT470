@@ -15,5 +15,6 @@
 .task-navbar-margin {
   margin-top: 2em;
 }
-.create-task-spacing {
+.task-button-positioning {
+  float: right;
 }
