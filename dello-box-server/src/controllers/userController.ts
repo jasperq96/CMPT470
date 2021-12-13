@@ -9,10 +9,11 @@ import { insertItem } from './requestTemplates/createRequest';
 import { User } from 'db/models/userModel';
 import { UserInfo } from 'db/models/userInfoModel';
 import { Column } from 'db/models/columnModel';
-import { userInfoDNEError } from 'utils/errorMessages';
+import { userInfoDNEError, userDeleteInputError } from 'utils/errorMessages';
 import { deleteUser } from './requestTemplates/deleteUserById';
 import controller from './fileController';
 import { insertNewUserColumns } from './columnController';
+import { isInvalidUserId } from 'utils/isInvalidUserId';
 
 const NAMESPACE = 'User Control';
 const TABLE_USER = 'user';
@@ -59,7 +60,11 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteUserByUserId = async (req: Request, res: Response, next: NextFunction) => {
   const userId: number = +req.params.userId;
-  logging.info(NAMESPACE, `REMOVING USER ${userId}`);
+  if (await isInvalidUserId(userId)) {
+    res.status(400).send(userDeleteInputError);
+    return;
+  }
+  logging.info(NAMESPACE, `REMOVING USER WITH ID ${userId}`);
   try {
     const listOfUsersWithMeAdded = await Knex.select('*').from('contact_list').where('contact_list.user_id', '<>', userId);
     const updateNicknameForAllUsers = await Knex.select('user_id', 'contact_nicknames').from('user_info').where('user_id', '<>', userId);

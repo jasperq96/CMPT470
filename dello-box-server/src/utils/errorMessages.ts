@@ -22,6 +22,7 @@ const filesDNEError = dneError('files', 'do not exist for this user');
 const filePostInputError = inputError('/file/:userId');
 const userInfoNegativeOrNanInputError = negativeOrNanInputError('/user-info/:userId');
 const userInfoDNEError = dneError('user', 'does not exist');
+const userDeleteInputError = inputError('/user/:userId');
 const tasksNegativeOrNanInputError = negativeOrNanInputError('/task/:userId');
 const tasksDNEError = dneError('tasks', 'do not exist for this user or user does not exist');
 const taskPostInputError = inputError('/task/:userId');
@@ -47,6 +48,7 @@ export {
   filePostInputError,
   userInfoNegativeOrNanInputError,
   userInfoDNEError,
+  userDeleteInputError,
   tasksNegativeOrNanInputError,
   tasksDNEError,
   taskPostInputError,

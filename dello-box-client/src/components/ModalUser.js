@@ -7,7 +7,7 @@ const ModalUser = (props) => {
       <Modal.Header closeButton>
         <Modal.Title>WARNING</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you Sure you want to delete your account?</Modal.Body>
+      <Modal.Body>Are you sure you want to delete your account?</Modal.Body>
       <Modal.Footer>
         <Button variant="outline-dark" onClick={() => props.onModalClose()}>
           Woops
