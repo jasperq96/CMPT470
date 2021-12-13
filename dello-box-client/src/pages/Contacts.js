@@ -147,7 +147,6 @@ export default function Contacts() {
                     {contact.first_name} {contact.last_name} {contact.nickname}
                   </ListGroupItem>
                   <ListGroupItem>{contact.email}</ListGroupItem>
-                  <ListGroupItem>{contact.phone}</ListGroupItem>
                   <Button variant="outline-light" onClick={() => addContact(contact.user_id)}>
                     Add to Contacts
                   </Button>
