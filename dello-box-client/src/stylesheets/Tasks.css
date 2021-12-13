@@ -18,3 +18,12 @@
 .task-button-positioning {
   float: right;
 }
+
+.container-scrolling {
+  padding-top: 50;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: auto;
+  min-width: 100vh;
+  min-height: 100vh;
+}

@@ -283,14 +283,9 @@ const Tasks = () => {
   return (
     <Container
       fluid
+      className="container-scrolling"
       style={{
-        paddingTop: 50,
-        maxHeight: heightOfScreen,
-        overflowY: 'auto',
-        minHeight: heightOfScreen - 5,
-        maxWidth: widthOfScreen,
-        minWidth: widthOfScreen,
-        overflowX: 'auto'
+        paddingTop: 50
       }}
     >
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
