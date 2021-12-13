@@ -28,9 +28,6 @@ export default function CreateTask() {
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.value);
-    }
   };
 
   const handleChangeCol = (evt) => {
@@ -38,9 +35,6 @@ export default function CreateTask() {
       ...colValue,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.value);
-    }
   };
 
   const handleSubmit = (evt) => {
@@ -83,7 +77,6 @@ export default function CreateTask() {
       end_date: '',
       end_time: ''
     });
-    console.log(values);
   };
 
   const handleSubmitCol = (evt) => {
