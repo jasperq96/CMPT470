@@ -42,7 +42,6 @@ const Calendar = () => {
       <Row>
         <Col lg style={{ maxHeight: windowScreenHeight }}>
           <Calendarlib onChange={onDate} value={date} />
-          <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
         </Col>
         <Col lg>
           {task
