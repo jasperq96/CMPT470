@@ -13,7 +13,6 @@ import ViewFiles from './pages/Files/ViewFiles';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Contacts from './pages/Contacts';
-import AddContact from './pages/AddContact'
 import Login from './pages/Login';
 import Signup from './pages/Signup/Signup';
 import PrivateRoute from './hocs/privateRoutes';

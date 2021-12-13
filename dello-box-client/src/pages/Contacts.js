@@ -90,10 +90,12 @@ export default function Contacts() {
 
   const removeContact = async (id) => {
 
-    const url = `/contacts/${userContext.user?.id}/add`;
+    const url = `/contacts/${userContext.user?.id}`;
+    console.log("del:" + url);
+    console.log("id:" + id);
 
     try {
-      const response = await httpService.delete(url, {"contactId":id});
+      const response = await httpService.del(url, {data: {"contactId":id}});
       const { data } = response;
     } catch (error) {
       console.log(error);
