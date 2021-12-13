@@ -68,7 +68,7 @@ export default function CreateTask() {
 
     console.log(forBackend);
     const url = `/task/${userContext.user?.id}`;
-    createTaskOrColumn(url, forBackend);
+    createTaskOrColumn(url, forBackend, true);
     setValue({
       title: '',
       notes: '',
@@ -88,8 +88,7 @@ export default function CreateTask() {
         title: colValue.title
       };
       const url = `/column/${userContext.user?.id}`;
-      createTaskOrColumn(url, forBackend);
-      window.location.reload();
+      createTaskOrColumn(url, forBackend, false);
     } else {
       toast.error('Title: Must have a length of at least 1 character');
     }
@@ -98,10 +97,10 @@ export default function CreateTask() {
     });
   };
 
-  const createTaskOrColumn = async (url, formData) => {
+  const createTaskOrColumn = async (url, formData, itemIdentity) => {
     try {
       await httpService.post(url, formData);
-      toast.success('Successfully created a Task/Column!');
+      toast.success(`Successfully created a ${itemIdentity ? "Task" : "Column"}`);
     } catch (error) {
       // Will display the first input error message
       const errorBody = error.response.data.errors[0];
@@ -121,7 +120,7 @@ export default function CreateTask() {
 
   useEffect(() => {
     getCols();
-  }, []);
+  }, [cols]);
 
   return (
     <Container fluid>
