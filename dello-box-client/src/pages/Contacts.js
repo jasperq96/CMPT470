@@ -80,6 +80,7 @@ export default function Contacts() {
     }
 
     await getContacts();
+    await searchContact();
 
     return undefined;
   };

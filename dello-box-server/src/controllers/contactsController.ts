@@ -62,7 +62,7 @@ const getUsersByUsername = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId).first();
-    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name')
+    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name', 'email')
       .from('user')
       .join('user_info', 'user.id', 'user_info.user_id')
       .where('username', 'like', '%' + userName + '%')
