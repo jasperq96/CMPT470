@@ -4,3 +4,8 @@ export interface Column {
   title: string;
   col_order: number;
 }
+
+export interface ColumnOrder {
+  id: string;
+  col_order: number;
+}

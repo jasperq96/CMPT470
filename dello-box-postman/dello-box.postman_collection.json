@@ -79,6 +79,20 @@
           "response": []
         },
         {
+          "name": "GET all columns by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/column/1",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column", "1"]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "POST a column by user id",
           "request": {
             "method": "POST",
@@ -122,16 +136,62 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/column/:id/label",
+              "raw": "localhost:8080/column/title/:id",
               "host": ["localhost"],
               "port": "8080",
-              "path": ["column", ":id", "label"],
+              "path": ["column", "title", ":id"],
               "variable": [
                 {
                   "key": "id",
                   "value": ""
                 }
               ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT  a list of columns",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"columns\": [\r\n        {\r\n            \"id\": \"--insert valid column id here--\",\r\n            \"user_id\": 1,\r\n            \"title\": \"Complete\",\r\n            \"col_order\": 0\r\n        },\r\n        {\r\n            \"id\": \"--insert valid column id here--\",\r\n            \"user_id\": 1,\r\n            \"title\": \"To-Do\",\r\n            \"col_order\": 1\r\n        },\r\n        {\r\n            \"id\": \"--insert valid column id here--\",\r\n            \"user_id\": 1,\r\n            \"title\": \"In-Progress\",\r\n            \"col_order\": 2\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column/order",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column", "order"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a column",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"col_id\": \"0f3bc187-62ac-47da-bf9a-bdc81c083476\",\r\n    \"list_of_tasks_length\": 3,\r\n    \"list_of_tasks\": [\r\n        {\r\n            \"id\": 4,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"0f3bc187-62ac-47da-bf9a-bdc81c083476\",\r\n            \"index\": 0,\r\n            \"start_date\": \"2021-11-17T17:00:00.000Z\",\r\n            \"end_date\": \"2021-11-26T02:30:00.000Z\",\r\n            \"title\": \"task4\",\r\n            \"notes\": \"Blah blah blah\"\r\n        },\r\n        {\r\n            \"id\": 5,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"0f3bc187-62ac-47da-bf9a-bdc81c083476\",\r\n            \"index\": 1,\r\n            \"start_date\": \"2021-11-19T17:00:00.000Z\",\r\n            \"end_date\": \"2021-12-02T02:30:00.000Z\",\r\n            \"title\": \"task5\",\r\n            \"notes\": \"NONONO\"\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"0f3bc187-62ac-47da-bf9a-bdc81c083476\",\r\n            \"index\": 2,\r\n            \"start_date\": \"2021-11-21T18:30:00.000Z\",\r\n            \"end_date\": \"2021-12-05T00:30:00.000Z\",\r\n            \"title\": \"task6\",\r\n            \"notes\": \"Testing\"\r\n        }\r\n    ],\r\n    \"list_of_columns\": [\r\n        {\r\n            \"id\": \"66b74b31-27ee-48ef-847a-fb645d2dada3\",\r\n            \"user_id\": 1,\r\n            \"title\": \"To-Do\",\r\n            \"col_order\": 0\r\n        },\r\n        {\r\n            \"id\": \"2debb555-bfc2-43c4-bf23-9b0ffcbe13b6\",\r\n            \"user_id\": 1,\r\n            \"title\": \"Complete\",\r\n            \"col_order\": 1\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/column",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["column"]
             }
           },
           "response": []
@@ -473,6 +533,169 @@
       ]
     },
     {
+      "name": "Task",
+      "item": [
+        {
+          "name": "GET all tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all tasks by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET a task by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/task/view/:id",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", "view", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a task by user id",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"colId\": \"--insert valid column id here--\",\r\n    \"startDate\": \"2021-11-03T05:30:00\",\r\n    \"endDate\": \"2021-11-29T21:30:00\",\r\n    \"title\": \"WOW\",\r\n    \"notes\": \"giggity\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task/:userId",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a task's fields by id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"startDate\": \"2021-11-09T19:30:00\",\r\n    \"endDate\": \"2021-11-27T13:45:00\",\r\n    \"title\": \"my new task\",\r\n    \"notes\": \"hehehehehehehehehehe kekekekekekekekekekeke\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task/fields/:id",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", "fields", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT a list of tasks",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tasks\": [\r\n        {\r\n            \"id\": 2,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"--insert valid column id here--\",\r\n            \"index\": 0,\r\n            \"start_date\": \"2021-11-16T17:00:00.000Z\",\r\n            \"end_date\": \"2021-11-25T02:30:00.000Z\",\r\n            \"title\": \"task2\",\r\n            \"notes\": \"Giggity\"\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"--insert valid column id here--\",\r\n            \"index\": 1,\r\n            \"start_date\": \"2021-11-13T18:30:00.000Z\",\r\n            \"end_date\": \"2021-11-20T00:30:00.000Z\",\r\n            \"title\": \"task3\",\r\n            \"notes\": \"More notes here\"\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"--insert valid column id here--\",\r\n            \"index\": 2,\r\n            \"start_date\": \"2021-11-14T18:30:00.000Z\",\r\n            \"end_date\": \"2021-11-19T00:30:00.000Z\",\r\n            \"title\": \"task1\",\r\n            \"notes\": \"Some notes here\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task/order",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task", "order"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a task",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"task_id\": 3,\r\n    \"list_of_tasks\": [\r\n        {\r\n            \"id\": 1,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"dbea727c-5f86-4198-a1c5-a28c9a4ee1bf\",\r\n            \"index\": 0,\r\n            \"start_date\": \"2021-11-14T18:30:00.000Z\",\r\n            \"end_date\": \"2021-11-19T00:30:00.000Z\",\r\n            \"title\": \"task1\",\r\n            \"notes\": \"Some notes here\"\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"user_id\": 1,\r\n            \"col_id\": \"dbea727c-5f86-4198-a1c5-a28c9a4ee1bf\",\r\n            \"index\": 1,\r\n            \"start_date\": \"2021-11-16T17:00:00.000Z\",\r\n            \"end_date\": \"2021-11-25T02:30:00.000Z\",\r\n            \"title\": \"task2\",\r\n            \"notes\": \"Giggity\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/task",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["task"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "User",
       "item": [
         {
@@ -593,143 +816,6 @@
               "variable": [
                 {
                   "key": "userId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Task",
-      "item": [
-        {
-          "name": "GET all tasks",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/task",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET all tasks by user id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/task/:userId",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task", ":userId"],
-              "variable": [
-                {
-                  "key": "userId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET a task by id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/task/view/:id",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task", "view", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "POST a task by user id",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"colId\": \"--insert valid column id here--\",\r\n    \"startDate\": \"2021-11-03T05:30:00\",\r\n    \"endDate\": \"2021-11-29T21:30:00\",\r\n    \"title\": \"WOW\",\r\n    \"notes\": \"giggity\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "localhost:8080/task/:userId",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task", ":userId"],
-              "variable": [
-                {
-                  "key": "userId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "PUT a task's fields by id",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"startDate\": \"2021-11-09T19:30:00\",\r\n    \"endDate\": \"2021-11-27T13:45:00\",\r\n    \"title\": \"my new task\",\r\n    \"notes\": \"hehehehehehehehehehe kekekekekekekekekekeke\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "localhost:8080/task/:id",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "DELETE a task by id",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/task/:id",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["task", ":id"],
-              "variable": [
-                {
-                  "key": "id",
                   "value": ""
                 }
               ]
