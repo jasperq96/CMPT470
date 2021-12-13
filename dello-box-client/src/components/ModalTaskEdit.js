@@ -61,7 +61,7 @@ const ModalTaskEdit = (props) => {
             </Form.Group>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicLastName">
               <Form.Label>End Date</Form.Label>
-              <Form.Control type={Date} placeholder={props.task.start_date} name="end_date" value={values.end_date} onChange={handleChange} />
+              <Form.Control type={Date} placeholder={props.task.end_date} name="end_date" value={values.end_date} onChange={handleChange} />
             </Form.Group>
           </Row>
           <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
