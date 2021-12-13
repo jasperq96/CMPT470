@@ -12,5 +12,7 @@
 .column-height {
   height: 100%;
 }
-.main-task-container-dimensions {
+.scroll-margin {
+  overflow: scroll;
+  height: 80%;
 }
