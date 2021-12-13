@@ -34,7 +34,6 @@ const ModalTaskEdit = (props) => {
       ...values,
       [evt.target.name]: evt.target.value
     });
-    console.log(evt.target.value);
   };
 
   const handleSubmit = async (evt) => {
