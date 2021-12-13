@@ -10,7 +10,6 @@ import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
-
 const editColumnOrder = async (updatedColumns) => {
   const url = '/column/order';
   try {
@@ -273,17 +272,12 @@ const Tasks = () => {
     return;
   };
   return (
-    <Container fluid style={{ paddingTop: 50, overflow: 'scroll' }}>
+    <Container fluid className="navbar-margin">
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
-              <div
-                className="justify-content-left"
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                style={{ display: 'flex', flexDirection: 'row', background: snapshot.isDraggingOver ? 'lightblue' : 'white' }}
-              >
+              <Container fluid className="justify-content-left column-height" ref={provided.innerRef} {...provided.droppableProps} style={{ display: 'flex', flexDirection: 'row' }}>
                 {parsed_columns.map((column, index) => {
                   return (
                     <Draggable key={column.id} draggableId={column.id.toString()} index={index}>
@@ -328,7 +322,8 @@ const Tasks = () => {
                                         style={{
                                           background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
                                           minHeight: 50,
-                                          minWidth: 300
+                                          minWidth: 300,
+                                          className: 'task-height'
                                         }}
                                       >
                                         {column.col_tasks.map((task, index) => {
@@ -347,7 +342,8 @@ const Tasks = () => {
                                                       minHeight: '50',
                                                       background: snapshot.isDragging ? '#263B4A' : '#456C86',
                                                       color: 'white',
-                                                      ...provided.draggableProps.style
+                                                      ...provided.draggableProps.style,
+                                                      className: 'task-height'
                                                     }}
                                                   >
                                                     <h1>{task.title}</h1>
@@ -404,7 +400,7 @@ const Tasks = () => {
                   );
                 })}
                 {provided.placeholder}
-              </div>
+              </Container>
             );
           }}
         </Droppable>
