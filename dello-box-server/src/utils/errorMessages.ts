@@ -16,7 +16,7 @@ const inputError = (url: string) => {
 
 const fileNegativeOrNanInputError = negativeOrNanInputError('/file/:fileId');
 const fileDNEError = dneError('file', 'does not exist');
-const fileMimetypeError = invalidExtension('file', 'png, jpg, or jpeg');
+const fileMimetypeError = invalidExtension('file', 'pdf, png, jpg, jpeg, doc, docx, pptx, csv, txt or zip');
 const fileByUserIdNegativeOrNanInputError = inputError('/file/:userId');
 const filesDNEError = dneError('files', 'do not exist for this user');
 const filePostInputError = inputError('/file/:userId');

@@ -1,6 +1,6 @@
 import '../../App.css';
-import '../../stylesheets/calendarTask.css'
-import React, { useState, useContext, useEffect} from 'react';
+import '../../stylesheets/calendarTask.css';
+import React, { useState, useContext, useEffect } from 'react';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import Calendarlib from 'react-calendar';
@@ -36,26 +36,25 @@ const Calendar = () => {
     getTasks();
   }, []);
 
+  const windowScreenHeight = window.screen.height / 2;
   return (
     <div>
-      <Container fluid>
+      <Container fluid className="calendar-navbar-margin media-test">
         <Row>
-          <Col lg>
+          <Col lg style={{ maxHeight: windowScreenHeight }}>
             <Calendarlib onChange={onDate} value={date} />
             <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
           </Col>
           <Col lg>
             {task
-              .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) &&
-              stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
+              .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
-                <ul className='task-look'>
-                  <li className='task-title'>{filtered_Dates.title}</li>
+                <ul className="task-look">
+                  <li className="task-title">{filtered_Dates.title}</li>
                   <ul>
                     <li>{filtered_Dates.notes}</li>
                   </ul>
                 </ul>
-                
               ))}
             {console.log(date.toISOString)}
           </Col>
