@@ -57,7 +57,7 @@ const ModalColumnsEdit = (props) => {
         <Button variant="secondary" onClick={() => props.handleClose()}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="outline-success" onClick={handleSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>

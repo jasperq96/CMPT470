@@ -9,10 +9,10 @@ const ModalTasks = (props) => {
       </Modal.Header>
       <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-dark" onClick={() => props.onModalClose()}>
+        <Button variant="secondary" onClick={() => props.onModalClose()}>
           Woops
         </Button>
-        <Button variant="danger" onClick={() => props.onTaskDelete(props.task, props.index)}>
+        <Button variant="outline-danger" onClick={() => props.onTaskDelete(props.task, props.index)}>
           Delete
         </Button>
       </Modal.Footer>

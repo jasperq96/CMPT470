@@ -9,6 +9,8 @@ const ModalTaskEdit = (props) => {
   const [values, setValue] = useState({
     title: '',
     start_date: '',
+    start_time: '',
+    end_time: '',
     end_date: '',
     notes: ''
   });
@@ -32,13 +34,18 @@ const ModalTaskEdit = (props) => {
       ...values,
       [evt.target.name]: evt.target.value
     });
+    console.log(evt.target.value);
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    const full_start = values.start_date.concat('T', values.start_time, '.000Z');
+    const full_end = values.end_date.concat('T', values.end_time, '.000Z');
+    console.log(full_start);
+    console.log(full_end);
     const isSuccessful = await editTaskFieldsById(props.task.id, editTaskFieldsObject(values));
     if (isSuccessful) {
-      props.onTaskUpdate(values.notes, values.title, values.start_date, values.end_date);
+      props.onTaskUpdate(values.notes, values.title, full_start, '2021-11-27T13:45:00');
       props.handleClose();
     }
   };
@@ -50,21 +57,31 @@ const ModalTaskEdit = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3 mt-5" controlId="formBasicUsername">
+          <Form.Group className="mb-3 mt-5" controlId="formBasicTitle">
             <Form.Label>Title</Form.Label>
             <Form.Control type="text" placeholder={props.task.title} name="title" value={values.title} onChange={handleChange} />
           </Form.Group>
           <Row>
-            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicFirstName">
+            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control type={Date} placeholder={props.task.start_date} name="start_date" value={values.start_date} onChange={handleChange} />
+              <Form.Control type={Date} placeholder={new Date().toISOString().slice(0, 10)} name="start_date" value={values.start_date} onChange={handleChange} />
             </Form.Group>
-            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicLastName">
+            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formStartTime">
               <Form.Label>End Date</Form.Label>
-              <Form.Control type={Date} placeholder={props.task.end_date} name="end_date" value={values.end_date} onChange={handleChange} />
+              <Form.Control type={Date} placeholder={new Date().toISOString().slice(11, 19)} name="start_time" value={values.start_time} onChange={handleChange} />
             </Form.Group>
           </Row>
-          <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+          <Row>
+            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formEndDate">
+              <Form.Label>Start Date</Form.Label>
+              <Form.Control type={Date} placeholder={new Date().toISOString().slice(0, 10)} name="end_date" value={values.end_date} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicEndTime">
+              <Form.Label>End Date</Form.Label>
+              <Form.Control type={Date} placeholder={new Date().toISOString().slice(11, 19)} name="end_time" value={values.end_time} onChange={handleChange} />
+            </Form.Group>
+          </Row>
+          <Form.Group className="mb-3" controlId="formBasicNotes">
             <Form.Label>Notes</Form.Label>
             <Form.Control type="Notes" placeholder={props.task.notes} name="notes" value={values.notes} onChange={handleChange} as="textarea" rows={3} />
           </Form.Group>
@@ -76,7 +93,7 @@ const ModalTaskEdit = (props) => {
         </Button>
 
         <Button
-          variant="primary"
+          variant="outline-success"
           onClick={(e) => {
             handleSubmit(e);
           }}

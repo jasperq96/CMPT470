@@ -287,6 +287,7 @@ const Tasks = () => {
       }}
     >
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
+        <ModalTaskEdit show={task_edit} handleClose={onEditTaskClose} task={selected_task} onTaskUpdate={onTaskUpdate} task_index={task_index} col_index={column_index} />
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
@@ -363,14 +364,7 @@ const Tasks = () => {
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
                                                       <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
-                                                      <ModalTaskEdit
-                                                        show={task_edit}
-                                                        handleClose={onEditTaskClose}
-                                                        task={selected_task}
-                                                        onTaskUpdate={onTaskUpdate}
-                                                        task_index={task_index}
-                                                        col_index={column_index}
-                                                      />
+
                                                       <Button
                                                         variant="danger"
                                                         onClick={(e) => {
