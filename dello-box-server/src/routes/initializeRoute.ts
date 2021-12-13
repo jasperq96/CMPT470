@@ -18,7 +18,7 @@ publicRouter.use('/user', userPublicRoutes);
 
 const privateRouter = Router();
 // Uncomment the follow line to restrict routes
-// privateRouter.use(passport.authenticate('authAll', { session: false }));
+privateRouter.use(passport.authenticate('authAll', { session: false }));
 privateRouter.use('/auth', authenticationRoutes);
 privateRouter.use('/user-info', userInfoRoutes);
 privateRouter.use('/file', fileRoutes);

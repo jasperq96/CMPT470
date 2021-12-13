@@ -7,7 +7,7 @@ import { Form, ListGroupItem } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { Table, Container, Button, Row, Col, ListGroup } from 'react-bootstrap';
 
-export default function Contacts() {
+const Contacts = () => {
   const userContext = useContext(UserContext);
   const history = useHistory();
 
@@ -159,4 +159,6 @@ export default function Contacts() {
       </Row>
     </Container>
   );
-}
+};
+
+export default Contacts;
