@@ -271,8 +271,9 @@ const Tasks = () => {
     setParsed_Columns(column_array);
     return;
   };
+  const heightOfScreen = window.screen.height;
   return (
-    <Container fluid className="navbar-margin">
+    <Container fluid className="navbar-margin" style={{ paddingTop: 50, maxHeight: heightOfScreen, overflowY: 'auto', minHeight: heightOfScreen }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
@@ -346,7 +347,7 @@ const Tasks = () => {
                                                       className: 'task-height'
                                                     }}
                                                   >
-                                                    <h1>{task.title}</h1>
+                                                    <h2>{task.title}</h2>
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
                                                       <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
