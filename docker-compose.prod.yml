@@ -3,8 +3,45 @@ version: '3.9'
 services:
   dello-box-client:
     container_name: dello-box-client-prod
-    image: dello-box-client-prod
+    image: db-c-prod
     build:
       context: ./dello-box-client
       dockerfile: Dockerfile.dev
       target: production
+    ports:
+      - 3000:80
+
+  dello-box-server:
+    build:
+      context: ./dello-box-server
+      dockerfile: Dockerfile.dev
+      target: base
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./dello-box-server:/home/node/app/
+      - ./dello-box-server/nodemon.json:/home/node/app/nodemon.json
+    container_name: dello-box-server-prod
+    image: db-s-prod
+    expose:
+      - '8080'
+    ports:
+      - 8080:8080
+    command: npm run dev
+
+  dello-box-database:
+    image: postgres
+    build: ./dello-box-database
+    volumes:
+      - ./dello-box-database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      TZ: 'America/Vancouver'
+      PGTZ: 'America/Vancouver'
+      PGDATA: /dello-box-database
+      POSTGRES_DB: delloboxdb
+      POSTGRES_USER: GNINE
+      POSTGRES_PASSWORD: password
+      POSTGRES_ROOT_PASSWORD: password
+    container_name: dello-box-database-prod

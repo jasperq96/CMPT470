@@ -1,6 +1,20 @@
 version: '3.9'
 
 services:
+  dello-box-client:
+    build:
+      context: ./dello-box-client
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./dello-box-client:/dello-box-client
+    expose:
+      - '3000'
+    ports:
+      - 3000:3000
+    container_name: dello-box-client
+    command: npm start
+
   dello-box-server:
     build:
       context: ./dello-box-server
@@ -10,7 +24,7 @@ services:
     tty: true
     volumes:
       - ./dello-box-server:/home/node/app/
-    container_name: dello-box-server-prod
+    container_name: dello-box-server
     expose:
       - '8080'
     ports:
@@ -32,4 +46,4 @@ services:
       POSTGRES_USER: GNINE
       POSTGRES_PASSWORD: password
       POSTGRES_ROOT_PASSWORD: password
-    container_name: dello-box-database-prod
+    container_name: dello-box-database
