@@ -19,6 +19,7 @@ import PrivateRoute from './hocs/privateRoutes';
 import PublicRoute from './hocs/publicRoutes';
 import EditUser from './pages/EditUser';
 
+
 const App = () => {
   return (
     <div>

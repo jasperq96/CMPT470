@@ -1,0 +1,29 @@
+.contact-card {
+    background-color: dimgrey;
+    display: block;
+    padding: 15px;
+}
+
+.p-title {
+
+}
+
+.p-email {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.p-phone {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+p {
+    background-color: transparent;
+    color: white;
+}
+
+h1 {
+    color: grey;
+}
+
