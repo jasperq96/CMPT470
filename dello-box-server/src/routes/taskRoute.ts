@@ -5,7 +5,8 @@ import { validateTask } from 'middlewares/validateTask.mw';
 
 const router = express.Router();
 
-router.get('', controller.getTasks);
+// Certain APIs cannot be used during production
+// router.get('', controller.getTasks);
 router.get('/:userId', controller.getTasksByUserId);
 router.get('/view/:id', controller.getTaskById);
 router.post('/:userId', registerCreateTask, validateTask, controller.createTask);

@@ -6,7 +6,7 @@ import { capitalize } from '../../utils/capitalizeString';
 import { UserContext } from '../../hooks/UserContext';
 import '../../stylesheets/Tasks.css';
 
-export default function CreateTask() {
+const CreateTask = () => {
   const userContext = useContext(UserContext);
   const [cols, setCols] = useState([]);
   const [values, setValue] = useState({
@@ -177,4 +177,6 @@ export default function CreateTask() {
       </Form>
     </Container>
   );
-}
+};
+
+export default CreateTask;
