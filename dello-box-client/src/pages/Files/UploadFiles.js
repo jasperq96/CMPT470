@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../../hooks/UserContext';
 import { useHistory } from 'react-router-dom';
 import { capitalize } from '../../utils/capitalizeString';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Container, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../../stylesheets/files.css';
 const UploadFiles = () => {
   let history = useHistory();
@@ -48,9 +48,21 @@ const UploadFiles = () => {
         <Form.Label>File</Form.Label>
         <Form.Control type="file" name="file" id="file" onChange={validateFileExtension} size="lg" />
       </Form.Group>
-      <Button className="file-button-padding" variant="outline-light" onClick={uploadFileValidator}>
-        Upload File
-      </Button>
+      <OverlayTrigger
+        key={'OverlayTrigger'}
+        placement="bottom"
+        overlay={
+          <Tooltip id={'FileType'}>
+            The file types that we accept are the following.
+            <br />
+            pdf, png, jpeg/jpg, docx/doc, pptx, csv, .txt, .zip
+          </Tooltip>
+        }
+      >
+        <Button className="file-button-padding" variant="outline-light" onClick={uploadFileValidator}>
+          Upload File
+        </Button>
+      </OverlayTrigger>
     </Container>
   );
 };
