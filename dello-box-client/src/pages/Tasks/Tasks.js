@@ -10,6 +10,7 @@ import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
+import ManageEmpty from '../../components/ManageEmpty';
 const editColumnOrder = async (updatedColumns) => {
   const url = '/column/order';
   try {
@@ -96,6 +97,7 @@ const Tasks = () => {
   const [column_edit, setColumn_edit] = useState(false);
   const [selected_task, setSelected_task] = useState({});
   const [selected_column, setSelected_column] = useState({});
+  const [no_columns, setNo_column] = useState(false);
   //const [parsed_columns, setParsed_Columns] = useState([]);
   const onDeleteModal_task = (evt) => {
     evt.stopPropagation();
@@ -133,6 +135,10 @@ const Tasks = () => {
     setColumn_edit(false);
     return;
   };
+  const onManageEmptyClose = () => {
+    setNo_column(false);
+    return;
+  };
 
   const deleteColumn = async (deletedColumn) => {
     const url = '/column';
@@ -165,6 +171,7 @@ const Tasks = () => {
       getTasksByUserId(response.data);
     } catch (error) {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      setNo_column(true);
     }
   };
 
@@ -289,6 +296,7 @@ const Tasks = () => {
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <ModalTaskEdit show={task_edit} handleClose={onEditTaskClose} task={selected_task} onTaskUpdate={onTaskUpdate} task_index={task_index} col_index={column_index} />
         <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+        <ManageEmpty show={no_columns} onModalClose={onManageEmptyClose} />
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
