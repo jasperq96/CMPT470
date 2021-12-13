@@ -1,11 +1,11 @@
 import '../App.css';
 import React, { useState, useContext } from 'react';
-import { Navbar, Container, Form, Button, Col } from 'react-bootstrap';
+import { Navbar, Container, Form, Button, Col, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../hooks/UserContext';
 import { toast } from 'react-toastify';
 import authenticationService from '../services/authenticationService';
-
+import { Link } from 'react-router-dom';
 const Login = () => {
   let history = useHistory();
   let userContext = useContext(UserContext);
@@ -51,6 +51,11 @@ const Login = () => {
             <Navbar.Brand>Dello-Box Sign In</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav"></Navbar.Collapse>
+            <Nav>
+              <Nav.Link as={Link} to={'/'}>
+                Landing Page
+              </Nav.Link>
+            </Nav>
           </Container>
         </Navbar>
       </div>

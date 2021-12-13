@@ -34,9 +34,9 @@ const ViewFileElement = ({ fileData }) => {
               {fileData.filename}
             </a>
           </td>
-          <td>{fileData.created_at}</td>
+          <td className="responsive-cut">{fileData.created_at}</td>
           <td>{fileData.mimetype}</td>
-          <td>{fileData.size}</td>
+          <td className="responsive-cut">{fileData.size}</td>
         </tr>
       </tbody>
     </React.Fragment>

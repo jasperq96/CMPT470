@@ -76,14 +76,14 @@ const ManageFiles = () => {
       <Container className="body-color files-navbar-margin">
         <h1>Manage Files</h1>
         <Container className="file-container">
-          <Table variant="dark">
+          <Table responsive variant="dark">
             <thead>
               <tr>
                 <th>Filename</th>
-                <th>Date Created</th>
+                <th className="responsive-cut">Date Created</th>
                 <th>Mimetype</th>
-                <th>Size (Bytes)</th>
-                <th>Actions</th>
+                <th className="responsive-cut">Size (Bytes)</th>
+                <th className="responsive-cut-700">Actions</th>
               </tr>
             </thead>
             {files.map((file, index) => (
