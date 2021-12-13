@@ -274,7 +274,18 @@ const Tasks = () => {
   const heightOfScreen = window.screen.height - window.screen.height * 0.1;
   const widthOfScreen = window.screen.width;
   return (
-    <Container fluid style={{ paddingTop: 50, maxHeight: heightOfScreen, overflowY: 'auto', minHeight: heightOfScreen - 50, maxWidth: widthOfScreen, minWidth: widthOfScreen, overflowX: 'auto' }}>
+    <Container
+      fluid
+      style={{
+        paddingTop: 50,
+        maxHeight: heightOfScreen,
+        overflowY: 'auto',
+        minHeight: heightOfScreen - 5,
+        maxWidth: widthOfScreen,
+        minWidth: widthOfScreen,
+        overflowX: 'auto'
+      }}
+    >
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {

@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../../hooks/UserContext';
 import { useHistory } from 'react-router-dom';
 import { capitalize } from '../../utils/capitalizeString';
-
+import { Button, Container, Form } from 'react-bootstrap';
+import '../../stylesheets/files.css';
 const UploadFiles = () => {
   let history = useHistory();
   const userContext = useContext(UserContext);
@@ -41,11 +42,16 @@ const UploadFiles = () => {
   };
 
   return (
-    <div className="body-color">
+    <Container className="body-color files-navbar-margin">
       <h1>Upload Files</h1>
-      <input type="file" name="file" id="file" onChange={validateFileExtension} />
-      <button onClick={uploadFileValidator}>Upload File</button>
-    </div>
+      <Form.Group>
+        <Form.Label>File</Form.Label>
+        <Form.Control type="file" name="file" id="file" onChange={validateFileExtension} size="lg" />
+      </Form.Group>
+      <Button className="file-button-padding" variant="outline-light" onClick={uploadFileValidator}>
+        Upload File
+      </Button>
+    </Container>
   );
 };
 

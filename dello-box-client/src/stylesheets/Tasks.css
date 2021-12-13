@@ -12,7 +12,8 @@
 .column-height {
   height: 100%;
 }
-.scroll-margin {
-  overflow: scroll;
-  height: 80%;
+.task-navbar-margin {
+  margin-top: 2em;
+}
+.create-task-spacing {
 }
