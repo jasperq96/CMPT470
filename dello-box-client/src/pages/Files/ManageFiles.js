@@ -6,7 +6,7 @@ import { UserContext } from '../../hooks/UserContext';
 import { editFileObject } from '../../models/fileModel';
 import { capitalize } from '../../utils/capitalizeString';
 import ManageFileElement from '../../components/ManageFile';
-import { Button, Col, Row, Container, Form, Table } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import '../../stylesheets/files.css';
 
 const ManageFiles = () => {
