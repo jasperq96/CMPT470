@@ -1,7 +1,7 @@
-export const editTaskFieldsObject = (values) => {
+export const editTaskFieldsObject = (values, startDate, endDate) => {
   return {
-    startDate: values.start_date,
-    endDate: values.end_date,
+    startDate: startDate,
+    endDate: endDate,
     title: values.title,
     notes: values.notes
   };

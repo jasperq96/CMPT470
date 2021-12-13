@@ -39,13 +39,11 @@ const ModalTaskEdit = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const full_start = values.start_date.concat('T', values.start_time, '.000Z');
-    const full_end = values.end_date.concat('T', values.end_time, '.000Z');
-    console.log(full_start);
-    console.log(full_end);
-    const isSuccessful = await editTaskFieldsById(props.task.id, editTaskFieldsObject(values));
+    const full_start = values.start_date.concat('T', values.start_time, ':00');
+    const full_end = values.end_date.concat('T', values.end_time, ':00');
+    const isSuccessful = await editTaskFieldsById(props.task.id, editTaskFieldsObject(values, full_start, full_end));
     if (isSuccessful) {
-      props.onTaskUpdate(values.notes, values.title, full_start, '2021-11-27T13:45:00');
+      props.onTaskUpdate(values.notes, values.title, full_start, full_end);
       props.handleClose();
     }
   };
@@ -64,21 +62,21 @@ const ModalTaskEdit = (props) => {
           <Row>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control type={Date} placeholder={new Date().toISOString().slice(0, 10)} name="start_date" value={values.start_date} onChange={handleChange} />
+              <Form.Control type="date" name="start_date" value={values.start_date} onChange={handleChange} />
             </Form.Group>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formStartTime">
               <Form.Label>End Date</Form.Label>
-              <Form.Control type={Date} placeholder={new Date().toISOString().slice(11, 19)} name="start_time" value={values.start_time} onChange={handleChange} />
+              <Form.Control type="time" name="start_time" value={values.start_time} onChange={handleChange} />
             </Form.Group>
           </Row>
           <Row>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formEndDate">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control type={Date} placeholder={new Date().toISOString().slice(0, 10)} name="end_date" value={values.end_date} onChange={handleChange} />
+              <Form.Control type="date" name="end_date" value={values.end_date} onChange={handleChange} />
             </Form.Group>
             <Form.Group as={Col} md="6" className="position-relative mb-3" controlId="formBasicEndTime">
               <Form.Label>End Date</Form.Label>
-              <Form.Control type={Date} placeholder={new Date().toISOString().slice(11, 19)} name="end_time" value={values.end_time} onChange={handleChange} />
+              <Form.Control type="time" name="end_time" value={values.end_time} onChange={handleChange} />
             </Form.Group>
           </Row>
           <Form.Group className="mb-3" controlId="formBasicNotes">
