@@ -38,14 +38,13 @@ const Calendar = () => {
 
   const windowScreenHeight = window.screen.height / 2;
   return (
-    <div>
       <Container fluid className="calendar-navbar-margin media-test">
         <Row>
           <Col lg style={{ maxHeight: windowScreenHeight }}>
             <Calendarlib onChange={onDate} value={date} />
             <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
           </Col>
-          <Col lg>
+          <Col lg style={{overflowY: 'auto'}}>
             {task
               .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
@@ -60,7 +59,6 @@ const Calendar = () => {
           </Col>
         </Row>
       </Container>
-    </div>
   );
 };
 
