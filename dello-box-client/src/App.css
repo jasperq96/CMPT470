@@ -13,10 +13,6 @@
   }
 }
 
-/* @media only screen and (max-width: 990px) and (max-height: 560px){
-  body{overflow-y: scroll;}
-} */
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -76,18 +72,3 @@ td {
 .WhiteHeaders {
   color: white;
 }
-
-/*990x550
-
-<Container
-      fluid
-      style={{
-        paddingTop: 50,
-        maxHeight: heightOfScreen,
-        overflowY: 'auto',
-        minHeight: heightOfScreen - 5,
-        maxWidth: widthOfScreen,
-        minWidth: widthOfScreen,
-        overflowX: 'auto'
-      }}
-    >*/
