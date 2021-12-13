@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  dello-box-client:
+    container_name: dello-box-client-prod
+    image: dello-box-client-prod
+    build:
+      context: ./dello-box-client
+      dockerfile: Dockerfile.dev
+      target: production
