@@ -44,7 +44,7 @@ const Calendar = () => {
             <Calendarlib onChange={onDate} value={date} />
             <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
           </Col>
-          <Col lg style={{overflowY: 'auto'}}>
+          <Col lg>
             {task
               .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
               .map((filtered_Dates) => (
