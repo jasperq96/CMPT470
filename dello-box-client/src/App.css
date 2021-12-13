@@ -13,6 +13,10 @@
   }
 }
 
+/* @media only screen and (max-width: 990px) and (max-height: 560px){
+  body{overflow-y: scroll;}
+} */
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -69,14 +73,21 @@ td {
   font-size: 15px;
 }
 
-th {
-  background-color: rgb(111, 116, 119);
-}
-
-td {
-  background-color: rgb(156, 162, 165);
-}
-
 .WhiteHeaders {
   color: white;
 }
+
+/*990x550
+
+<Container
+      fluid
+      style={{
+        paddingTop: 50,
+        maxHeight: heightOfScreen,
+        overflowY: 'auto',
+        minHeight: heightOfScreen - 5,
+        maxWidth: widthOfScreen,
+        minWidth: widthOfScreen,
+        overflowX: 'auto'
+      }}
+    >*/

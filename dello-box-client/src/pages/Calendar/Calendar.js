@@ -38,7 +38,6 @@ const Calendar = () => {
 
   const windowScreenHeight = window.screen.height / 2;
   return (
-    <div>
       <Container fluid className="calendar-navbar-margin media-test">
         <Row>
           <Col lg style={{ maxHeight: windowScreenHeight }}>
@@ -60,7 +59,6 @@ const Calendar = () => {
           </Col>
         </Row>
       </Container>
-    </div>
   );
 };
 

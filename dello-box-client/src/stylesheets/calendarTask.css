@@ -26,8 +26,3 @@
 .calendar-navbar-margin {
   margin-top: 4em;
 }
-
-@media screen and (max-width: 900px) {
-  .media-test {
-  }
-}
