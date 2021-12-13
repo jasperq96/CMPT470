@@ -98,13 +98,13 @@ const ViewFiles = () => {
             </ToggleButton>
           </ButtonGroup>
           <div className="file-container">
-            <Table variant="dark">
+            <Table responsive variant="dark">
               <thead>
                 <tr>
                   <th>Filename</th>
-                  <th>Date Created</th>
+                  <th className="responsive-cut">Date Created</th>
                   <th>Mimetype</th>
-                  <th>Size (Bytes)</th>
+                  <th className="responsive-cut">Size (Bytes)</th>
                 </tr>
               </thead>
               {files.map((file, index) => (

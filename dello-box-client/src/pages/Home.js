@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import '../stylesheets/home.css';
-
+import { Container } from 'react-bootstrap';
 export default function Home() {
   const userContext = useContext(UserContext);
 
   return (
-    <div>
-      <p id="head1" class="header">
+    <Container fluids>
+      <Container className="justify-content-md-center" id="head1" class="header">
         Welcome Back
-      </p>
-      <p id="head2" class="header">
+      </Container>
+      <Container id="head2" class="header justify-content-md-center">
         {userContext.user?.username}
-      </p>
+      </Container>
       <p id="head3" class="header">
         Dello-box of {userContext.user?.username}
       </p>
@@ -25,6 +25,6 @@ export default function Home() {
       <div class="light x7"></div>
       <div class="light x8"></div>
       <div class="light x9"></div>
-    </div>
+    </Container>
   );
 }
