@@ -52,7 +52,7 @@ function Navigationbar() {
             </Nav>
             <Nav className="float-right">
               <NavDropdown title={userContext.user?.username} id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to={'/userinfo'}>
+                <NavDropdown.Item as={Link} to={'/user-info'}>
                   User Information
                 </NavDropdown.Item>
               </NavDropdown>

@@ -27,9 +27,6 @@ export default function CreateTask() {
       ...values,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.value);
-    }
   };
 
   const handleChangeCol = (evt) => {
@@ -37,9 +34,6 @@ export default function CreateTask() {
       ...colValue,
       [evt.target.name]: evt.target.value
     });
-    {
-      console.log(evt.target.value);
-    }
   };
 
   const handleSubmit = (evt) => {
@@ -78,7 +72,6 @@ export default function CreateTask() {
       end_time: '',
       col_id: ''
     });
-    console.log(values);
   };
 
   const handleSubmitCol = (evt) => {
@@ -100,7 +93,7 @@ export default function CreateTask() {
   const createTaskOrColumn = async (url, formData, itemIdentity) => {
     try {
       await httpService.post(url, formData);
-      toast.success(`Successfully created a ${itemIdentity ? "Task" : "Column"}`);
+      toast.success(`Successfully created a ${itemIdentity ? 'Task' : 'Column'}`);
     } catch (error) {
       // Will display the first input error message
       const errorBody = error.response.data.errors[0];
