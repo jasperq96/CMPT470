@@ -273,7 +273,7 @@ const Tasks = () => {
     return;
   };
   return (
-    <Container fluid style={{ paddingTop: 50 }}>
+    <Container fluid style={{ paddingTop: 50, maxHeight: 830, overflowY: 'auto' }}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
@@ -350,7 +350,7 @@ const Tasks = () => {
                                                       ...provided.draggableProps.style
                                                     }}
                                                   >
-                                                    <h1>{task.title}</h1>
+                                                    <h2>{task.title}</h2>
                                                     {task.notes}
                                                     <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
                                                       <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
