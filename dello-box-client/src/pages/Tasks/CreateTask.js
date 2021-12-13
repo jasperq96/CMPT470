@@ -157,7 +157,9 @@ export default function CreateTask() {
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label className="WhiteHeaders">Column</Form.Label>
           <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
-            <option>Choose a Column</option>
+            <option selected disabled>
+              Choose a Column
+            </option>
             {cols.map((col) => (
               <option value={col.id} key={col.id}>
                 {col.title}
