@@ -8,6 +8,7 @@ import initialUserInformation from './initialUserInformation.json';
 import { capitalize } from '../../utils/capitalizeString';
 import ModalUser from '../../components/ModalUser';
 import { editUserInfoObject } from '../../models/userInfoModel';
+import '../../stylesheets/userinfo.css';
 
 const UserInformation = () => {
   let history = useHistory();
@@ -77,7 +78,7 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <Container fluid>
+    <Container className="user-info-margin">
       <h1 className="WhiteHeaders">Edit User Information</h1>
       <Form>
         <Row className="mb-3">

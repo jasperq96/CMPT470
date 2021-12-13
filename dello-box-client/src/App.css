@@ -69,14 +69,6 @@ td {
   font-size: 15px;
 }
 
-th {
-  background-color: rgb(111, 116, 119);
-}
-
-td {
-  background-color: rgb(156, 162, 165);
-}
-
 .WhiteHeaders {
   color: white;
 }
