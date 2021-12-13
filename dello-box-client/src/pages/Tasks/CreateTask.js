@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import httpService from '../../services/httpService';
 import { capitalize } from '../../utils/capitalizeString';
 import { UserContext } from '../../hooks/UserContext';
+import '../../stylesheets/Tasks.css';
 
 export default function CreateTask() {
   const userContext = useContext(UserContext);
@@ -50,12 +51,17 @@ export default function CreateTask() {
       toast.error('You didnt set a End Date');
       return;
     }
-    const newStartDate = new Date(comb_start).toISOString();
-    const newEndDate = new Date(comb_end).toISOString();
+    const tzoffset = new Date().getTimezoneOffset() * 60000;
+    const newStartDate = new Date(comb_start);
+    const newEndDate = new Date(comb_end);
+    const localNewStartDate = new Date(newStartDate - tzoffset).toISOString().slice(0, -1);
+    const localNewEndDate = new Date(newEndDate - tzoffset).toISOString().slice(0, -1);
+    console.log(localNewEndDate);
+    console.log(localNewStartDate);
     const forBackend = {
       colId: parsing_Object.col_id,
-      startDate: newStartDate.slice(0, 19),
-      endDate: newEndDate.slice(0, 19),
+      startDate: localNewStartDate.slice(0, 19),
+      endDate: localNewEndDate.slice(0, 19),
       title: parsing_Object.title,
       notes: parsing_Object.notes
     };
@@ -69,8 +75,7 @@ export default function CreateTask() {
       start_date: '',
       start_time: '',
       end_date: '',
-      end_time: '',
-      col_id: ''
+      end_time: ''
     });
   };
 
@@ -115,8 +120,10 @@ export default function CreateTask() {
     getCols();
   }, [cols]);
 
+  const heightOfScreen = window.screen.height - window.screen.height * 0.1;
+  const widthOfScreen = window.screen.width;
   return (
-    <Container fluid>
+    <Container className="task-navbar-margin justify-content-md-center create-task-spacing">
       <h1 className="WhiteHeaders">Creating a Task</h1>
       <Form>
         <Form.Group as={Col} controlId="formGridEmail">

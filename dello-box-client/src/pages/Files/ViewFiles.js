@@ -1,20 +1,22 @@
 import '../../App.css';
 import React, { useContext, useEffect, useState } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../hooks/UserContext';
 import { capitalize } from '../../utils/capitalizeString';
 import ViewFileElement from '../../components/ViewFile';
-
+import { Container, Table, ToggleButton } from 'react-bootstrap';
+import '../../stylesheets/files.css';
 const ViewFiles = () => {
   const userContext = useContext(UserContext);
   const [files, setFiles] = useState([]);
   const ALL_FILES = `${userContext.user?.id}/all`;
   const PUBLIC_FILES = 'public';
   const PRIVATE_FILES = `${userContext.user?.id}/private`;
-
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checkedYours, setCheckedYours] = useState(false);
+  const [checkedPublic, setCheckedPublic] = useState(false);
   const getFiles = async (endpoint) => {
     const url = `/file-list/${endpoint}`;
     try {
@@ -48,35 +50,70 @@ const ViewFiles = () => {
 
   return (
     <React.Fragment>
-      <div className="body-color">
-        <h1>View Files</h1>
-        <ButtonGroup className="button-padding">
-          <Button onClick={() => filterFiles(1)} variant="secondary">
-            All Files
-          </Button>
-          <Button onClick={() => filterFiles(2)} variant="secondary">
-            Public Files
-          </Button>
-          <Button onClick={() => filterFiles(3)} variant="secondary">
-            Your Files
-          </Button>
-        </ButtonGroup>
-        <div className="file-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Filename</th>
-                <th>Date Created</th>
-                <th>Mimetype</th>
-                <th>Size (Bytes)</th>
-              </tr>
-            </thead>
-            {files.map((file, index) => (
-              <ViewFileElement id={index} fileData={file} />
-            ))}
-          </table>
+      <Container>
+        <div className="body-color files-navbar-margin">
+          <h1>View Files</h1>
+          <ButtonGroup className="button-padding">
+            <ToggleButton
+              onClick={() => {
+                filterFiles(1);
+                setCheckedAll(true);
+                setCheckedYours(false);
+                setCheckedPublic(false);
+              }}
+              variant="outline-light"
+              id="toggle-check"
+              type="checkbox"
+              checked={checkedAll}
+            >
+              All Files
+            </ToggleButton>
+            <ToggleButton
+              onClick={() => {
+                filterFiles(2);
+                setCheckedPublic(true);
+                setCheckedYours(false);
+                setCheckedAll(false);
+              }}
+              variant="outline-light"
+              id="toggle-check"
+              type="checkbox"
+              checked={checkedPublic}
+            >
+              Public Files
+            </ToggleButton>
+            <ToggleButton
+              onClick={() => {
+                filterFiles(3);
+                setCheckedPublic(false);
+                setCheckedYours(true);
+                setCheckedAll(false);
+              }}
+              variant="outline-light"
+              id="toggle-check"
+              type="checkbox"
+              checked={checkedYours}
+            >
+              Your Files
+            </ToggleButton>
+          </ButtonGroup>
+          <div className="file-container">
+            <Table variant="dark">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Date Created</th>
+                  <th>Mimetype</th>
+                  <th>Size (Bytes)</th>
+                </tr>
+              </thead>
+              {files.map((file, index) => (
+                <ViewFileElement id={index} fileData={file} />
+              ))}
+            </Table>
+          </div>
         </div>
-      </div>
+      </Container>
     </React.Fragment>
   );
 };

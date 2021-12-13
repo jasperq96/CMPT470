@@ -16,7 +16,7 @@ function Navigationbar() {
 
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand as={Link} to={'/home'}>
             Dello-Box

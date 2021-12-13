@@ -17,7 +17,18 @@ const fileUpload = multer({
   // Will be changed later when there are restrictions on certain types of files
   fileFilter: (req: Request, file: any, cb: any) => {
     const fileExtension = selectedFilepath.extname(file.originalname.toLowerCase());
-    if (fileExtension !== '.png' && fileExtension !== '.jpg' && fileExtension !== '.jpeg') {
+    if (
+      fileExtension !== '.png' &&
+      fileExtension !== '.jpg' &&
+      fileExtension !== '.jpeg' &&
+      fileExtension !== '.pdf' &&
+      fileExtension !== '.docx' &&
+      fileExtension !== '.doc' &&
+      fileExtension !== '.pptx' &&
+      fileExtension !== '.csv' &&
+      fileExtension !== '.txt' &&
+      fileExtension !== '.zip'
+    ) {
       return cb(null, false);
     }
     cb(null, true);

@@ -6,6 +6,8 @@ import { UserContext } from '../../hooks/UserContext';
 import { editFileObject } from '../../models/fileModel';
 import { capitalize } from '../../utils/capitalizeString';
 import ManageFileElement from '../../components/ManageFile';
+import { Container, Table } from 'react-bootstrap';
+import '../../stylesheets/files.css';
 
 const ManageFiles = () => {
   const userContext = useContext(UserContext);
@@ -71,10 +73,10 @@ const ManageFiles = () => {
 
   return (
     <React.Fragment>
-      <div className="body-color">
+      <Container className="body-color files-navbar-margin">
         <h1>Manage Files</h1>
-        <div className="file-container">
-          <table>
+        <Container className="file-container">
+          <Table variant="dark">
             <thead>
               <tr>
                 <th>Filename</th>
@@ -87,9 +89,9 @@ const ManageFiles = () => {
             {files.map((file, index) => (
               <ManageFileElement id={index} data={file} handleVisibility={handleVisibility} handleDelete={handleDelete} />
             ))}
-          </table>
-        </div>
-      </div>
+          </Table>
+        </Container>
+      </Container>
     </React.Fragment>
   );
 };
