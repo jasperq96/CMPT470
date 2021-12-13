@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { capitalize } from '../../utils/capitalizeString';
 import { Button, Container, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import '../../stylesheets/files.css';
+
 const UploadFiles = () => {
   let history = useHistory();
   const userContext = useContext(UserContext);
@@ -55,7 +56,7 @@ const UploadFiles = () => {
           <Tooltip id={'FileType'}>
             The file types that we accept are the following.
             <br />
-            pdf, png, jpeg/jpg, docx/doc, pptx, csv, .txt, .zip
+            .pdf, .png, .jpeg/.jpg, .docx/.doc, .pptx, .csv, .txt, .zip
           </Tooltip>
         }
       >
