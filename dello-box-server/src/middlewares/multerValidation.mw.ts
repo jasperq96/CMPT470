@@ -13,13 +13,14 @@ const configureStorage = multer.diskStorage({
 
 const fileUpload = multer({
   storage: configureStorage,
-
-  // Will be changed later when there are restrictions on certain types of files
   fileFilter: (req: Request, file: any, cb: any) => {
+    const fileExtensions: string[] = ['pdf', 'png', 'jpg', 'jpeg', 'doc', 'docx', 'pptx', 'csv', 'txt', 'zip'];
     const fileExtension = selectedFilepath.extname(file.originalname.toLowerCase());
-    if (fileExtension !== '.png' && fileExtension !== '.jpg' && fileExtension !== '.jpeg') {
-      return cb(null, false);
-    }
+    fileExtensions.forEach((fileExt: any) => {
+      if (fileExtension !== fileExt) {
+        return cb(null, false);
+      }
+    });
     cb(null, true);
   }
 });
