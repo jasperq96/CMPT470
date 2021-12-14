@@ -73,6 +73,12 @@ td {
   color: white;
 }
 
-.hug-right{
-  margin-left: 90%;
+.hug-right {
+  margin-left: 84%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .hug-right {
+    margin-left: 0%;
+  }
 }
