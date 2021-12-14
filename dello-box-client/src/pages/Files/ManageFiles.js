@@ -73,7 +73,7 @@ const ManageFiles = () => {
 
   return (
     <React.Fragment>
-      <Container className="body-color files-navbar-margin">
+      <Container className="body-color files-navbar-margin container-create-manage-scrolling">
         <h1>Manage Files</h1>
         <Container className="file-container">
           <Table responsive variant="dark">

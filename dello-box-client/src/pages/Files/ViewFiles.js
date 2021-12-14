@@ -50,7 +50,7 @@ const ViewFiles = () => {
 
   return (
     <React.Fragment>
-      <Container>
+      <Container className="container-create-view-scrolling">
         <div className="body-color files-navbar-margin">
           <h1>View Files</h1>
           <ButtonGroup className="button-padding">
