@@ -35,21 +35,25 @@ const Contacts = () => {
   };
 
   const searchContact = async () => {
-    if (document.getElementById('search-bar').value === '') {
-      toast.error('No users found!');
-      return;
-    }
     const url = `/contacts/filter/${userContext.user?.id}/${document.getElementById('search-bar').value}`;
     try {
       const response = await httpService.get(url);
       const { data } = response;
-      data.length === 0
-        ? toast.error('No users found!')
-        : setQueryContactState({
-            queryContacts: data
-          });
+      if (data.length === 0) {
+        toast.error('No users found!');
+        setQueryContactState({
+          queryContacts: []
+        });
+      } else {
+        setQueryContactState({
+          queryContacts: data
+        });
+      }
     } catch (error) {
-      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      toast.error('No users found!');
+      setQueryContactState({
+        queryContacts: []
+      });
     }
   };
 
@@ -77,60 +81,62 @@ const Contacts = () => {
   };
 
   return (
-    <Container className="p-title">
-      <Row>
-        <Col>
-          <Table variant="dark">
-            <thead>
-              <tr>
-                <th>Contacts List</th>
-              </tr>
-            </thead>
-            {contactState.contacts.map((contact) => {
-              return (
-                <ListGroup className="p-contacts">
-                  <ListGroupItem>
-                    {contact.first_name} {contact.last_name} {contact.nickname}
-                  </ListGroupItem>
-                  <ListGroupItem>{contact.email}</ListGroupItem>
-                  <ListGroupItem>{contact.phone}</ListGroupItem>
-                  <Button variant="outline-light" onClick={() => removeContact(contact.user_id)}>
-                    Remove from contacts
-                  </Button>
-                </ListGroup>
-              );
-            })}
-          </Table>
-        </Col>
-        <Col>
-          <Table variant="dark">
-            <thead>
-              <tr>
-                <th>Add Contact</th>
-              </tr>
-            </thead>
-            <Form.Group className="mb-3" controlId="formSearch">
-              <Form.Control id="search-bar" type="search" placeholder="Search friend's username..."></Form.Control>
-            </Form.Group>
-            <Button variant="outline-light" onClick={searchContact}>
-              Search
-            </Button>
-            {queryContactState.queryContacts.map((contact) => {
-              return (
-                <ListGroup className="p-contacts">
-                  <ListGroupItem>
-                    {contact.first_name} {contact.last_name} {contact.nickname}
-                  </ListGroupItem>
-                  <ListGroupItem>{contact.email}</ListGroupItem>
-                  <Button variant="outline-light" onClick={() => addContact(contact.user_id)}>
-                    Add to Contacts
-                  </Button>
-                </ListGroup>
-              );
-            })}
-          </Table>
-        </Col>
-      </Row>
+    <Container className="container-contact-scrolling">
+      <Container className="p-title">
+        <Row>
+          <Col>
+            <Table variant="dark">
+              <thead>
+                <tr>
+                  <th>Contacts List</th>
+                </tr>
+              </thead>
+              {contactState.contacts.map((contact) => {
+                return (
+                  <ListGroup className="p-contacts">
+                    <ListGroupItem>
+                      {contact.first_name} {contact.last_name} {contact.nickname}
+                    </ListGroupItem>
+                    <ListGroupItem>{contact.email}</ListGroupItem>
+                    <ListGroupItem>{contact.phone}</ListGroupItem>
+                    <Button variant="outline-light" onClick={() => removeContact(contact.user_id)}>
+                      Remove from contacts
+                    </Button>
+                  </ListGroup>
+                );
+              })}
+            </Table>
+          </Col>
+          <Col>
+            <Table variant="dark">
+              <thead>
+                <tr>
+                  <th>Add Contact</th>
+                </tr>
+              </thead>
+              <Form.Group className="mb-3" controlId="formSearch">
+                <Form.Control id="search-bar" type="search" placeholder="Search friend's username..."></Form.Control>
+              </Form.Group>
+              <Button variant="outline-light" onClick={searchContact}>
+                Search
+              </Button>
+              {queryContactState.queryContacts.map((contact) => {
+                return (
+                  <ListGroup className="p-contacts">
+                    <ListGroupItem>
+                      {contact.first_name} {contact.last_name} {contact.nickname}
+                    </ListGroupItem>
+                    <ListGroupItem>{contact.email}</ListGroupItem>
+                    <Button variant="outline-light" onClick={() => addContact(contact.user_id)}>
+                      Add to Contacts
+                    </Button>
+                  </ListGroup>
+                );
+              })}
+            </Table>
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 };

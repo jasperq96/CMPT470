@@ -35,26 +35,28 @@ const Calendar = () => {
     getTasks();
   }, []);
 
-  const windowScreenHeight = window.screen.height / 2;
   return (
-    <Container fluid className="calendar-navbar-margin media-test">
-      <Row>
-        <Col lg style={{ maxHeight: windowScreenHeight }}>
-          <Calendarlib onChange={onDate} value={date} />
-        </Col>
-        <Col lg>
-          {task
-            .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
-            .map((filtered_Dates) => (
-              <ul className="task-look">
-                <li className="task-title">{filtered_Dates.title}</li>
-                <ul>
-                  <li>{filtered_Dates.notes}</li>
+    <Container className="container-calendar-scrolling">
+      <Container fluid className="media-test" style={{ paddingTop: 70 }}>
+        <Row>
+          <Col lg>
+            <Calendarlib onChange={onDate} value={date} />
+          </Col>
+          <Col lg>
+            {task
+              .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
+              .map((filtered_Dates) => (
+                <ul className="task-look">
+                  <li className="task-title">{filtered_Dates.title}</li>
+                  <ul>
+                    <li>{filtered_Dates.notes}</li>
+                  </ul>
                 </ul>
-              </ul>
-            ))}
-        </Col>
-      </Row>
+              ))}
+            {console.log(date.toISOString)}
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 };

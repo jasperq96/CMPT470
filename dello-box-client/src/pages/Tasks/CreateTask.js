@@ -115,62 +115,65 @@ const CreateTask = () => {
   useEffect(() => {
     getCols();
   }, [cols]);
-
   return (
-    <Container className="task-navbar-margin justify-content-md-center create-task-spacing">
-      <h1 className="WhiteHeaders">Creating a Task</h1>
-      <Form>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label className="WhiteHeaders">Task Title</Form.Label>
-          <Form.Control type="Text" placeholder="Task Title" name="title" value={values.title} onChange={handleChange} />
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label className="WhiteHeaders">Task Notes</Form.Label>
-          <Form.Control type="Text" placeholder="Task Notes" as="textarea" rows={3} name="notes" value={values.notes} onChange={handleChange} />
-        </Form.Group>
-        <Row className="mb-3">
+    <Container className="container-create-task-scrolling">
+      <Container className="task-navbar-margin create-task-spacing ">
+        <h1 className="WhiteHeaders">Creating a Task</h1>
+        <Form>
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label className="WhiteHeaders">Start Date</Form.Label>
-            <Form.Control type="Date" placeholder="First Day of The Task" name="start_date" value={values.start_date} onChange={handleChange} />
+            <Form.Label className="WhiteHeaders">Task Title</Form.Label>
+            <Form.Control type="Text" placeholder="Task Title" name="title" value={values.title} onChange={handleChange} />
           </Form.Group>
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label className="WhiteHeaders">Time of Event</Form.Label>
-            <Form.Control type="Time" placeholder="Time of Event" name="start_time" value={values.start_time} onChange={handleChange} />
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label className="WhiteHeaders">End Date</Form.Label>
-            <Form.Control type="Date" placeholder="Last Day of The Task" name="end_date" value={values.end_date} onChange={handleChange} />
+            <Form.Label className="WhiteHeaders">Task Notes</Form.Label>
+            <Form.Control type="Text" placeholder="Task Notes" as="textarea" rows={3} name="notes" value={values.notes} onChange={handleChange} />
           </Form.Group>
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label className="WhiteHeaders">Time of Event End</Form.Label>
-            <Form.Control type="Time" placeholder="Time of Event End" name="end_time" value={values.end_time} onChange={handleChange} />
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label className="WhiteHeaders">Start Date</Form.Label>
+              <Form.Control type="Date" placeholder="First Day of The Task" name="start_date" value={values.start_date} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label className="WhiteHeaders">Time of Event</Form.Label>
+              <Form.Control type="Time" placeholder="Time of Event" name="start_time" value={values.start_time} onChange={handleChange} />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label className="WhiteHeaders">End Date</Form.Label>
+              <Form.Control type="Date" placeholder="Last Day of The Task" name="end_date" value={values.end_date} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label className="WhiteHeaders">Time of Event End</Form.Label>
+              <Form.Control type="Time" placeholder="Time of Event End" name="end_time" value={values.end_time} onChange={handleChange} />
+            </Form.Group>
+          </Row>
+          <Form.Group as={Col} controlId="formGridState">
+            <Form.Label className="WhiteHeaders">Column</Form.Label>
+            <Form.Select defaultValue="Choose..." name="col_id" onClick={handleChange}>
+              <option>Choose a Column</option>
+              {cols.map((col) => (
+                <option value={col.id} key={col.id}>
+                  {col.title}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
-        </Row>
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label className="WhiteHeaders">Column</Form.Label>
-          <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
-            <option selected disabled>
-              Choose a Column
-            </option>
-            {cols.map((col) => (
-              <option value={col.id} key={col.id}>
-                {col.title}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-        <Button onClick={(e) => handleSubmit(e)}>Submit Task</Button>
-      </Form>
-      <h1 className="WhiteHeaders">Creating a Column</h1>
-      <Form>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label className="WhiteHeaders">Column Title</Form.Label>
-          <Form.Control type="Text" placeholder="Column Title" name="title" onChange={handleChangeCol} />
-        </Form.Group>
-        <Button onClick={(e) => handleSubmitCol(e)}>Submit Column</Button>
-      </Form>
+          <Button variant="outline-light" className="task-button-padding" onClick={(e) => handleSubmit(e)}>
+            Submit Task
+          </Button>
+        </Form>
+        <h1 className="WhiteHeaders">Creating a Column</h1>
+        <Form>
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label className="WhiteHeaders">Column Title</Form.Label>
+            <Form.Control type="Text" placeholder="Column Title" name="title" onChange={handleChangeCol} />
+          </Form.Group>
+          <Button variant="outline-light" className="task-button-padding" onClick={(e) => handleSubmitCol(e)}>
+            Submit Column
+          </Button>
+        </Form>
+      </Container>
     </Container>
   );
 };

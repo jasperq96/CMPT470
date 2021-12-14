@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Knex } from 'config/postgres';
 import userAuth from './requestTemplates/authUserController';
 import authConfig from 'utils/authConfig';
-import { authUserExists } from 'utils/authMessages';
+import { authUserExists, authUserNotFound } from 'utils/authMessages';
 import { getItems } from './requestTemplates/getAllRequest';
 import { insertItem } from './requestTemplates/createRequest';
 import { User } from 'db/models/userModel';
@@ -14,13 +14,17 @@ import { deleteUser } from './requestTemplates/deleteUserById';
 import controller from './fileController';
 import { insertNewUserColumns } from './columnController';
 import { isInvalidUserId } from 'utils/isInvalidUserId';
+import { Contacts } from 'db/models/contactModel';
+import { generateUUID } from 'utils/generateUUID';
 
 const NAMESPACE = 'User Control';
 const TABLE_USER = 'user';
 const TABLE_USER_INFO = 'user_info';
+const TABLE_CONTACT_LIST = 'contact_list';
+
 const userInputtedReqBody = (req: Request) => {
   const { username, password } = req.body;
-  return { username: username, password: password };
+  return { username: username, password: password, uuid: generateUUID() };
 };
 
 const userInfoInputtedReqBody = (req: Request, userId: number) => {
@@ -46,11 +50,12 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       res.status(400).send(authUserExists);
     } else {
       newUser.password = await authConfig.hashPassword(newUser.password);
-      const createdUser: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);
+      const createdUser: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);
       const newlyCreatedUser: User = await retrieveUserByUserName(newUser.username);
-      const createdUserInfo: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER_INFO, userInfoInputtedReqBody(req, newlyCreatedUser.id));
+      const createdUserInfo: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER_INFO, userInfoInputtedReqBody(req, newlyCreatedUser.id));
       const createdColumns: Column[] = await insertNewUserColumns(newlyCreatedUser.id);
-      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }, { columns: createdColumns }]);
+      const createdContact: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_CONTACT_LIST, { user_id: newlyCreatedUser.id });
+      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }, { columns: createdColumns }, { contact_list: createdContact }]);
     }
   } catch (error: any) {
     logging.error(NAMESPACE, error.message, error);
@@ -64,6 +69,13 @@ const deleteUserByUserId = async (req: Request, res: Response, next: NextFunctio
     res.status(400).send(userDeleteInputError);
     return;
   }
+  const currentUUID: string = req.body.uuid;
+  const storedUUID = await Knex.select('uuid').from(TABLE_USER).where('id', userId).first();
+  if (currentUUID !== storedUUID.uuid) {
+    res.status(401).send(authUserNotFound);
+    return;
+  }
+
   logging.info(NAMESPACE, `REMOVING USER WITH ID ${userId}`);
   try {
     const listOfUsersWithMeAdded = await Knex.select('*').from('contact_list').where('contact_list.user_id', '<>', userId);

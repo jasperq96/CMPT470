@@ -8,3 +8,9 @@ export const createUserObject = (values) => {
     phone: values.phonenumber
   };
 };
+
+export const deleteUserObject = (uuid) => {
+  return {
+    uuid: uuid
+  };
+};

@@ -6,6 +6,7 @@ import { UserContext } from '../hooks/UserContext';
 import { toast } from 'react-toastify';
 import authenticationService from '../services/authenticationService';
 import { Link } from 'react-router-dom';
+import '../stylesheets/authentication.css';
 
 const Login = () => {
   let history = useHistory();
@@ -51,32 +52,35 @@ const Login = () => {
           <Container>
             <Navbar.Brand>Dello-Box Sign In</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav"></Navbar.Collapse>
-            <Nav>
-              <Nav.Link as={Link} to={'/'}>
-                Landing Page
-              </Nav.Link>
-            </Nav>
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="hug-right">
+                <Nav.Link as={Link} to={'/'}>
+                  Landing Page
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       </div>
-      <Container>
-        <Col xs>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
-              <Form.Label>User Name</Form.Label>
-              <Form.Control type="Username" placeholder="Enter Username" name="username" value={values.username} onChange={handleChange} />
-            </Form.Group>
+      <Container className="container-create-login-scrolling">
+        <Container>
+          <Col xs>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
+                <Form.Label>User Name</Form.Label>
+                <Form.Control type="Username" placeholder="Enter Username" name="username" value={values.username} onChange={handleChange} />
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password" value={values.password} onChange={handleChange} />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Log in
-            </Button>
-          </Form>
-        </Col>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" name="password" value={values.password} onChange={handleChange} />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Log in
+              </Button>
+            </Form>
+          </Col>
+        </Container>
       </Container>
     </div>
   );
