@@ -13,10 +13,11 @@ Alternatively: (If you cannot use make commands)
 1. cd dello-box-server
 2. npm i
 3. cd .. (To return to root directory)
-4. docker-compose -f docker-compose.prod.yml up -d
-5. docker exec dello-box-server-prod node_modules/.bin/knex migrate:latest (This will run migrations)
-6. docker exec dello-box-server-prod node_modules/.bin/knex seed:run (This will run seeds)
-7. Open a new browser and visit: http://localhost:3000/
+4. docker-compose -f docker-compose.prod.yml build
+5. docker-compose -f docker-compose.prod.yml up -d
+6. docker exec dello-box-server-prod node_modules/.bin/knex migrate:latest (This will run migrations)
+7. docker exec dello-box-server-prod node_modules/.bin/knex seed:run (This will run seeds)
+8. Open a new browser and visit: http://localhost:3000/
 
 <h1>Project Overview and Important Notes</h1>
  
