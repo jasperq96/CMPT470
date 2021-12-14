@@ -31,7 +31,7 @@ const Navigationbar = () => {
           <img className="d-block w-100" src="https://pt-static.z-dn.net/files/d14/f0517e80cc1fe426a2d7767047986b02.jpg" alt="Third slide" />
           <Carousel.Caption>
             <h3>What is Dello-box?</h3>
-            <p>Inpisred by Trello and Drop-box, Dello-box is a centralized application that combines unique functionalities found in both aforementioned applications</p>
+            <p>Inpisred by Trello and Dropbox, Dello-Box is a centralized application that combines unique functionalities found in both aforementioned applications</p>
           </Carousel.Caption>
         </Carousel.Item>
 
@@ -41,8 +41,8 @@ const Navigationbar = () => {
           <Carousel.Caption>
             <h3>Task Board</h3>
             <p>
-              Our task board puts the simple in simplistic, keeping descriptions of tasks hidden until clicked upon. With only the task name displayed, users have an easier time locating their desired
-              task. If needed they can still click on the desired task to display any information related to it.
+              Our task board (DelloBoard) puts the simple in simplistic. With the task name, notes, start date and end date displayed, users have an easier time locating their desired task. If needed
+              they can click on the desired task to edit any information related to it.
             </p>
           </Carousel.Caption>
         </Carousel.Item>
@@ -53,7 +53,7 @@ const Navigationbar = () => {
           <Carousel.Caption>
             <h3>Dropbox?</h3>
             <p>
-              Similar to Dropbox, users can upload any file they wish. They can also view all public typed files that other users have uploaded. Don't worry, by default, users upload private typed
+              Similar to Dropbox, users can upload files of many types. They can also view all publicly-visible files that other users have uploaded. Don't worry, by default, users upload private
               files, so no accidental pictures to the world.
             </p>
           </Carousel.Caption>
@@ -64,7 +64,7 @@ const Navigationbar = () => {
 
           <Carousel.Caption>
             <h3>Make Contacts!</h3>
-            <p>Like what others upload? Have a group member forget to attach a needed file for a task? Add them as a contact and view all their public files as soon as they are uploaded!</p>
+            <p>Like what others upload? Have a group member forget to attach a needed file for a task? Add them as a contact...</p>
           </Carousel.Caption>
         </Carousel.Item>
 
@@ -73,7 +73,7 @@ const Navigationbar = () => {
 
           <Carousel.Caption>
             <h3>Did we miss something?</h3>
-            <p>Let us know if we missed any features or have any suggestions to improve our website!</p>
+            <p>Let us know if we missed any features or have any suggestions to improve our web-application!</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

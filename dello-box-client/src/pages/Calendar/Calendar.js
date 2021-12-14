@@ -50,6 +50,9 @@ const Calendar = () => {
                   <li className="task-title">{filtered_Dates.title}</li>
                   <ul>
                     <li>{filtered_Dates.notes}</li>
+                    <span>
+                      {filtered_Dates.start_date.slice(0, 10)} to {filtered_Dates.start_date.slice(0, 10)}
+                    </span>
                   </ul>
                 </ul>
               ))}
