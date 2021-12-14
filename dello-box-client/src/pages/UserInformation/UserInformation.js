@@ -78,8 +78,8 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <Container>
-      <Container className="user-info-margin container-user-info">
+    <Container className="user-info-margin container-user-info">
+      <Container>
         <h1 className="WhiteHeaders">Edit User Information</h1>
         <Form>
           <Row className="mb-3">
