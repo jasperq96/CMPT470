@@ -49,72 +49,74 @@ const ViewFiles = () => {
   }, []);
 
   return (
-    <React.Fragment>
-      <Container className="container-create-view-scrolling">
-        <div className="body-color files-navbar-margin">
-          <h1>View Files</h1>
-          <ButtonGroup className="button-padding">
-            <ToggleButton
-              onClick={() => {
-                filterFiles(1);
-                setCheckedAll(true);
-                setCheckedYours(false);
-                setCheckedPublic(false);
-              }}
-              variant="outline-light"
-              id="toggle-check"
-              type="checkbox"
-              checked={checkedAll}
-            >
-              All Files
-            </ToggleButton>
-            <ToggleButton
-              onClick={() => {
-                filterFiles(2);
-                setCheckedPublic(true);
-                setCheckedYours(false);
-                setCheckedAll(false);
-              }}
-              variant="outline-light"
-              id="toggle-check"
-              type="checkbox"
-              checked={checkedPublic}
-            >
-              Public Files
-            </ToggleButton>
-            <ToggleButton
-              onClick={() => {
-                filterFiles(3);
-                setCheckedPublic(false);
-                setCheckedYours(true);
-                setCheckedAll(false);
-              }}
-              variant="outline-light"
-              id="toggle-check"
-              type="checkbox"
-              checked={checkedYours}
-            >
-              Your Files
-            </ToggleButton>
-          </ButtonGroup>
-          <div className="file-container">
-            <Table responsive variant="dark">
-              <thead>
-                <tr>
-                  <th>Filename</th>
-                  <th className="responsive-cut">Date Created</th>
-                  <th>Mimetype</th>
-                  <th className="responsive-cut">Size (Bytes)</th>
-                </tr>
-              </thead>
-              {files.map((file, index) => (
-                <ViewFileElement id={index} fileData={file} />
-              ))}
-            </Table>
+    <Container className="container-create-view-scrolling">
+      <React.Fragment>
+        <Container>
+          <div className="body-color files-navbar-margin">
+            <h1>View Files</h1>
+            <ButtonGroup className="button-padding">
+              <ToggleButton
+                onClick={() => {
+                  filterFiles(1);
+                  setCheckedAll(true);
+                  setCheckedYours(false);
+                  setCheckedPublic(false);
+                }}
+                variant="outline-light"
+                id="toggle-check"
+                type="checkbox"
+                checked={checkedAll}
+              >
+                All Files
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => {
+                  filterFiles(2);
+                  setCheckedPublic(true);
+                  setCheckedYours(false);
+                  setCheckedAll(false);
+                }}
+                variant="outline-light"
+                id="toggle-check"
+                type="checkbox"
+                checked={checkedPublic}
+              >
+                Public Files
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => {
+                  filterFiles(3);
+                  setCheckedPublic(false);
+                  setCheckedYours(true);
+                  setCheckedAll(false);
+                }}
+                variant="outline-light"
+                id="toggle-check"
+                type="checkbox"
+                checked={checkedYours}
+              >
+                Your Files
+              </ToggleButton>
+            </ButtonGroup>
+            <div className="file-container">
+              <Table responsive variant="dark">
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th className="responsive-cut">Date Created</th>
+                    <th>Mimetype</th>
+                    <th className="responsive-cut">Size (Bytes)</th>
+                  </tr>
+                </thead>
+                {files.map((file, index) => (
+                  <ViewFileElement id={index} fileData={file} />
+                ))}
+              </Table>
+            </div>
           </div>
-        </div>
-      </Container>
-    </React.Fragment>
+        </Container>
+      </React.Fragment>
+    </Container>
   );
 };
 

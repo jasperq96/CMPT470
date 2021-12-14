@@ -78,38 +78,42 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <Container className="user-info-margin">
-      <h1 className="WhiteHeaders">Edit User Information</h1>
-      <Form>
-        <Row className="mb-3">
+    <Container>
+      <Container className="user-info-margin container-user-info">
+        <h1 className="WhiteHeaders">Edit User Information</h1>
+        <Form>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label className="WhiteHeaders">First Name</Form.Label>
+              <Form.Control type="Name" placeholder="First Name" name="first_name" value={values.first_name} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label className="WhiteHeaders">Last Name</Form.Label>
+              <Form.Control type="Name" placeholder="Last Name" name="last_name" value={values.last_name} onChange={handleChange} />
+            </Form.Group>
+          </Row>
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label className="WhiteHeaders">First Name</Form.Label>
-            <Form.Control type="Name" placeholder="First Name" name="first_name" value={values.first_name} onChange={handleChange} />
+            <Form.Label className="WhiteHeaders">Email</Form.Label>
+            <Form.Control type="Email" placeholder="Email" name="email" value={values.email} onChange={handleChange} />
           </Form.Group>
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label className="WhiteHeaders">Last Name</Form.Label>
-            <Form.Control type="Name" placeholder="Last Name" name="last_name" value={values.last_name} onChange={handleChange} />
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label className="WhiteHeaders">Phone</Form.Label>
+            <Form.Control type="PhoneNumber" placeholder="Phone Number" name="phone" value={values.phone} onChange={handleChange} />
           </Form.Group>
-        </Row>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label className="WhiteHeaders">Email</Form.Label>
-          <Form.Control type="Email" placeholder="Email" name="email" value={values.email} onChange={handleChange} />
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label className="WhiteHeaders">Phone</Form.Label>
-          <Form.Control type="PhoneNumber" placeholder="Phone Number" name="phone" value={values.phone} onChange={handleChange} />
-        </Form.Group>
-        <Button onClick={(e) => putUserInfo(e)}>Update User Information</Button>
-        <ModalUser show={userModal} onModalClose={onModalClose} onModalDelete={onModalDelete}></ModalUser>
-        <Button
-          variant="danger"
-          onClick={(e) => {
-            onDeleteUser(e);
-          }}
-        >
-          Delete Account
-        </Button>
-      </Form>
+          <Button variant="outline-success" onClick={(e) => putUserInfo(e)}>
+            Update User Information
+          </Button>
+          <ModalUser show={userModal} onModalClose={onModalClose} onModalDelete={onModalDelete}></ModalUser>
+          <Button
+            variant="danger"
+            onClick={(e) => {
+              onDeleteUser(e);
+            }}
+          >
+            Delete Account
+          </Button>
+        </Form>
+      </Container>
     </Container>
   );
 };
