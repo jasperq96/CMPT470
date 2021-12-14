@@ -96,6 +96,9 @@ Deployment:
 - nginx
 
 <h1>Resources and Tutorials</h1>
+
+Links:
+
 - https://react-bootstrap.github.io/components/alerts (Alerts)
 - https://egghead.io/lessons/react-reorder-a-list-with-react-beautiful-dnd (DelloBoard)
 - https://www.youtube.com/watch?v=Vqa9NMzF3wc&t=1492s (DelloBoard)
