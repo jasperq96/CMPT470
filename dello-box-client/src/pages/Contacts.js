@@ -35,21 +35,25 @@ const Contacts = () => {
   };
 
   const searchContact = async () => {
-    if (document.getElementById('search-bar').value === '') {
-      toast.error('No users found!');
-      return;
-    }
     const url = `/contacts/filter/${userContext.user?.id}/${document.getElementById('search-bar').value}`;
     try {
       const response = await httpService.get(url);
       const { data } = response;
-      data.length === 0
-        ? toast.error('No users found!')
-        : setQueryContactState({
-            queryContacts: data
-          });
+      if (data.length === 0) {
+        toast.error('No users found!');
+        setQueryContactState({
+          queryContacts: []
+        });
+      } else {
+        setQueryContactState({
+          queryContacts: data
+        });
+      }
     } catch (error) {
-      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      toast.error('No users found!');
+      setQueryContactState({
+        queryContacts: []
+      });
     }
   };
 
@@ -106,7 +110,7 @@ const Contacts = () => {
           <Table variant="dark">
             <thead>
               <tr>
-                <th>Add Contact</th>
+                <th>Add Contact (Case Sensitive)</th>
               </tr>
             </thead>
             <Form.Group className="mb-3" controlId="formSearch">

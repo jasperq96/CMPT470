@@ -14,10 +14,12 @@ import { deleteUser } from './requestTemplates/deleteUserById';
 import controller from './fileController';
 import { insertNewUserColumns } from './columnController';
 import { isInvalidUserId } from 'utils/isInvalidUserId';
+import { Contacts } from 'db/models/contactModel';
 
 const NAMESPACE = 'User Control';
 const TABLE_USER = 'user';
 const TABLE_USER_INFO = 'user_info';
+const TABLE_CONTACT_LIST = 'contact_list';
 const userInputtedReqBody = (req: Request) => {
   const { username, password } = req.body;
   return { username: username, password: password };
@@ -46,11 +48,12 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       res.status(400).send(authUserExists);
     } else {
       newUser.password = await authConfig.hashPassword(newUser.password);
-      const createdUser: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);
+      const createdUser: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER, newUser);
       const newlyCreatedUser: User = await retrieveUserByUserName(newUser.username);
-      const createdUserInfo: User | UserInfo | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER_INFO, userInfoInputtedReqBody(req, newlyCreatedUser.id));
+      const createdUserInfo: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_USER_INFO, userInfoInputtedReqBody(req, newlyCreatedUser.id));
       const createdColumns: Column[] = await insertNewUserColumns(newlyCreatedUser.id);
-      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }, { columns: createdColumns }]);
+      const createdContact: User | UserInfo | Contacts | undefined = await insertItem(req, res, next, NAMESPACE, TABLE_CONTACT_LIST, { user_id: newlyCreatedUser.id });
+      res.status(201).send([{ user: createdUser }, { user_info: createdUserInfo }, { columns: createdColumns }, { contact_list: createdContact }]);
     }
   } catch (error: any) {
     logging.error(NAMESPACE, error.message, error);
