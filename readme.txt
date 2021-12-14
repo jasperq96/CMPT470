@@ -23,8 +23,9 @@ Key highlights of our project for the checkpoint:
 
             - Calendar: The calendar can only show current tasks assigned to their days.
 
-            - User: Users can click on their profile located on the top right of the window, in this screen they can either update their user information or delete themselves are a user from our system. The delete API is public, malicious users who want to delete a user
-            who are not themselves are required to submit a userid and a uuid. A uuid is not viewable anywhere in our application and is randomely generated when a user is created and stored within their account information. 
+            - User: Users can click on their profile located on the top right of the window, in this screen they can either update their user information or delete themselves are a user from our system. While the delete a user API is public, malicious users who attempt to delete 
+            a user who are not themselves will have hard time. In order to successfully delete a user, the malicious users would have to submit a valid userid and uuid. The uuid is not viewable anywhere in our application and is randomely generated when a user is created and stored 
+            within their account information. This uuid is not passed in any of the feature APIs so no user's uuid will ever be revealed.
 
     Backend:
         We have all API's implemented in the backend, with input sanitization, authentication, and middleware. Endpoint restriction and only localhost:3000 can access API functionality while all other ports will give CORS errors.
