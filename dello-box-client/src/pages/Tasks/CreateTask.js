@@ -123,7 +123,7 @@ export default function CreateTask() {
   const heightOfScreen = window.screen.height - window.screen.height * 0.1;
   const widthOfScreen = window.screen.width;
   return (
-    <Container className="task-navbar-margin justify-content-md-center create-task-spacing">
+    <Container className="task-navbar-margin create-task-spacing container-create-task-scrolling">
       <h1 className="WhiteHeaders">Creating a Task</h1>
       <Form>
         <Form.Group as={Col} controlId="formGridEmail">
@@ -156,7 +156,7 @@ export default function CreateTask() {
         </Row>
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label className="WhiteHeaders">Column</Form.Label>
-          <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
+          <Form.Select defaultValue="Choose..." name="col_id" onClick={handleChange}>
             <option>Choose a Column</option>
             {cols.map((col) => (
               <option value={col.id} key={col.id}>
@@ -165,7 +165,9 @@ export default function CreateTask() {
             ))}
           </Form.Select>
         </Form.Group>
-        <Button onClick={(e) => handleSubmit(e)}>Submit Task</Button>
+        <Button variant="outline-light" className="task-button-padding" onClick={(e) => handleSubmit(e)}>
+          Submit Task
+        </Button>
       </Form>
       <h1 className="WhiteHeaders">Creating a Column</h1>
       <Form>
@@ -173,7 +175,9 @@ export default function CreateTask() {
           <Form.Label className="WhiteHeaders">Column Title</Form.Label>
           <Form.Control type="Text" placeholder="Column Title" name="title" onChange={handleChangeCol} />
         </Form.Group>
-        <Button onClick={(e) => handleSubmitCol(e)}>Submit Column</Button>
+        <Button variant="outline-light" className="task-button-padding" onClick={(e) => handleSubmitCol(e)}>
+          Submit Column
+        </Button>
       </Form>
     </Container>
   );

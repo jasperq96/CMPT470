@@ -38,11 +38,10 @@ const Calendar = () => {
 
   const windowScreenHeight = window.screen.height / 2;
   return (
-    <Container fluid className="calendar-navbar-margin media-test">
+    <Container fluid className="media-test container-calendar-scrolling" style={{ paddingTop: 70 }}>
       <Row>
         <Col lg style={{ maxHeight: windowScreenHeight }}>
           <Calendarlib onChange={onDate} value={date} />
-          <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
         </Col>
         <Col lg>
           {task
