@@ -236,7 +236,7 @@
           "response": []
         },
         {
-          "name": "GET user info by username",
+          "name": "GET filter a contact by username",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -253,13 +253,17 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/contacts/:userId/filter",
+              "raw": "localhost:8080/contacts/filter/:userId/:username",
               "host": ["localhost"],
               "port": "8080",
-              "path": ["contacts", ":userId", "filter"],
+              "path": ["contacts", "filter", ":userId", ":username"],
               "variable": [
                 {
                   "key": "userId",
+                  "value": ""
+                },
+                {
+                  "key": "username",
                   "value": ""
                 }
               ]

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Col, Container, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { Col, Container, ListGroup, ListGroupItem, Button, Row } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { UserContext } from '../../hooks/UserContext';
 import httpService from '../../services/httpService';
@@ -10,6 +10,8 @@ import ModalTasks from '../../components/ModalTasks';
 import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
+import ManageEmpty from '../../components/ManageEmpty';
+
 const editColumnOrder = async (updatedColumns) => {
   const url = '/column/order';
   try {
@@ -96,6 +98,7 @@ const Tasks = () => {
   const [column_edit, setColumn_edit] = useState(false);
   const [selected_task, setSelected_task] = useState({});
   const [selected_column, setSelected_column] = useState({});
+  const [no_columns, setNo_column] = useState(false);
   //const [parsed_columns, setParsed_Columns] = useState([]);
   const onDeleteModal_task = (evt) => {
     evt.stopPropagation();
@@ -133,6 +136,10 @@ const Tasks = () => {
     setColumn_edit(false);
     return;
   };
+  const onManageEmptyClose = () => {
+    setNo_column(false);
+    return;
+  };
 
   const deleteColumn = async (deletedColumn) => {
     const url = '/column';
@@ -165,6 +172,7 @@ const Tasks = () => {
       getTasksByUserId(response.data);
     } catch (error) {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      setNo_column(true);
     }
   };
 
@@ -287,6 +295,9 @@ const Tasks = () => {
       }}
     >
       <DragDropContext onDragEnd={(result) => onDragEnd(result, parsed_columns, setParsed_Columns)}>
+        <ModalTaskEdit show={task_edit} handleClose={onEditTaskClose} task={selected_task} onTaskUpdate={onTaskUpdate} task_index={task_index} col_index={column_index} />
+        <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
+        <ManageEmpty show={no_columns} onModalClose={onManageEmptyClose} />
         <Droppable droppableId="all_columns" direction="horizontal" type="column">
           {(provided, snapshot) => {
             return (
@@ -298,7 +309,7 @@ const Tasks = () => {
                         return (
                           <Col md="auto" ref={provided.innerRef} {...provided.draggableProps}>
                             <ListGroup>
-                              <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center' }}>
+                              <ListGroupItem {...provided.dragHandleProps} style={{ margin: 5, justifyContent: 'center', background: 'black', color: 'white' }}>
                                 {column.title}
                                 <ModalColumns index={column_index} show={column_modal} task={column} onModalClose={onModalClose_column} onColumnDelete={onColumnDelete} />
                                 <ModalColumnsEdit show={column_edit} handleClose={onEditColClose} column={selected_column} onColUpdate={onColUpdate} task_index={task_index} col_index={column_index} />
@@ -314,7 +325,7 @@ const Tasks = () => {
                                 </Button>
                                 <Button
                                   style={{ display: 'inline-flex', float: 'right' }}
-                                  variant="dark"
+                                  variant="outline-light"
                                   onClick={(e) => {
                                     onEditModal_column(e);
                                     setColumn_Index(column.col_order);
@@ -333,7 +344,7 @@ const Tasks = () => {
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
                                         style={{
-                                          background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                                          background: snapshot.isDraggingOver ? '#eed0fd' : 'lightgrey',
                                           minHeight: 50,
                                           minWidth: 300,
                                           className: 'task-height'
@@ -353,46 +364,48 @@ const Tasks = () => {
                                                       padding: '50',
                                                       margin: '0 0 5px 0',
                                                       minHeight: '50',
-                                                      background: snapshot.isDragging ? '#263B4A' : '#456C86',
+                                                      background: snapshot.isDragging ? '#110119' : '#300346',
                                                       color: 'white',
                                                       ...provided.draggableProps.style,
                                                       className: 'task-height'
                                                     }}
                                                   >
-                                                    <h2>{task.title}</h2>
-                                                    {task.notes}
-                                                    <ListGroup style={{ display: 'inline-flex', float: 'right' }}>
-                                                      <ModalTasks index={task_index} show={task_modal} task={parsed_columns} onModalClose={onModalClose} onTaskDelete={onTaskDelete} />
-                                                      <ModalTaskEdit
-                                                        show={task_edit}
-                                                        handleClose={onEditTaskClose}
-                                                        task={selected_task}
-                                                        onTaskUpdate={onTaskUpdate}
-                                                        task_index={task_index}
-                                                        col_index={column_index}
-                                                      />
-                                                      <Button
-                                                        variant="danger"
-                                                        onClick={(e) => {
-                                                          onDeleteModal_task(e);
-                                                          setTask_Index(task.index);
-                                                          setColumn_Index(column.col_order);
-                                                        }}
-                                                      >
-                                                        X
-                                                      </Button>
-                                                      <Button
-                                                        variant="dark"
-                                                        onClick={(e) => {
-                                                          onEditModal_task(e);
-                                                          setTask_Index(task.index);
-                                                          setColumn_Index(column.col_order);
-                                                          setSelected_task(parsed_columns[column.col_order].col_tasks[task.index]);
-                                                        }}
-                                                      >
-                                                        Edit
-                                                      </Button>
-                                                    </ListGroup>
+                                                    <Row>
+                                                      <h2>
+                                                        {task.title}{' '}
+                                                        <Button
+                                                          className="task-button-positioning"
+                                                          variant="danger"
+                                                          onClick={(e) => {
+                                                            onDeleteModal_task(e);
+                                                            setTask_Index(task.index);
+                                                            setColumn_Index(column.col_order);
+                                                          }}
+                                                        >
+                                                          X
+                                                        </Button>
+                                                        <Button
+                                                          className="task-button-positioning"
+                                                          variant="outline-light"
+                                                          onClick={(e) => {
+                                                            onEditModal_task(e);
+                                                            setTask_Index(task.index);
+                                                            setColumn_Index(column.col_order);
+                                                            setSelected_task(parsed_columns[column.col_order].col_tasks[task.index]);
+                                                          }}
+                                                        >
+                                                          Edit
+                                                        </Button>
+                                                      </h2>
+                                                    </Row>
+                                                    <Row>
+                                                      <Col>{task.notes}</Col>
+                                                    </Row>
+                                                    <Row>
+                                                      <Col>From: {task.start_date.slice(0, 10)}</Col>
+                                                      <Col>To: {task.end_date.slice(0, 10)}</Col>
+                                                    </Row>
+                                                    <ListGroup style={{ display: 'inline-flex', float: 'right' }}></ListGroup>
                                                   </ListGroupItem>
                                                 );
                                               }}

@@ -8,7 +8,7 @@ import '../stylesheets/landing.css';
 
 const Navigationbar = () => {
   return (
-    <div>
+    <Container fluid className="carousel">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand>Welcome to Dello-Box</Navbar.Brand>
@@ -26,7 +26,6 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
       <Carousel indicators={false}>
         <Carousel.Item>
           <img className="d-block w-100" src="https://pt-static.z-dn.net/files/d14/f0517e80cc1fe426a2d7767047986b02.jpg" alt="Third slide" />
@@ -78,7 +77,7 @@ const Navigationbar = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-    </div>
+    </Container>
   );
 };
 

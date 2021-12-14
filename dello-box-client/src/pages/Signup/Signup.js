@@ -1,12 +1,13 @@
 import '../../App.css';
 import React, { useState } from 'react';
-import { Navbar, Container, Form, Button, Col, Row } from 'react-bootstrap';
+import { Navbar, Container, Form, Button, Col, Row, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import initialSignup from './initialSignup.json';
 import { createUserObject } from '../../models/userModel';
 import { capitalize } from '../../utils/capitalizeString';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   let history = useHistory();
@@ -45,6 +46,11 @@ const Signup = () => {
             <Navbar.Brand>Dello-Box Sign Up</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav"></Navbar.Collapse>
+            <Nav>
+              <Nav.Link as={Link} to={'/'}>
+                Landing Page
+              </Nav.Link>
+            </Nav>
           </Container>
         </Navbar>
       </div>

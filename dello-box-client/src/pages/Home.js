@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import '../stylesheets/home.css';
+import { Container } from 'react-bootstrap';
 
-export default function Home() {
+const Home = () => {
   const userContext = useContext(UserContext);
 
   return (
-    <div>
+    <Container fluids>
       <p id="head1" class="header">
         Welcome Back
       </p>
@@ -25,6 +26,8 @@ export default function Home() {
       <div class="light x7"></div>
       <div class="light x8"></div>
       <div class="light x9"></div>
-    </div>
+    </Container>
   );
-}
+};
+
+export default Home;

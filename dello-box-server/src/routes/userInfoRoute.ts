@@ -5,7 +5,8 @@ import { validateUserInfo } from 'middlewares/validateUserInfo.mw';
 
 const router = express.Router();
 
-router.get('', controller.getUserInfo);
+// Certain APIs cannot be used during production
+// router.get('', controller.getUserInfo);
 router.get('/:userId', controller.getUserInfoByUserId);
 router.put('/:userId', registerUserInfo, validateUserInfo, controller.editUserInfoByUserId);
 

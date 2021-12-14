@@ -7,13 +7,12 @@ import { validateContactId } from 'middlewares/validateContactId.mw';
 
 const router = express.Router();
 
-router.get('', controller.getAllContactLists);
-router.get('/filter/:userId/:userName', controller.getUsersByUsername);
+// Certain APIs cannot be used during production
+// router.get('', controller.getAllContactLists);
+router.get('/filter/:userId/:username', controller.getUsersByUsername);
 router.get('/:userId', controller.getContactsOfUserId);
-
 router.put('/:userId/nickname', registerNickName, validateNickname, controller.editNicknameOfContacts);
 router.put('/:userId/add', registerContactId, validateContactId, controller.addContactById);
-
 router.delete('/:userId', registerContactId, validateContactId, controller.deleteContactById);
 
 export = router;

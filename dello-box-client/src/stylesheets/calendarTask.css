@@ -16,18 +16,9 @@
   width: auto !important;
 }
 
-.react-calendar__tile {
-  padding: 30px !important;
-}
-
 .react-datepicker-wrapper {
   padding-bottom: 10px !important;
 }
 .calendar-navbar-margin {
   margin-top: 4em;
-}
-
-@media screen and (max-width: 900px) {
-  .media-test {
-  }
 }

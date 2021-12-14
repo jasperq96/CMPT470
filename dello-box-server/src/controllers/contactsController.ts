@@ -54,17 +54,19 @@ const getContactsOfUserId = async (req: Request, res: Response, next: NextFuncti
 const getUsersByUsername = async (req: Request, res: Response, next: NextFunction) => {
   logging.info(NAMESPACE, `GETTING USER INFO BY USERNAME`);
   const userId: number = +req.params.userId;
-  const userName: string = req.params.userName;
+  const username: string = req.params.username;
   if (isInvalidInput(userId)) {
     res.status(400).send(contactNegativeOrNanInputError);
     return;
   }
 
   try {
-    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name')
+    const listOfContacts = await Knex.select(`${TABLE_NAME}.contacts`).from(TABLE_NAME).where('user_id', userId).first();
+    const retrievedUserInfo = await Knex.select('user_id', 'username', 'first_name', 'last_name', 'email')
       .from('user')
       .join('user_info', 'user.id', 'user_info.user_id')
-      .where('username', 'like', '%' + userName + '%')
+      .where('username', 'like', '%' + username + '%')
+      .andWhere('user_id', 'not in', listOfContacts['contacts'])
       .andWhere(`user_info.user_id`, '<>', userId);
 
     if (!retrievedUserInfo) {

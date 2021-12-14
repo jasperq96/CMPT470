@@ -5,7 +5,6 @@ import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import Calendarlib from 'react-calendar';
 import { UserContext } from '../../hooks/UserContext';
-import DatePicker from 'react-datepicker';
 import { Container, Row, Col } from 'react-bootstrap';
 import { capitalize } from '../../utils/capitalizeString';
 import 'react-calendar/dist/Calendar.css';
@@ -38,29 +37,25 @@ const Calendar = () => {
 
   const windowScreenHeight = window.screen.height / 2;
   return (
-    <div>
-      <Container fluid className="calendar-navbar-margin media-test">
-        <Row>
-          <Col lg style={{ maxHeight: windowScreenHeight }}>
-            <Calendarlib onChange={onDate} value={date} />
-            <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
-          </Col>
-          <Col lg>
-            {task
-              .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
-              .map((filtered_Dates) => (
-                <ul className="task-look">
-                  <li className="task-title">{filtered_Dates.title}</li>
-                  <ul>
-                    <li>{filtered_Dates.notes}</li>
-                  </ul>
+    <Container fluid className="calendar-navbar-margin media-test">
+      <Row>
+        <Col lg style={{ maxHeight: windowScreenHeight }}>
+          <Calendarlib onChange={onDate} value={date} />
+        </Col>
+        <Col lg>
+          {task
+            .filter((stored_date) => stored_date.start_date.substring(0, 10) <= date.toISOString().substring(0, 10) && stored_date.end_date.substring(0, 10) >= date.toISOString().substring(0, 10))
+            .map((filtered_Dates) => (
+              <ul className="task-look">
+                <li className="task-title">{filtered_Dates.title}</li>
+                <ul>
+                  <li>{filtered_Dates.notes}</li>
                 </ul>
-              ))}
-            {console.log(date.toISOString)}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+              </ul>
+            ))}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

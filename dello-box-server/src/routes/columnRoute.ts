@@ -5,7 +5,8 @@ import { validateColumn } from 'middlewares/validateColumn.mw';
 
 const router = express.Router();
 
-router.get('', controller.getColumns);
+// Certain APIs cannot be used during production
+// router.get('', controller.getColumns);
 router.get('/:userId', controller.getColumnsByUserId);
 router.post('/:userId', registerCreateEditColumn, validateColumn, controller.createColumn);
 router.put('/title/:id', registerCreateEditColumn, validateColumn, controller.editColumnTitleById);

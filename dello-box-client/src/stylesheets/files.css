@@ -5,3 +5,40 @@
 .file-button-padding {
   margin: 1em;
 }
+.file-button-margin {
+  margin: 1px;
+}
+
+@media only screen and (max-width: 800px) {
+  td.responsive-cut {
+    display: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: collapse;
+  }
+  th.responsive-cut {
+    display: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: collapse;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  td.responsive-cut-700 {
+    display: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: collapse;
+  }
+  th.responsive-cut-700 {
+    display: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: collapse;
+  }
+}

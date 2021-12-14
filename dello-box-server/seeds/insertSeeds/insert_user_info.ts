@@ -9,7 +9,7 @@ export async function insertUserInfo(knex: Knex): Promise<void> {
       email: 'johndoe@hotmail.com',
       phone: '604-123-4567'
     },
-    { user_id: 2, first_name: 'Jane', last_name: 'Doe', email: 'janedoe@gmail.com', phone: '604-123-4567', contact_nicknames: [{ '1': '', '3': '' }] },
-    { user_id: 3, first_name: 'Bob', last_name: 'Marley', email: 'bmarley@gmail.com', phone: '604-123-4567', contact_nicknames: [{ '1': '', '2': '' }] }
+    { user_id: 2, first_name: 'Jane', last_name: 'Doe', email: 'janedoe@gmail.com', phone: '604-123-4567' },
+    { user_id: 3, first_name: 'Bob', last_name: 'Marley', email: 'bmarley@gmail.com', phone: '604-123-4567' }
   ]);
 }
