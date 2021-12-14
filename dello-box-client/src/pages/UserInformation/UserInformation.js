@@ -103,18 +103,24 @@ const UserInformation = () => {
             <Form.Label className="WhiteHeaders">Phone</Form.Label>
             <Form.Control type="PhoneNumber" placeholder="Phone Number" name="phone" value={values.phone} onChange={handleChange} />
           </Form.Group>
-          <Button variant="outline-success" onClick={(e) => putUserInfo(e)}>
-            Update User Information
-          </Button>
+          <br />
+          <Row md="auto">
+            <Button className="userinfo-button-margin" variant="success" onClick={(e) => putUserInfo(e)}>
+              Update User Information
+            </Button>
+          </Row>
           <ModalUser show={userModal} onModalClose={onModalClose} onModalDelete={onModalDelete}></ModalUser>
-          <Button
-            variant="danger"
-            onClick={(e) => {
-              onDeleteUser(e);
-            }}
-          >
-            Delete Account
-          </Button>
+          <Row md="auto">
+            <Button
+              className="userinfo-button-margin"
+              variant="danger"
+              onClick={(e) => {
+                onDeleteUser(e);
+              }}
+            >
+              Delete Account
+            </Button>
+          </Row>
         </Form>
       </Container>
     </Container>
