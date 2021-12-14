@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import httpService from '../services/httpService';
 import '../stylesheets/contacts.css';
-import { useHistory } from 'react-router-dom';
+import { capitalize } from '../utils/capitalizeString';
 import { Form, ListGroupItem } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { Table, Container, Button, Row, Col, ListGroup } from 'react-bootstrap';
 
-export default function Contacts() {
+const Contacts = () => {
   const userContext = useContext(UserContext);
-  const history = useHistory();
-
   const [contactState, setContactState] = useState({
     contacts: []
   });
@@ -18,11 +16,6 @@ export default function Contacts() {
   const [queryContactState, setQueryContactState] = useState({
     queryContacts: []
   });
-
-  const routeChange = () => {
-    let path = `/contacts/add`;
-    history.push(path);
-  };
 
   useEffect(() => {
     getContacts();
@@ -37,69 +30,54 @@ export default function Contacts() {
         contacts: data
       });
     } catch (error) {
-      console.log(error);
+      toast.error('Error: No contacts found!');
     }
   };
 
   const searchContact = async () => {
-    if (document.getElementById('search-bar').value.length < 4) {
-      toast.error(`Please enter a minimum of 4 characters!`);
+    const url = `/contacts/filter/${userContext.user?.id}/${document.getElementById('search-bar').value}`;
+    try {
+      const response = await httpService.get(url);
+      const { data } = response;
+      if (data.length === 0) {
+        toast.error('No users found!');
+        setQueryContactState({
+          queryContacts: []
+        });
+      } else {
+        setQueryContactState({
+          queryContacts: data
+        });
+      }
+    } catch (error) {
+      toast.error('No users found!');
       setQueryContactState({
         queryContacts: []
       });
-      return;
     }
-    toast.dismiss();
-
-    const url = `/contacts/filter/${userContext.user?.id}/${document.getElementById('search-bar').value}`;
-
-    try {
-      const response = await httpService.get(url, { contactId: 'user' });
-      const { data } = response;
-      setQueryContactState({
-        queryContacts: data
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
-    let path = `/contacts`;
-    history.push(path);
-
-    return undefined;
   };
 
-  const addContact = async (id) => {
+  const addContact = async (contactId) => {
     const url = `/contacts/${userContext.user?.id}/add`;
-
     try {
-      const response = await httpService.put(url, { contactId: id });
-      const { data } = response;
+      await httpService.put(url, { contactId: contactId });
     } catch (error) {
-      console.log(error);
+      // Will display the first input error message
+      const errorBody = error.response.data.errors[0];
+      toast.error(capitalize(errorBody.param).concat(': ').concat(errorBody.msg));
     }
-
     await getContacts();
     await searchContact();
-
-    return undefined;
   };
 
-  const removeContact = async (id) => {
+  const removeContact = async (contactId) => {
     const url = `/contacts/${userContext.user?.id}`;
-    console.log('del:' + url);
-    console.log('id:' + id);
-
     try {
-      const response = await httpService.del(url, { data: { contactId: id } });
-      const { data } = response;
+      await httpService.del(url, { data: { contactId: contactId } });
     } catch (error) {
-      console.log(error);
+      toast.error('Error: '.concat(capitalize(error.response.data.error)));
     }
-
     await getContacts();
-
-    return undefined;
   };
 
   return (
@@ -161,4 +139,6 @@ export default function Contacts() {
       </Container>
     </Container>
   );
-}
+};
+
+export default Contacts;

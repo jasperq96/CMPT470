@@ -8,6 +8,7 @@ import initialUserInformation from './initialUserInformation.json';
 import { capitalize } from '../../utils/capitalizeString';
 import ModalUser from '../../components/ModalUser';
 import { editUserInfoObject } from '../../models/userInfoModel';
+import { deleteUserObject } from '../../models/userModel';
 import '../../stylesheets/userinfo.css';
 
 const UserInformation = () => {
@@ -39,10 +40,10 @@ const UserInformation = () => {
     }
   };
 
-  const deleteUser = async () => {
-    const url = `/user/${userContext.user?.id}`;
+  const deleteUser = async (uuidObject, storedUserId) => {
+    const url = `/user/${storedUserId}`;
     try {
-      await httpService.del(url);
+      await httpService.del(url, { data: uuidObject });
       toast.success('Successfully deleted account!');
     } catch (error) {
       toast.error('Error: '.concat(capitalize(error.response.data.error)));
@@ -60,8 +61,10 @@ const UserInformation = () => {
   };
 
   const onModalDelete = async () => {
+    const storedUserId = userContext.user?.id;
+    const storedUUID = userContext.user?.uuid;
     await userContext.logout();
-    await deleteUser();
+    await deleteUser(deleteUserObject(storedUUID), storedUserId);
     history.push('/');
     setUserModal(false);
   };

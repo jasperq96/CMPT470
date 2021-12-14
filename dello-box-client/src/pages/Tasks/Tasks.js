@@ -11,6 +11,7 @@ import ModalColumns from '../../components/ModalColumns';
 import ModalColumnsEdit from '../../components/ModalColumnsEdit';
 import ModalTaskEdit from '../../components/ModalTaskEdit';
 import ManageEmpty from '../../components/ManageEmpty';
+
 const editColumnOrder = async (updatedColumns) => {
   const url = '/column/order';
   try {

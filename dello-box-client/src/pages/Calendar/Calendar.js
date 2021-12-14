@@ -5,8 +5,7 @@ import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import Calendarlib from 'react-calendar';
 import { UserContext } from '../../hooks/UserContext';
-import DatePicker from 'react-datepicker';
-import { Container, Row, Col, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { capitalize } from '../../utils/capitalizeString';
 import 'react-calendar/dist/Calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -36,7 +35,6 @@ const Calendar = () => {
     getTasks();
   }, []);
 
-  const windowScreenHeight = window.screen.height / 2;
   return (
     <Container className="container-calendar-scrolling">
       <Container fluid className="media-test" style={{ paddingTop: 70 }}>

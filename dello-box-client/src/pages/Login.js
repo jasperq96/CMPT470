@@ -53,7 +53,7 @@ const Login = () => {
             <Navbar.Brand>Dello-Box Sign In</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className='hug-right'>
+              <Nav className="hug-right">
                 <Nav.Link as={Link} to={'/'}>
                   Landing Page
                 </Nav.Link>

@@ -3,7 +3,7 @@ import controller from '../controllers/userController';
 
 const router = express.Router();
 
-router.get('', controller.getUsers);
-router.delete('/:userId', controller.deleteUserByUserId);
+// Certain APIs cannot be used during production
+// router.get('', controller.getUsers);
 
 export = router;
