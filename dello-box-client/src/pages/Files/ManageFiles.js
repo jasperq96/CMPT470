@@ -72,27 +72,29 @@ const ManageFiles = () => {
   }, []);
 
   return (
-    <React.Fragment>
-      <Container className="body-color files-navbar-margin">
-        <h1>Manage Files</h1>
-        <Container className="file-container">
-          <Table responsive variant="dark">
-            <thead>
-              <tr>
-                <th>Filename</th>
-                <th className="responsive-cut">Date Created</th>
-                <th>Mimetype</th>
-                <th className="responsive-cut">Size (Bytes)</th>
-                <th className="responsive-cut-700">Actions</th>
-              </tr>
-            </thead>
-            {files.map((file, index) => (
-              <ManageFileElement id={index} data={file} handleVisibility={handleVisibility} handleDelete={handleDelete} />
-            ))}
-          </Table>
+    <Container className="container-create-manage-scrolling">
+      <React.Fragment>
+        <Container className="body-color files-navbar-margin ">
+          <h1>Manage Files</h1>
+          <Container className="file-container">
+            <Table responsive variant="dark">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th className="responsive-cut">Date Created</th>
+                  <th>Mimetype</th>
+                  <th className="responsive-cut">Size (Bytes)</th>
+                  <th className="responsive-cut-700">Actions</th>
+                </tr>
+              </thead>
+              {files.map((file, index) => (
+                <ManageFileElement id={index} data={file} handleVisibility={handleVisibility} handleDelete={handleDelete} />
+              ))}
+            </Table>
+          </Container>
         </Container>
-      </Container>
-    </React.Fragment>
+      </React.Fragment>
+    </Container>
   );
 };
 

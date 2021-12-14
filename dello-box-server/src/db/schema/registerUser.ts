@@ -14,4 +14,6 @@ const userSchema = [
     .withMessage('Must be in format XXX-XXX-XXXX')
 ];
 
-export { userSchema as registerUser };
+const uuidSchema = [check('uuid').trim().escape().isLength({ min: 1 }).isString().withMessage('Must have a length of at least 1 character')];
+
+export { userSchema as registerUser, uuidSchema as registerUUID };

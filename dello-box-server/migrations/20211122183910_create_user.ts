@@ -5,6 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments().primary();
     table.string('username').unique().notNullable();
     table.string('password').notNullable();
+    table.text('uuid').notNullable();
   });
 }
 
