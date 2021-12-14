@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Certain APIs cannot be used during production
 // router.get('', controller.getAllContactLists);
-router.get('/filter/:userId/:userName', controller.getUsersByUsername);
+router.get('/filter/:userId/:username', controller.getUsersByUsername);
 router.get('/:userId', controller.getContactsOfUserId);
 router.put('/:userId/nickname', registerNickName, validateNickname, controller.editNicknameOfContacts);
 router.put('/:userId/add', registerContactId, validateContactId, controller.addContactById);

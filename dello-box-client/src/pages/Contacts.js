@@ -30,7 +30,7 @@ const Contacts = () => {
         contacts: data
       });
     } catch (error) {
-      toast.error('Error: '.concat(capitalize(error.response.data.error)));
+      toast.error('Error: No contacts found!');
     }
   };
 
