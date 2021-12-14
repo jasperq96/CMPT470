@@ -28,6 +28,7 @@ up:
 up-prod:
 	docker-compose -f docker-compose.prod.yml up -d
 	docker exec dello-box-server-prod node_modules/.bin/knex migrate:latest
+	docker exec dello-box-server-prod node_modules/.bin/knex seed:run
 
 up-proj:
 	docker-compose up -d
