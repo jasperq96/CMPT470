@@ -5,8 +5,7 @@ import httpService from '../../services/httpService';
 import { toast } from 'react-toastify';
 import Calendarlib from 'react-calendar';
 import { UserContext } from '../../hooks/UserContext';
-import DatePicker from 'react-datepicker';
-import { Container, Row, Col, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { capitalize } from '../../utils/capitalizeString';
 import 'react-calendar/dist/Calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -42,7 +41,6 @@ const Calendar = () => {
       <Row>
         <Col lg style={{ maxHeight: windowScreenHeight }}>
           <Calendarlib onChange={onDate} value={date} />
-          <DatePicker selected={date} onChange={(date) => setDate(date)} readOnly />
         </Col>
         <Col lg>
           {task
@@ -55,7 +53,6 @@ const Calendar = () => {
                 </ul>
               </ul>
             ))}
-          {console.log(date.toISOString)}
         </Col>
       </Row>
     </Container>

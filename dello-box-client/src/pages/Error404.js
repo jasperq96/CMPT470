@@ -1,5 +1,11 @@
 import React from 'react';
 
-export default function Error404() {
-  return <div>ERROR 404</div>;
-}
+const Error404 = () => {
+  return (
+    <div>
+      <h1 style={{ marginTop: '3em' }}>404: Not Found</h1>
+    </div>
+  );
+};
+
+export default Error404;

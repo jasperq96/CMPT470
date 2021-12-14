@@ -6,7 +6,7 @@ import { capitalize } from '../../utils/capitalizeString';
 import { UserContext } from '../../hooks/UserContext';
 import '../../stylesheets/Tasks.css';
 
-export default function CreateTask() {
+const CreateTask = () => {
   const userContext = useContext(UserContext);
   const [cols, setCols] = useState([]);
   const [values, setValue] = useState({
@@ -40,7 +40,6 @@ export default function CreateTask() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const parsing_Object = { ...values };
-    console.log(parsing_Object);
     const comb_start = parsing_Object.start_date.concat(' ', parsing_Object.start_time);
     const comb_end = parsing_Object.end_date.concat(' ', parsing_Object.end_time);
     if (parsing_Object.start_date === '') {
@@ -56,8 +55,6 @@ export default function CreateTask() {
     const newEndDate = new Date(comb_end);
     const localNewStartDate = new Date(newStartDate - tzoffset).toISOString().slice(0, -1);
     const localNewEndDate = new Date(newEndDate - tzoffset).toISOString().slice(0, -1);
-    console.log(localNewEndDate);
-    console.log(localNewStartDate);
     const forBackend = {
       colId: parsing_Object.col_id,
       startDate: localNewStartDate.slice(0, 19),
@@ -66,7 +63,6 @@ export default function CreateTask() {
       notes: parsing_Object.notes
     };
 
-    console.log(forBackend);
     const url = `/task/${userContext.user?.id}`;
     createTaskOrColumn(url, forBackend, true);
     setValue({
@@ -120,8 +116,6 @@ export default function CreateTask() {
     getCols();
   }, [cols]);
 
-  const heightOfScreen = window.screen.height - window.screen.height * 0.1;
-  const widthOfScreen = window.screen.width;
   return (
     <Container className="task-navbar-margin justify-content-md-center create-task-spacing">
       <h1 className="WhiteHeaders">Creating a Task</h1>
@@ -157,7 +151,9 @@ export default function CreateTask() {
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label className="WhiteHeaders">Column</Form.Label>
           <Form.Select defaultValue="Choose..." name="col_id" onChange={handleChange}>
-            <option>Choose a Column</option>
+            <option selected disabled>
+              Choose a Column
+            </option>
             {cols.map((col) => (
               <option value={col.id} key={col.id}>
                 {col.title}
@@ -177,4 +173,6 @@ export default function CreateTask() {
       </Form>
     </Container>
   );
-}
+};
+
+export default CreateTask;
